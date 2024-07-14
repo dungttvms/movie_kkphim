@@ -19,9 +19,10 @@ function HomePage() {
       }}
     >
       <Helmet>
-        <title>Trang chủ | Chợ đất Tây Nguyên</title>
+        <title>Trang chủ | HAUSNEO MOVIE</title>
       </Helmet>
       <MovieList />
+
       <Box>
         <CellPhone />
         <CustomChatBot />

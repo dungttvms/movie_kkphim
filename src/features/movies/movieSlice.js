@@ -7,6 +7,7 @@ const initialState = {
   error: null,
   movies: [],
   singleMovie: "",
+  pagination: "",
 };
 
 const slice = createSlice({

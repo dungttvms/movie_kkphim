@@ -172,7 +172,7 @@ function SingleMovie() {
                 <strong>Đạo diễn:</strong> {singleMovieInfo.director}
               </Typography>
               <Typography variant="body1">
-                <strong>Quốc gia:</strong> {singleMovieInfo.country.name}
+                <strong>Quốc gia:</strong> {singleMovieInfo.country[0].name}
               </Typography>
               <Typography variant="body1">
                 <strong>Năm sản xuất:</strong> {singleMovieInfo.year}

@@ -8,9 +8,11 @@ import LoadingScreen from "../../components/LoadingScreen";
 
 function MovieList() {
   const [page, setPage] = useState(1);
+
   const dispatch = useDispatch();
   const { movies } = useSelector((state) => state.movie);
   const loading = useSelector((state) => state.movie.isLoading);
+  console.log("LOADING", loading);
   const error = useSelector((state) => state.movie.error);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function MovieList() {
       {loading && <LoadingScreen />}
       {error && <p>Error: {error}</p>}
       {movies && (
-        <Typography>
+        <>
           <Box
             display="flex"
             alignItems="center"
@@ -37,21 +39,38 @@ function MovieList() {
               <ArrowForward />
             </IconButton>
           </Box>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            style={{ display: "flex", flexWrap: "wrap" }}
+          >
             {movies?.map((movie) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={movie._id}>
+              <Grid
+                key={movie._id}
+                item
+                xs={12}
+                sm={6}
+                md={6}
+                lg={2.4}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <MovieCard movie={movie} />
               </Grid>
             ))}
           </Grid>
-        </Typography>
+        </>
       )}
-      <IconButton onClick={() => setPage(page - 1)} disabled={page === 1}>
-        <ArrowBack />
-      </IconButton>
-      <IconButton onClick={() => setPage(page + 1)}>
-        <ArrowForward />
-      </IconButton>
+      <Box display="flex" justifyContent="center" mt={2}>
+        <IconButton onClick={() => setPage(page - 1)} disabled={page === 1}>
+          <ArrowBack />
+        </IconButton>
+        <IconButton onClick={() => setPage(page + 1)}>
+          <ArrowForward />
+        </IconButton>
+      </Box>
     </Container>
   );
 }

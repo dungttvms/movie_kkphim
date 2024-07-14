@@ -12,7 +12,7 @@ import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles({
   root: {
     maxWidth: 350,
-    margin: "15px",
+    margin: "5px",
     "&:hover": {
       transform: "scale(1.05)",
       transition: "transform 0.3s",
@@ -27,9 +27,11 @@ const useStyles = makeStyles({
   },
   title: {
     fontWeight: "bold",
+    fontSize: "0.65rem", // Adjusted font size for title
   },
   subtitle: {
     color: "#aaa",
+    fontSize: "0.625rem", // Adjusted font size for subtitle
   },
 });
 
@@ -50,9 +52,12 @@ function MovieCard({ movie }) {
           title={movie.origin_name}
         />
         <CardContent className={classes.content}>
-          <Typography className={classes.title} variant="h8">
-            {movie.name}
+          <Typography className={classes.title} variant="h6">
+            {movie.name.length > 25
+              ? `${movie.name.substring(0, 25)}...`
+              : movie.name}
           </Typography>
+
           <Typography className={classes.subtitle} variant="subtitle1">
             {movie.origin_name.length > 30
               ? `${movie.origin_name.substring(0, 30)}...`
