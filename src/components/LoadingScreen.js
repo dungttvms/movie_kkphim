@@ -13,7 +13,7 @@ function LoadingScreen() {
         alignItems: "center",
       }}
     >
-      <CircularProgress />;
+      <CircularProgress />
     </Box>
   );
 }

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "./movieSlice";
 import MovieCard from "./MovieCard";
-import { Box, Container, Grid, IconButton, Typography } from "@mui/material";
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import LoadingScreen from "../../components/LoadingScreen";
+import Pagination from "../../components/Pagination";
 
 function MovieList() {
   const [page, setPage] = useState(1);
@@ -12,11 +12,10 @@ function MovieList() {
   const dispatch = useDispatch();
   const { movies } = useSelector((state) => state.movie);
   const loading = useSelector((state) => state.movie.isLoading);
-  console.log("LOADING", loading);
   const error = useSelector((state) => state.movie.error);
 
   useEffect(() => {
-    dispatch(getAllMovies({ page }));
+    dispatch(getAllMovies({ page, range: 2 }));
   }, [page, dispatch]);
 
   return (
@@ -32,12 +31,7 @@ function MovieList() {
             mb={2}
           >
             <Typography>PHIM MỚI CẬP NHẬT</Typography>
-            <IconButton onClick={() => setPage(page - 1)} disabled={page === 1}>
-              <ArrowBack />
-            </IconButton>
-            <IconButton onClick={() => setPage(page + 1)}>
-              <ArrowForward />
-            </IconButton>
+            <Pagination page={page} setPage={setPage} />
           </Box>
           <Grid
             container
@@ -50,7 +44,7 @@ function MovieList() {
                 item
                 xs={12}
                 sm={6}
-                md={6}
+                md={3}
                 lg={2.4}
                 style={{
                   display: "flex",
@@ -61,16 +55,16 @@ function MovieList() {
               </Grid>
             ))}
           </Grid>
+          <Box
+            display="flex"
+            justifyContent="center"
+            mt={2}
+            style={{ marginTop: "16px" }}
+          >
+            <Pagination page={page} setPage={setPage} />
+          </Box>
         </>
       )}
-      <Box display="flex" justifyContent="center" mt={2}>
-        <IconButton onClick={() => setPage(page - 1)} disabled={page === 1}>
-          <ArrowBack />
-        </IconButton>
-        <IconButton onClick={() => setPage(page + 1)}>
-          <ArrowForward />
-        </IconButton>
-      </Box>
     </Container>
   );
 }

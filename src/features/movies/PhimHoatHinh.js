@@ -133,6 +133,15 @@ function PhimHoatHinh() {
                               textAlign: "center",
                             }}
                           >
+                            Thời lượng
+                          </TableCell>
+                          <TableCell
+                            sx={{
+                              width: { xs: "none", md: "10%" },
+                              fontWeight: "bold",
+                              textAlign: "center",
+                            }}
+                          >
                             Chất lượng
                           </TableCell>
                           <TableCell
@@ -194,6 +203,9 @@ function PhimHoatHinh() {
                           <>
                             <TableCell align="center">
                               {movie.episode_current || "N/A"}
+                            </TableCell>
+                            <TableCell align="center">
+                              {movie.time || "N/A"}
                             </TableCell>
                             <TableCell align="center">
                               {movie.quality || "N/A"}
