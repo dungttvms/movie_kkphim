@@ -72,10 +72,10 @@ const ICON_LINK = [
 function MainFooter() {
   return (
     <Container maxWidth="lg" sx={{ pt: 3 }}>
-      <Grid container>
+      <Grid container justifyContent="center">
         <Grid item xs={12} sm={4}>
           <Stack spacing={1}>
-            <Box sx={{ display: "flex", justifyContent: "left" }}>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               <Stack mt={1} spacing={3} direction="row" name="link">
                 {ICON_LINK.map((value) => (
                   <Tooltip
@@ -117,7 +117,7 @@ function MainFooter() {
         align="center"
         sx={{ my: 1 }}
       >
-        Website đang trong quá trình xây dựng và hoàn thiện
+        Website dùng với mục đích học tập
       </Typography>
     </Container>
   );

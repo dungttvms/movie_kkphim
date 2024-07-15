@@ -33,11 +33,11 @@ const useStyles = makeStyles({
   },
   title: {
     fontWeight: "bold",
-    fontSize: "0.65rem", // Adjusted font size for title
+    fontSize: "0.65rem",
   },
   subtitle: {
     color: "#aaa",
-    fontSize: "0.625rem", // Adjusted font size for subtitle
+    fontSize: "0.625rem",
   },
   playIcon: {
     position: "absolute",

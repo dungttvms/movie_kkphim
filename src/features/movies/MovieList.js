@@ -13,7 +13,7 @@ function MovieList() {
   const { movies } = useSelector((state) => state.movie);
   const loading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
-
+  console.log(movies);
   useEffect(() => {
     dispatch(getAllMovies({ page, range: 2 }));
   }, [page, dispatch]);

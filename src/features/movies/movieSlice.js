@@ -78,7 +78,8 @@ export const getAllMovies = ({ page }) => async (dispatch) => {
     ]);
 
     const combinedMovies = [...response1.items, ...response2.items];
-    dispatch(slice.actions.getAllMoviesSuccess(combinedMovies));
+    const totalMovies = response1.pagination.totalItems;
+    dispatch(slice.actions.getAllMoviesSuccess(combinedMovies, totalMovies));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -112,6 +113,7 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
     const response = await apiService.get(
       `v1/api/danh-sach/phim-bo?${queryParams.toString()}`
     );
+
     dispatch(slice.actions.getPhimBoSuccess(response.data.items));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));

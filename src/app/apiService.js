@@ -7,10 +7,10 @@ const apiService = axios.create({
 
 apiService.interceptors.request.use(
   (request) => {
-    console.log("Start request", request);
+    // console.log("Start request", request);
     return request;
   },
-  function (error) {
+  function(error) {
     console.log("REQUEST ERROR", { error });
     return Promise.reject(error);
   }
@@ -21,7 +21,7 @@ apiService.interceptors.response.use(
     console.log("Response", response);
     return response.data;
   },
-  function (error) {
+  function(error) {
     console.log("RESPONSE ERROR", { error });
     const message = error.response?.data?.error?.message || "Unknown Error";
     return Promise.reject(message);

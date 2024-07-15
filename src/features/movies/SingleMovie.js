@@ -51,10 +51,14 @@ const useStyles = makeStyles({
   keyword: {
     marginRight: "10px",
     marginBottom: "10px",
+    color: "white",
   },
   episodesContainer: {
     display: "flex",
+    flexDirection: "column",
     flexWrap: "wrap",
+    maxHeight: "200px", // Adjust height as needed
+    overflowY: "auto",
     marginTop: "10px",
   },
   episodeButton: {
@@ -120,7 +124,7 @@ function SingleMovie() {
           <Grid item xs={12} md={4}>
             <CardMedia
               className={classes.media}
-              image={singleMovieInfo.thumb_url || "/path/to/poster.jpg"}
+              image={singleMovieInfo.thumb_url}
               title={singleMovieInfo.origin_name}
             />
             <Box p={2} alignItems="center">
@@ -158,7 +162,7 @@ function SingleMovie() {
               </Box>
             </Box>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} md={8} sx={{ p: 2 }}>
             <CardContent className={classes.content}>
               <Typography variant="h4" className={classes.title}>
                 {singleMovieInfo.name}
@@ -235,8 +239,10 @@ function SingleMovie() {
               <Box display="flex" flexWrap="wrap">
                 {[
                   singleMovieInfo.name,
-                  singleMovieInfo.country[0].name,
-                  singleMovieInfo.type,
+                  ...singleMovieInfo.country.map((country) => country.name),
+                  singleMovieInfo.lang,
+                  singleMovieInfo.year,
+                  ...singleMovieInfo.category.map((cat) => cat.name),
                 ].map((keyword, index) => (
                   <Chip
                     key={index}
