@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/SearchInput";
 import { getSearchMovie } from "../features/movies/movieSlice";
+import CustomChatBot from "../components/ChatBot"; // Import CustomChatBot component
 
 function MainHeader() {
   const navigate = useNavigate();
@@ -47,97 +48,97 @@ function MainHeader() {
   const handleSearchSubmit = (keyword) => {
     dispatch(getSearchMovie({ keyword }));
     navigate(`/tim-kiem?keyword=${keyword}`);
-  };
-
-  const resetSearchQuery = () => {
-    setSearchQuery("");
+    setSearchQuery(""); // Reset the search query
   };
 
   return (
-    <AppBar position="sticky">
-      <Container maxWidth="false">
-        <Toolbar disableGutters>
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "flex", md: "none" },
-            }}
-          >
-            {isMobile && (
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+    <>
+      <AppBar position="sticky">
+        <Container maxWidth="false">
+          <Toolbar disableGutters>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: { xs: "flex", md: "none" },
               }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
-                ml: 5,
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
             >
+              {isMobile && (
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+              )}
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                  ml: 5,
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{ display: { xs: "block", md: "none" } }}
+              >
+                {pages.map((page) => (
+                  <MenuItem
+                    pl={1}
+                    pr={1}
+                    key={page.title}
+                    onClick={page.action}
+                    sx={{
+                      "&:hover": {
+                        backgroundColor: "primary.lighter",
+                        borderRadius: "4px",
+                      },
+                    }}
+                  >
+                    <Typography
+                      variant="body1"
+                      textAlign="center"
+                      sx={{ fontSize: "18px" }}
+                    >
+                      {page.title}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {pages.map((page) => (
-                <MenuItem
-                  pl={1}
-                  pr={1}
+                <Button
+                  variant="contained"
                   key={page.title}
                   onClick={page.action}
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "primary.lighter",
-                      borderRadius: "4px",
-                    },
-                  }}
+                  sx={{ my: 2, color: "white" }}
                 >
-                  <Typography
-                    variant="body1"
-                    textAlign="center"
-                    sx={{ fontSize: "18px" }}
-                  >
-                    {page.title}
-                  </Typography>
-                </MenuItem>
+                  {page.title}
+                </Button>
               ))}
-            </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                variant="contained"
-                key={page.title}
-                onClick={page.action}
-                sx={{ my: 2, color: "white" }}
-              >
-                {page.title}
-              </Button>
-            ))}
-          </Box>
-          <Box>
-            <SearchInput
-              searchQuery={searchQuery}
-              handleSubmit={handleSearchSubmit}
-              resetSearchQuery={resetSearchQuery}
-            />
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+            <Box>
+              <SearchInput
+                searchQuery={searchQuery}
+                setSearchQuery={setSearchQuery}
+                handleSubmit={handleSearchSubmit}
+              />
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <CustomChatBot /> {/* Add the CustomChatBot component */}
+    </>
   );
 }
 

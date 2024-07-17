@@ -19,7 +19,7 @@ const ICON_LINK = [
     name: "twitter",
     icon: (
       <Link
-        href="https://facebook.com/dungttvms"
+        href="https://x.com/tran_tien_dzung"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -45,7 +45,7 @@ const ICON_LINK = [
     name: "youtube",
     icon: (
       <Link
-        href="https://facebook.com/dungttvms"
+        href="https://www.youtube.com/@tiendungtran1385"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -57,7 +57,7 @@ const ICON_LINK = [
     name: "instagram",
     icon: (
       <Link
-        href="https://facebook.com/dungttvms"
+        href="https://www.instagram.com/dungttvms/"
         target="_blank"
         rel="noopener noreferrer"
       >

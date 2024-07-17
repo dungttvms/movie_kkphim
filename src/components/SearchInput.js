@@ -1,14 +1,11 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 
-function SearchInput({ handleSubmit, resetSearchQuery }) {
-  const [searchQuery, setSearchQuery] = useState("");
-
+function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit(searchQuery);
-    resetSearchQuery();
   };
 
   return (

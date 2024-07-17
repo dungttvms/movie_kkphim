@@ -33,6 +33,7 @@ const useStyles = makeStyles({
   },
   title: {
     fontWeight: "bold",
+    textTransform: "uppercase",
   },
   subtitle: {
     color: "#aaa",
@@ -57,7 +58,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     flexWrap: "wrap",
-    maxHeight: "200px", // Adjust height as needed
+    maxHeight: "200px",
     overflowY: "auto",
     marginTop: "10px",
   },
@@ -120,82 +121,91 @@ function SingleMovie() {
   return (
     <Container>
       <Card className={classes.root}>
-        <Grid container>
-          <Grid item xs={12} md={4}>
-            <CardMedia
-              className={classes.media}
-              image={singleMovieInfo.thumb_url}
-              title={singleMovieInfo.origin_name}
-            />
-            <Box p={2} alignItems="center">
-              <Button
-                variant="contained"
-                color="primary"
-                href={singleMovieInfo.trailer_url}
-                target="_blank"
-                className={classes.button}
-              >
-                Trailer
-              </Button>
-              <Box className={classes.episodesContainer}>
-                {currentEpisodes.map((episode, index) =>
-                  episode.server_data.map((data, dataIndex) => (
-                    <Button
-                      key={`${index}-${dataIndex}`}
-                      variant="contained"
-                      color="secondary"
-                      className={classes.episodeButton}
-                      onClick={() => handleEpisodeClick(data)}
-                    >
-                      {data.name}
-                    </Button>
-                  ))
-                )}
-              </Box>
-              <Box className={classes.paginationContainer}>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
+        <CardContent className={classes.content}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={4}>
+              <CardMedia
+                className={classes.media}
+                image={singleMovieInfo.thumb_url}
+                title={singleMovieInfo.origin_name}
+              />
+              <Box p={2} alignItems="center">
+                <Button
+                  variant="contained"
                   color="primary"
-                />
+                  href={singleMovieInfo.trailer_url}
+                  target="_blank"
+                  className={classes.button}
+                >
+                  Trailer
+                </Button>
+                <Box className={classes.episodesContainer}>
+                  {currentEpisodes.map((episode, index) =>
+                    episode.server_data.map((data, dataIndex) => (
+                      <Button
+                        key={`${index}-${dataIndex}`}
+                        variant="contained"
+                        color="secondary"
+                        className={classes.episodeButton}
+                        onClick={() => handleEpisodeClick(data)}
+                      >
+                        {data.name}
+                      </Button>
+                    ))
+                  )}
+                </Box>
+                <Box className={classes.paginationContainer}>
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                  />
+                </Box>
               </Box>
-            </Box>
-          </Grid>
-          <Grid item xs={12} md={8} sx={{ p: 2 }}>
-            <CardContent className={classes.content}>
-              <Typography variant="h4" className={classes.title}>
+            </Grid>
+            <Grid item xs={12} md={8}>
+              <Typography
+                variant="h4"
+                className={classes.title}
+                sx={{ pl: 2, pt: 2 }}
+              >
                 {singleMovieInfo.name}
               </Typography>
-              <Typography variant="h6" className={classes.subtitle}>
+
+              <Typography
+                variant="h6"
+                className={classes.subtitle}
+                sx={{ pl: 2, pt: 1 }}
+              >
                 {singleMovieInfo.origin_name} ({singleMovieInfo.year})
               </Typography>
               <Box my={2}>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Trạng thái:</strong> {singleMovieInfo.episode_current}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Đạo diễn:</strong> {singleMovieInfo.director}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Quốc gia:</strong> {singleMovieInfo.country[0].name}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Năm sản xuất:</strong> {singleMovieInfo.year}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Tổng số tập:</strong> {singleMovieInfo.episode_total}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Thời lượng:</strong> {singleMovieInfo.time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Chất lượng:</strong> {singleMovieInfo.quality}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Ngôn ngữ:</strong> {singleMovieInfo.lang}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Thể loại:</strong>{" "}
                   {singleMovieInfo.type === "series"
                     ? "Phim bộ"
@@ -205,14 +215,18 @@ function SingleMovie() {
                     ? "Phim hoạt hình"
                     : "Chương trình giải trí"}
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Lượt xem:</strong> {singleMovieInfo.view}
                 </Typography>
               </Box>
-              <Typography variant="h5" className={classes.title}>
+              <Typography
+                variant="h6"
+                className={classes.title}
+                sx={{ pl: 2, pt: 1 }}
+              >
                 Diễn viên
               </Typography>
-              <Box display="flex" flexWrap="wrap" my={2}>
+              <Box display="flex" flexWrap="wrap" my={2} sx={{ pl: 2, pt: 1 }}>
                 {singleMovieInfo.actor.map((actor) => (
                   <Chip
                     key={actor}
@@ -227,16 +241,24 @@ function SingleMovie() {
                   />
                 ))}
               </Box>
-              <Typography variant="h5" className={classes.title}>
+              <Typography
+                variant="h5"
+                className={classes.title}
+                sx={{ pl: 2, pt: 1 }}
+              >
                 Nội dung phim
               </Typography>
-              <Typography variant="body1" paragraph>
+              <Typography variant="body1" paragraph sx={{ pl: 2, pt: 1 }}>
                 {singleMovieInfo.content}
               </Typography>
-              <Typography variant="h5" className={classes.title}>
+              <Typography
+                variant="h5"
+                className={classes.title}
+                sx={{ pl: 2, pt: 1 }}
+              >
                 Từ khóa
               </Typography>
-              <Box display="flex" flexWrap="wrap">
+              <Box display="flex" flexWrap="wrap" className={classes.keyword}>
                 {[
                   singleMovieInfo.name,
                   ...singleMovieInfo.country.map((country) => country.name),
@@ -251,9 +273,9 @@ function SingleMovie() {
                   />
                 ))}
               </Box>
-            </CardContent>
+            </Grid>
           </Grid>
-        </Grid>
+        </CardContent>
       </Card>
     </Container>
   );

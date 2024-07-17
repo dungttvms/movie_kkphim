@@ -1,13 +1,14 @@
-import { Box, IconButton } from "@mui/material";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { Box, IconButton } from "@mui/material";
 import ChatBot from "react-simple-chatbot";
-
 import CloseIcon from "@mui/icons-material/Close";
-
 import SupportAgentIcon from "../images/customer-service_870175.png";
 import styled, { keyframes } from "styled-components";
 import apiService from "../app/apiService";
-import { toast } from "react-toastify";
+import { getSearchMovie } from "../features/movies/movieSlice";
 
 const ChatContainer = styled.div`
   position: relative;
@@ -73,21 +74,28 @@ function CustomChatBot() {
   const [showChatbot, setShowChatbot] = useState(false);
   const [username, setUsername] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [province, setProvince] = useState("");
+  const [movie, setMovie] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (movie) => {
+    dispatch(getSearchMovie({ keyword: movie }));
+    navigate(`/tim-kiem?keyword=${movie}`);
+  };
 
   const handleSentData = async () => {
-    if (!username || !phoneNumber || !province) {
+    if (!username || !phoneNumber || !movie) {
       return;
     }
     const data = {
       username: username,
       phoneNumber: phoneNumber,
-      province: province,
+      movie: movie,
     };
 
     try {
       await apiService.post("/chatBots", data);
-
       toast.success("Cảm ơn bạn ");
     } catch (error) {
       toast.error(error.message);
@@ -103,14 +111,14 @@ function CustomChatBot() {
     handleSentData();
     setUsername("");
     setPhoneNumber("");
-    setProvince("");
+    setMovie("");
   };
 
   const steps = [
     {
       id: "Step_1",
       message:
-        "Chào mừng bạn đến với website Chợ đất Tây Nguyên - Nơi kết nối các giá trị Bất động sản khu vực Tây Nguyên",
+        "Chào mừng bạn đã đến với Hausneo-Movie, rạp chiếu phim của ngôi nhà bạn",
       trigger: "Step_2",
     },
     {
@@ -148,26 +156,23 @@ function CustomChatBot() {
     },
     {
       id: "Step_6",
-      message: "Bạn đang quan tâm đến Bất động sản khu vực nào?",
+      message: "Bạn đang cần chúng tôi cập nhật bộ phim nào?",
       trigger: "Step_7",
     },
-
     {
       id: "Step_7",
       user: true,
-      trigger: "Step_8",
-      validator: (value) => {
-        setProvince(value);
-        return true;
+      trigger: (value) => {
+        setMovie(value);
+        return "Step_8";
       },
     },
-
     {
       id: "Step_8",
       message:
-        "Cảm ơn bạn, Chợ đất Tây Nguyên sẽ liên hệ với bạn trong thời gian sớm nhất",
-
+        "Chúng tôi đang tìm kiếm bộ phim {previousValue} cho bạn. Vui lòng chờ giây lát...",
       end: true,
+      callback: () => handleSearchSubmit(movie),
     },
   ];
 
@@ -195,7 +200,6 @@ function CustomChatBot() {
           }}
         >
           <ChatBot steps={steps} />
-
           <IconButton
             sx={{
               color: "#ffffff",
