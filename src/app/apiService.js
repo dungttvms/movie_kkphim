@@ -18,11 +18,11 @@ apiService.interceptors.request.use(
 
 apiService.interceptors.response.use(
   (response) => {
-    console.log("Response", response);
+    // console.log("Response", response);
     return response.data;
   },
   function(error) {
-    console.log("RESPONSE ERROR", { error });
+    // console.log("RESPONSE ERROR", { error });
     const message = error.response?.data?.error?.message || "Unknown Error";
     return Promise.reject(message);
   }

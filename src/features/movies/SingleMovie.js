@@ -40,6 +40,8 @@ const useStyles = makeStyles({
   },
   button: {
     marginRight: "10px",
+    marginLeft: "10px",
+    width: "100%",
   },
   actorAvatar: {
     backgroundColor: "#555",
