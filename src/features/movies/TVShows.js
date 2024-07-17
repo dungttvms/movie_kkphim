@@ -54,7 +54,8 @@ function TVShows() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-  const { movies = [], total = 0 } = useSelector((state) => state?.movie);
+  const { movies } = useSelector((state) => state?.movie);
+  const total = useSelector((state) => state.movie.pagination);
   const loading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
 
@@ -80,7 +81,7 @@ function TVShows() {
       {movies.length > 0 ? (
         <>
           <Typography variant="h4" sx={{ mb: 3 }}>
-            DANH SÁCH CHƯƠNG TRÌNH GIẢI TRÍ
+            CÓ {total} CHƯƠNG TRÌNH GIẢI TRÍ
           </Typography>
           <Card sx={{ p: 3 }}>
             <Stack spacing={2}>

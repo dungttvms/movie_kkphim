@@ -6,13 +6,11 @@ import {
   CardMedia,
   Container,
   Link,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
   useMediaQuery,
@@ -48,6 +46,7 @@ const useStyles = makeStyles({
 });
 function SearchResults() {
   const { movies, isLoading, error } = useSelector((state) => state.movie);
+  const total = useSelector((state) => state.movie.pagination);
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -64,27 +63,9 @@ function SearchResults() {
       {movies.length > 0 ? (
         <>
           <Typography variant="h4" sx={{ mb: 3 }}>
-            KẾT QUẢ TÌM KIẾM
+            CÓ {total} PHIM ĐƯỢC TÌM THẤY
           </Typography>
           <Card sx={{ p: 3 }}>
-            <Stack spacing={2}>
-              <Stack spacing={2} direction="column" alignItems="center">
-                <TablePagination
-                  sx={{
-                    "& .MuiTablePagination-selectLabel, .MuiTablePagination-select, .MuiTablePagination-selectIcon": {
-                      display: { xs: "none", md: "block" },
-                    },
-                  }}
-                  component="div"
-                  // count={total}
-                  // page={page}
-                  //   onPageChange={handleChangePage}
-                  //   rowsPerPage={rowsPerPage}
-                  //   rowsPerPageOptions={[20, 30, 50]}
-                  //   onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Stack>
-            </Stack>
             <Box sx={{ overflowX: "auto" }}>
               <TableContainer sx={{ minWidth: 800 }}>
                 <Table>

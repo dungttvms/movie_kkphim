@@ -54,7 +54,8 @@ function PhimBo() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-  const { movies = [], total = 0 } = useSelector((state) => state?.movie);
+  const { movies } = useSelector((state) => state?.movie);
+  const total = useSelector((state) => state.movie.pagination);
   const loading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
 
@@ -80,7 +81,7 @@ function PhimBo() {
       {movies.length > 0 ? (
         <>
           <Typography variant="h4" sx={{ mb: 3 }}>
-            DANH SÁCH PHIM BỘ
+            CÓ {total} PHIM BỘ
           </Typography>
           <Card sx={{ p: 3 }}>
             <Stack spacing={2}>

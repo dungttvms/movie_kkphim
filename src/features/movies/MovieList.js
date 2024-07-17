@@ -11,11 +11,13 @@ function MovieList() {
 
   const dispatch = useDispatch();
   const { movies } = useSelector((state) => state.movie);
+  const totalMovies = useSelector((state) => state.movie.pagination);
+
   const loading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
-  console.log(movies);
+
   useEffect(() => {
-    dispatch(getAllMovies({ page, range: 2 }));
+    dispatch(getAllMovies({ page }));
   }, [page, dispatch]);
 
   return (
@@ -30,7 +32,7 @@ function MovieList() {
             justifyContent="space-between"
             mb={2}
           >
-            <Typography>PHIM MỚI CẬP NHẬT</Typography>
+            <Typography>CỎ {totalMovies} PHIM ĐÃ ĐƯỢC CẬP NHẬT</Typography>
             <Pagination page={page} setPage={setPage} />
           </Box>
           <Grid
