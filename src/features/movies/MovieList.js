@@ -32,7 +32,7 @@ function MovieList() {
             justifyContent="space-between"
             mb={2}
           >
-            <Typography>CỎ {totalMovies} PHIM ĐÃ ĐƯỢC CẬP NHẬT</Typography>
+            <Typography>CÓ {totalMovies} PHIM ĐÃ ĐƯỢC CẬP NHẬT</Typography>
             <Pagination page={page} setPage={setPage} />
           </Box>
           <Grid
