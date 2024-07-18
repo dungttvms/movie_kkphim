@@ -25,6 +25,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { fDate } from "../../utils/formatTime";
 import { IMAGE_URL } from "../../app/config";
 import { fNumber } from "../../utils/numberFormat";
+import { Helmet } from "react-helmet";
 const useStyles = makeStyles({
   root: {
     maxWidth: 350,
@@ -77,6 +78,9 @@ function PhimBo() {
 
   return (
     <Container sx={{ mt: 2 }}>
+      <Helmet>
+        <title>Phim Bộ | HAUSNEO MOVIE</title>
+      </Helmet>
       {loading && <LoadingScreen />}
       {error && <p>Error: {error}</p>}
       {movies.length > 0 ? (

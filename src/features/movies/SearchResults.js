@@ -25,6 +25,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { fNumber } from "../../utils/numberFormat";
 import NotFoundPage from "../../pages/NotFoundPage";
 import Logo from "../../components/Logo";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles({
   root: {
@@ -82,6 +83,9 @@ function SearchResults() {
 
   return (
     <Container sx={{ mt: 2 }}>
+      <Helmet>
+        <title>Tìm kiếm | HAUSNEO MOVIE</title>
+      </Helmet>
       <>
         <Box
           display="flex"
