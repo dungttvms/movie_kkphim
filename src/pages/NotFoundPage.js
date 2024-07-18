@@ -28,10 +28,10 @@ const NotFoundPage = () => {
         alignItems="center"
       >
         <Typography variant="h4" align="center">
-          404 - Page Not Found
+          Trang không tìm thấy (Error 404)
         </Typography>
         <Typography align="center" marginBottom={3}>
-          Sorry, the movie you are looking for does not exist.
+          Xin lỗi, phim bạn đang tìm kiếm không tồn tại
         </Typography>
         <Button variant="contained" component={NavLink} to="/">
           Quay về Trang chủ

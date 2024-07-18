@@ -24,6 +24,7 @@ import { getTVShows } from "./movieSlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fDate } from "../../utils/formatTime";
 import { IMAGE_URL } from "../../app/config";
+import { fNumber } from "../../utils/numberFormat";
 const useStyles = makeStyles({
   root: {
     maxWidth: 350,
@@ -75,14 +76,30 @@ function TVShows() {
   };
 
   return (
-    <Container sx={{ mt: 5 }}>
+    <Container sx={{ mt: 2 }}>
       {loading && <LoadingScreen />}
       {error && <p>Error: {error}</p>}
       {movies.length > 0 ? (
         <>
-          <Typography variant="h4" sx={{ mb: 3 }}>
-            CÓ {total} CHƯƠNG TRÌNH GIẢI TRÍ
-          </Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-around"
+            p={1}
+            sx={{ backgroundColor: "background.paper", borderRadius: 2 }}
+          >
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                fontWeight: "bold",
+                color: "Orange",
+                textAlign: "center",
+              }}
+            >
+              CÓ {fNumber(total)} CHƯƠNG TRÌNH GIẢI TRÍ
+            </Typography>
+          </Box>
           <Card sx={{ p: 3 }}>
             <Stack spacing={2}>
               <Stack spacing={2} direction="column" alignItems="center">

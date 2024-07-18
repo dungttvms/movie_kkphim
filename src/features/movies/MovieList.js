@@ -5,6 +5,7 @@ import MovieCard from "./MovieCard";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import LoadingScreen from "../../components/LoadingScreen";
 import Pagination from "../../components/Pagination";
+import { fNumber } from "../../utils/numberFormat";
 
 function MovieList() {
   const [page, setPage] = useState(1);
@@ -30,16 +31,23 @@ function MovieList() {
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            mb={2}
+            p={2}
+            sx={{ backgroundColor: "background.paper", borderRadius: 2 }}
           >
-            <Typography>CÓ {totalMovies} PHIM ĐÃ ĐƯỢC CẬP NHẬT</Typography>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{
+                fontWeight: "bold",
+                color: "orange",
+                textAlign: "left",
+              }}
+            >
+              CÓ {fNumber(totalMovies)} PHIM
+            </Typography>
             <Pagination page={page} setPage={setPage} />
           </Box>
-          <Grid
-            container
-            spacing={2}
-            style={{ display: "flex", flexWrap: "wrap" }}
-          >
+          <Grid container spacing={2}>
             {movies?.map((movie) => (
               <Grid
                 key={movie._id}
@@ -57,12 +65,7 @@ function MovieList() {
               </Grid>
             ))}
           </Grid>
-          <Box
-            display="flex"
-            justifyContent="center"
-            mt={2}
-            style={{ marginTop: "16px" }}
-          >
+          <Box display="flex" justifyContent="center" mt={2}>
             <Pagination page={page} setPage={setPage} />
           </Box>
         </>

@@ -12,7 +12,7 @@ function Logo({ disabledLink = false, sx }) {
   if (disabledLink) {
     return <React.Fragment key="logo">{logo}</React.Fragment>;
   }
-  return <RouterLink to="/HomePage"> {logo}</RouterLink>;
+  return <RouterLink to="/"> {logo}</RouterLink>;
 }
 
 export default Logo;

@@ -9,19 +9,22 @@ import PhimBo from "../features/movies/PhimBo";
 import PhimHoatHinh from "../features/movies/PhimHoatHinh";
 import TVShows from "../features/movies/TVShows";
 import SearchResults from "../features/movies/SearchResults";
+import BlankLayout from "../layouts/BlankLayout";
 
 function Router() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomePage />} />
-        <Route path="*" element={<NotFoundPage />} />
         <Route path="/phim/:slug" element={<SingleMovie />} />
         <Route path="/phim-le" element={<PhimLe />} />
         <Route path="/phim-bo" element={<PhimBo />} />
         <Route path="/hoat-hinh" element={<PhimHoatHinh />} />
         <Route path="/tv-shows" element={<TVShows />} />
         <Route path="/tim-kiem" element={<SearchResults />} />
+      </Route>
+      <Route element={<BlankLayout />}>
+        <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
   );

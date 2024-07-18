@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/SearchInput";
 import { getSearchMovie } from "../features/movies/movieSlice";
-import CustomChatBot from "../components/ChatBot"; // Import CustomChatBot component
+import Logo from "../components/Logo";
 
 function MainHeader() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function MainHeader() {
       { title: "TRANG CHỦ", action: () => navigate("/") },
       { title: "PHIM LẺ", action: () => navigate("/phim-le") },
       { title: "PHIM BỘ", action: () => navigate("/phim-bo") },
-      { title: "HOẠT HÌNH", action: () => navigate("/hoat-hinh") },
+      { title: "PHIM HOẠT HÌNH", action: () => navigate("/hoat-hinh") },
       { title: "TV SHOWS", action: () => navigate("/tv-shows") },
     ],
     [navigate]
@@ -52,17 +52,13 @@ function MainHeader() {
   };
 
   return (
-    <>
+    <Container>
       <AppBar position="sticky">
-        <Container maxWidth="false">
-          <Toolbar disableGutters>
-            <Box
-              sx={{
-                flexGrow: 1,
-                display: { xs: "flex", md: "none" },
-              }}
-            >
-              {isMobile && (
+        <Toolbar disableGutters>
+          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+            <Logo sx={{ mr: 2, ml: 2 }} />
+            {isMobile ? (
+              <>
                 <IconButton
                   size="large"
                   aria-label="account of current user"
@@ -73,72 +69,74 @@ function MainHeader() {
                 >
                   <MenuIcon />
                 </IconButton>
-              )}
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                  ml: 5,
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
-              >
-                {pages.map((page) => (
-                  <MenuItem
-                    pl={1}
-                    pr={1}
-                    key={page.title}
-                    onClick={page.action}
-                    sx={{
-                      "&:hover": {
-                        backgroundColor: "primary.lighter",
-                        borderRadius: "4px",
-                      },
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
-                      textAlign="center"
-                      sx={{ fontSize: "18px" }}
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{ display: { xs: "block", md: "none" } }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem
+                      key={page.title}
+                      onClick={page.action}
+                      sx={{
+                        "&:hover": {
+                          backgroundColor: "primary.lighter",
+                          borderRadius: "4px",
+                          mx: 2,
+                        },
+                      }}
                     >
-                      {page.title}
-                    </Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
+                      <Typography
+                        variant="body1"
+                        textAlign="center"
+                        sx={{ fontSize: "18px" }}
+                      >
+                        {page.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              pages.map((page) => (
                 <Button
-                  variant="contained"
                   key={page.title}
                   onClick={page.action}
-                  sx={{ my: 2, color: "white" }}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    mx: 1,
+                    "&:hover": {
+                      backgroundColor: "primary.dark",
+                    },
+                  }}
                 >
                   {page.title}
                 </Button>
-              ))}
-            </Box>
-            <Box>
-              <SearchInput
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                handleSubmit={handleSearchSubmit}
-              />
-            </Box>
-          </Toolbar>
-        </Container>
+              ))
+            )}
+          </Box>
+          <SearchInput
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSubmit={handleSearchSubmit}
+            sx={{ ml: 2 }}
+          />
+        </Toolbar>
       </AppBar>
-      <CustomChatBot /> {/* Add the CustomChatBot component */}
-    </>
+    </Container>
   );
 }
 

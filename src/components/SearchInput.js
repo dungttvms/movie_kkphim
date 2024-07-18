@@ -1,5 +1,5 @@
-import { IconButton, InputAdornment, TextField } from "@mui/material";
 import React from "react";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
@@ -15,7 +15,8 @@ function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
         placeholder="Tìm phim..."
         onChange={(event) => setSearchQuery(event.target.value)}
         sx={{
-          width: 300,
+          width: "90%",
+          marginRight: "16px",
           "& .MuiOutlinedInput-root": {
             "& fieldset": {
               borderColor: "white", // default border color
@@ -37,7 +38,7 @@ function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
                 color="primary"
                 aria-label="Tìm phim..."
               >
-                <SearchIcon />
+                <SearchIcon sx={{ color: "white" }} />
               </IconButton>
             </InputAdornment>
           ),

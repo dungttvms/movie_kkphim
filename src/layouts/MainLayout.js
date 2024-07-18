@@ -2,9 +2,14 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import MainFooter from "./MainFooter";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useMediaQuery, useTheme, keyframes } from "@mui/material";
+import Banner from "../images/banner.png";
+import { BANNER_URL } from "../app/config";
 
 function MainLayout() {
+  const theme = useTheme();
+  const isFullScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
   const footerStyles = {
     flexShrink: 0,
     position: "fixed",
@@ -13,32 +18,56 @@ function MainLayout() {
     right: 0,
   };
 
-  // const leftAdBannerStyles = {
-  //   position: "fixed",
-  //   left: 0,
-  //   top: "50%",
-  //   transform: "translateY(-50%)",
-  //   width: "100px", // Adjust width as needed
-  //   height: "200px", // Adjust height as needed
-  //   backgroundColor: "#f0f0f0", // Example background color
-  //   zIndex: 1000, // Ensure it's above other content
-  // };
+  const blinkAnimation = keyframes`
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  `;
 
-  // const rightAdBannerStyles = {
-  //   position: "fixed",
-  //   right: 0,
-  //   top: "50%",
-  //   transform: "translateY(-50%)",
-  //   width: "100px", // Adjust width as needed
-  //   height: "200px", // Adjust height as needed
-  //   backgroundColor: "#f0f0f0", // Example background color
-  //   zIndex: 1000, // Ensure it's above other content
-  // };
+  const adBannerStyles = {
+    position: "fixed",
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: "15vw",
+    height: "100vh",
+    backgroundColor: "none",
+    zIndex: 2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    animation: `${blinkAnimation} 1.5s infinite`,
+  };
 
   return (
     <Stack sx={{ minHeight: "100vh", position: "relative" }}>
-      {/* <Box sx={leftAdBannerStyles}>Left Ad Banner</Box>
-      <Box sx={rightAdBannerStyles}>Right Ad Banner</Box> */}
+      {isFullScreen && (
+        <>
+          <Box sx={{ ...adBannerStyles, left: 0 }}>
+            <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
+              <img
+                src={Banner}
+                alt="Left Banner"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </a>
+          </Box>
+          <Box sx={{ ...adBannerStyles, right: 0 }}>
+            <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
+              <img
+                src={Banner}
+                alt="Right Banner"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </a>
+          </Box>
+        </>
+      )}
       <MainHeader />
       <Outlet />
       <Box sx={{ flexGrow: 1 }} />

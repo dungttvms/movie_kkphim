@@ -39,8 +39,6 @@ const useStyles = makeStyles({
     color: "#aaa",
   },
   button: {
-    marginRight: "10px",
-    marginLeft: "10px",
     width: "100%",
   },
   actorAvatar: {
@@ -65,7 +63,7 @@ const useStyles = makeStyles({
     marginTop: "10px",
   },
   episodeButton: {
-    marginRight: "10px",
+    // marginRight: "10px",
     marginBottom: "10px",
   },
   paginationContainer: {

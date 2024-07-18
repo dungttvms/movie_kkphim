@@ -34,6 +34,7 @@ const ChatBox = styled.div`
   right: 20px;
   cursor: pointer;
   animation: ${ChatBotAnim}1s infinite ease-in-out;
+  z-index: 1001;
 `;
 
 const ChatIconStyled = styled.div`
@@ -118,7 +119,7 @@ function CustomChatBot() {
     {
       id: "Step_1",
       message:
-        "Chào mừng bạn đã đến với Hausneo-Movie, rạp chiếu phim của ngôi nhà bạn",
+        "Chào mừng bạn đã đến với Hausneo-Movie, rạp chiếu phim trong ngôi nhà bạn",
       trigger: "Step_2",
     },
     {
