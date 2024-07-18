@@ -105,9 +105,10 @@ function MainFooter() {
         sx={{ my: 1 }}
       >
         {`Copyright © `}
-        <Link color="inherit" href="https://facebook.com/dungttvms">
-          Web phim miễn phí
-        </Link>{" "}
+        <Link href="https://kkphim.vip" underline="none" color="inherit">
+          Phim miễn phí
+        </Link>
+
         {new Date().getFullYear()}
         {"."}
       </Typography>
