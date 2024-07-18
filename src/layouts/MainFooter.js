@@ -106,9 +106,8 @@ function MainFooter() {
       >
         {`Copyright © `}
         <Link href="https://kkphim.vip" underline="none" color="inherit">
-          Phim miễn phí
-        </Link>
-
+          Phim miễn phí,
+        </Link>{" "}
         {new Date().getFullYear()}
         {"."}
       </Typography>
@@ -118,7 +117,7 @@ function MainFooter() {
         align="center"
         sx={{ my: 1 }}
       >
-        Website dùng với mục đích học tập
+        Website được sử dụng với mục đích học tập
       </Typography>
     </Container>
   );
