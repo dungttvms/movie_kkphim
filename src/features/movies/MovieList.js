@@ -18,7 +18,10 @@ function MovieList() {
   } = useSelector((state) => state.movie);
 
   useEffect(() => {
-    dispatch(getAllMovies({ page }));
+    const startPage = (page - 1) * 3 + 1;
+    const pagesToFetch = [startPage, startPage + 1, startPage + 2];
+
+    dispatch(getAllMovies({ pages: pagesToFetch }));
   }, [page, dispatch]);
 
   const handlePageChange = (event, value) => {
@@ -50,7 +53,7 @@ function MovieList() {
               CÓ {fNumber(totalMovies)} PHIM
             </Typography>
             <Pagination
-              count={Math.ceil(totalMovies / 20)}
+              count={Math.ceil(totalMovies / 30)}
               page={page}
               onChange={handlePageChange}
               shape="rounded"
@@ -77,7 +80,7 @@ function MovieList() {
           </Grid>
           <Box display="flex" justifyContent="center" mt={2}>
             <Pagination
-              count={Math.ceil(totalMovies / 20)}
+              count={Math.ceil(totalMovies / 30)}
               page={page}
               onChange={handlePageChange}
               shape="rounded"

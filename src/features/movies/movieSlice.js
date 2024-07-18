@@ -78,19 +78,23 @@ const slice = createSlice({
   },
 });
 
-export const getAllMovies = ({ page }) => async (dispatch) => {
+export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
   dispatch(slice.actions.startLoading());
   try {
-    const queryParams1 = new URLSearchParams({ page: page });
-    const queryParams2 = new URLSearchParams({ page: page + 1 });
+    const requests = pages.map((page) => {
+      const queryParams = new URLSearchParams({ page });
+      return apiService.get(
+        `danh-sach/phim-moi-cap-nhat?${queryParams.toString()}`
+      );
+    });
 
-    const [response1, response2] = await Promise.all([
-      apiService.get(`danh-sach/phim-moi-cap-nhat?${queryParams1.toString()}`),
-      apiService.get(`danh-sach/phim-moi-cap-nhat?${queryParams2.toString()}`),
-    ]);
+    const responses = await Promise.all(requests);
+    const combinedMovies = responses.reduce((acc, response) => {
+      return acc.concat(response.items);
+    }, []);
 
-    const combinedMovies = [...response1.items, ...response2.items];
-    const totalMovies = response1.pagination.totalItems;
+    const totalMovies = responses[0].pagination.totalItems; // Assuming totalItems is the same for all pages
+
     dispatch(
       slice.actions.getAllMoviesSuccess({ movies: combinedMovies, totalMovies })
     );
