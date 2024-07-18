@@ -2,9 +2,24 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import MainFooter from "./MainFooter";
-import { Box, Stack, useMediaQuery, useTheme, keyframes } from "@mui/material";
+import {
+  Box,
+  Stack,
+  useMediaQuery,
+  useTheme,
+  keyframes,
+  styled,
+} from "@mui/material";
 import Banner from "../images/banner.png";
 import { BANNER_URL } from "../app/config";
+
+const FixedHeader = styled("div")(({ theme }) => ({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  zIndex: theme.zIndex.appBar,
+}));
 
 function MainLayout() {
   const theme = useTheme();
@@ -52,6 +67,9 @@ function MainLayout() {
         backgroundColor: "primary.main",
       }}
     >
+      <FixedHeader>
+        <MainHeader />
+      </FixedHeader>
       {isFullScreen && (
         <>
           <Box sx={{ ...adBannerStyles, left: 0 }}>
@@ -74,7 +92,6 @@ function MainLayout() {
           </Box>
         </>
       )}
-      <MainHeader />
       <Outlet />
       <Box sx={{ flexGrow: 1 }} />
       <MainFooter sx={footerStyles} />

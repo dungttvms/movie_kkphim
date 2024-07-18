@@ -12,11 +12,14 @@ import {
   Avatar,
   Pagination,
   Container,
+  Stack,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleMovie } from "./movieSlice";
 import LoadingScreen from "../../components/LoadingScreen";
+import Logo from "../../components/Logo";
+import NotFoundPage from "../../pages/NotFoundPage";
 
 const useStyles = makeStyles({
   root: {
@@ -40,6 +43,7 @@ const useStyles = makeStyles({
   },
   button: {
     width: "100%",
+    color: "orange",
   },
   actorAvatar: {
     backgroundColor: "#555",
@@ -60,11 +64,12 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     maxHeight: "200px",
     overflowY: "auto",
-    marginTop: "10px",
+    margin: "10px",
   },
   episodeButton: {
     // marginRight: "10px",
     marginBottom: "10px",
+    color: "green",
   },
   paginationContainer: {
     display: "flex",
@@ -102,7 +107,12 @@ function SingleMovie() {
   }
 
   if (!singleMovieInfo) {
-    return <Typography>No movie data available</Typography>;
+    return (
+      <Stack minHeight="100vh" justifyContent="center" alignItems="center">
+        <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+        <NotFoundPage />
+      </Stack>
+    );
   }
 
   const handleEpisodeClick = (episode) => {
