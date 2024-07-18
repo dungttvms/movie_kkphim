@@ -5,7 +5,6 @@ import {
   Card,
   CardMedia,
   Container,
-  Link,
   Stack,
   Table,
   TableBody,
@@ -19,7 +18,7 @@ import {
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
-import { fDate } from "../../utils/formatTime";
+import { fToNow } from "../../utils/formatTime";
 import { IMAGE_URL } from "../../app/config";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fNumber } from "../../utils/numberFormat";
@@ -92,7 +91,7 @@ function SearchResults() {
           alignItems="center"
           justifyContent="space-around"
           p={1}
-          sx={{ backgroundColor: "background.paper", borderRadius: 2 }}
+          sx={{ backgroundColor: "#333333", borderRadius: 1 }}
         >
           <Typography
             variant="h5"
@@ -106,8 +105,8 @@ function SearchResults() {
             CÓ {fNumber(total)} PHIM CÓ TỪ KHÓA "{searchKeyword}" ĐƯỢC TÌM THẤY
           </Typography>
         </Box>
-        <Card sx={{ p: 3 }}>
-          <Box sx={{ overflowX: "auto" }}>
+        <Card sx={{ p: 3, backgroundColor: "#333333" }}>
+          <Box sx={{ overflowX: "auto", backgroundColor: "#333333" }}>
             <TableContainer sx={{ minWidth: 800 }}>
               <Table>
                 <TableHead>
@@ -117,6 +116,7 @@ function SearchResults() {
                         width: { xs: "70%", md: "25%" },
                         fontWeight: "bold",
                         textAlign: "center",
+                        color: "yellow",
                       }}
                     >
                       Tên phim
@@ -128,6 +128,7 @@ function SearchResults() {
                             width: { xs: "none", md: "10%" },
                             fontWeight: "bold",
                             textAlign: "center",
+                            color: "yellow",
                           }}
                         >
                           Tình trạng
@@ -137,6 +138,17 @@ function SearchResults() {
                             width: { xs: "none", md: "10%" },
                             fontWeight: "bold",
                             textAlign: "center",
+                            color: "yellow",
+                          }}
+                        >
+                          Thời lượng
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            width: { xs: "none", md: "10%" },
+                            fontWeight: "bold",
+                            textAlign: "center",
+                            color: "yellow",
                           }}
                         >
                           Chất lượng
@@ -146,6 +158,7 @@ function SearchResults() {
                             width: { xs: "none", md: "10%" },
                             fontWeight: "bold",
                             textAlign: "center",
+                            color: "yellow",
                           }}
                         >
                           Ngôn ngữ
@@ -155,6 +168,7 @@ function SearchResults() {
                             width: { xs: "none", md: "10%" },
                             fontWeight: "bold",
                             textAlign: "center",
+                            color: "yellow",
                           }}
                         >
                           Quốc gia
@@ -164,6 +178,7 @@ function SearchResults() {
                             width: { xs: "none", md: "10%" },
                             fontWeight: "bold",
                             textAlign: "center",
+                            color: "yellow",
                           }}
                         >
                           Ngày cập nhật
@@ -185,33 +200,40 @@ function SearchResults() {
                         <CardMedia
                           className={classes.media}
                           image={`${IMAGE_URL}${movie.poster_url}`}
-                          sx={{ width: 60, height: 60, marginRight: 2 }} // Adjust size and margin as needed
+                          sx={{ width: 60, height: 60, marginRight: 2 }}
                         />
-                        <Link
+                        <Typography
                           variant="subtitle2"
-                          sx={{ fontWeight: 600 }}
+                          sx={{
+                            fontWeight: 600,
+                            textDecoration: "none",
+                            color: "white",
+                          }}
                           component={RouterLink}
                           to={`/phim/${movie.slug}`}
                         >
                           {movie.name} - {movie.year}
-                        </Link>
+                        </Typography>
                       </TableCell>
                       {!isMobile && (
                         <>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ color: "white" }}>
                             {movie.episode_current || "N/A"}
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ color: "white" }}>
+                            {movie.time || "N/A"}
+                          </TableCell>
+                          <TableCell align="center" sx={{ color: "white" }}>
                             {movie.quality || "N/A"}
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ color: "white" }}>
                             {movie.lang || "N/A"}
                           </TableCell>
-                          <TableCell align="center">
+                          <TableCell align="center" sx={{ color: "white" }}>
                             {movie.country?.[0]?.name || "N/A"}
                           </TableCell>
-                          <TableCell align="center">
-                            {fDate(movie.modified?.time)}
+                          <TableCell align="center" sx={{ color: "white" }}>
+                            {fToNow(movie.modified?.time)}
                           </TableCell>
                         </>
                       )}

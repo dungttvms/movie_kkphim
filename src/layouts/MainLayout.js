@@ -45,7 +45,13 @@ function MainLayout() {
   };
 
   return (
-    <Stack sx={{ minHeight: "100vh", position: "relative" }}>
+    <Stack
+      sx={{
+        minHeight: "100vh",
+        position: "relative",
+        backgroundColor: "primary.main",
+      }}
+    >
       {isFullScreen && (
         <>
           <Box sx={{ ...adBannerStyles, left: 0 }}>

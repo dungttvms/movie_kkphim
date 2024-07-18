@@ -12,7 +12,7 @@ function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
     <form onSubmit={onSubmit}>
       <TextField
         value={searchQuery}
-        placeholder="Tìm phim..."
+        placeholder="Nhập tên phim cần tìm..."
         onChange={(event) => setSearchQuery(event.target.value)}
         sx={{
           width: "90%",
@@ -28,16 +28,15 @@ function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
               borderColor: "red", // border color when focused
             },
           },
+          "& .MuiInputBase-input": {
+            color: "white", // input text color
+          },
         }}
         size="small"
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                type="submit"
-                color="primary"
-                aria-label="Tìm phim..."
-              >
+              <IconButton type="submit" aria-label="Nhập tên phim cần tìm...">
                 <SearchIcon sx={{ color: "white" }} />
               </IconButton>
             </InputAdornment>

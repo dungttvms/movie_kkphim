@@ -2,24 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "./movieSlice";
 import MovieCard from "./MovieCard";
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography, Pagination } from "@mui/material";
 import LoadingScreen from "../../components/LoadingScreen";
-import Pagination from "../../components/Pagination";
 import { fNumber } from "../../utils/numberFormat";
 
 function MovieList() {
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
-  const { movies } = useSelector((state) => state.movie);
-  const totalMovies = useSelector((state) => state.movie.pagination);
-
-  const loading = useSelector((state) => state.movie.isLoading);
-  const error = useSelector((state) => state.movie.error);
+  const {
+    movies,
+    pagination: totalMovies,
+    isLoading: loading,
+    error,
+  } = useSelector((state) => state.movie);
 
   useEffect(() => {
     dispatch(getAllMovies({ page }));
   }, [page, dispatch]);
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
     <Container>
@@ -32,7 +36,7 @@ function MovieList() {
             alignItems="center"
             justifyContent="space-between"
             p={2}
-            sx={{ backgroundColor: "background.paper", borderRadius: 2 }}
+            sx={{ backgroundColor: "#333333", borderRadius: 1 }}
           >
             <Typography
               variant="h6"
@@ -45,10 +49,16 @@ function MovieList() {
             >
               CÓ {fNumber(totalMovies)} PHIM
             </Typography>
-            <Pagination page={page} setPage={setPage} />
+            <Pagination
+              count={Math.ceil(totalMovies / 20)}
+              page={page}
+              onChange={handlePageChange}
+              shape="rounded"
+              sx={{ color: "white" }}
+            />
           </Box>
           <Grid container spacing={2}>
-            {movies?.map((movie) => (
+            {movies.map((movie) => (
               <Grid
                 key={movie._id}
                 item
@@ -66,7 +76,12 @@ function MovieList() {
             ))}
           </Grid>
           <Box display="flex" justifyContent="center" mt={2}>
-            <Pagination page={page} setPage={setPage} />
+            <Pagination
+              count={Math.ceil(totalMovies / 20)}
+              page={page}
+              onChange={handlePageChange}
+              shape="rounded"
+            />
           </Box>
         </>
       )}

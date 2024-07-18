@@ -20,7 +20,7 @@ import LoadingScreen from "../../components/LoadingScreen";
 
 const useStyles = makeStyles({
   root: {
-    margin: "20px",
+    // margin: "20px",
     backgroundColor: "#333",
     color: "white",
   },
@@ -56,7 +56,7 @@ const useStyles = makeStyles({
   },
   episodesContainer: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     flexWrap: "wrap",
     maxHeight: "200px",
     overflowY: "auto",

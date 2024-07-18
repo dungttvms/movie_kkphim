@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { Helmet } from "react-helmet";
 import CellPhone from "../components/CellPhone";
 import CustomChatBot from "../components/ChatBot";
@@ -27,11 +27,6 @@ function HomePage() {
         <CellPhone />
         <CustomChatBot />
       </Box>
-      <Stack style={{ mt: 10 }}>
-        <Box sx={{ m: 3, padding: 3, borderRadius: "4px" }}>
-          <Box sx={{ marginTop: 3, marginBottom: 3 }}></Box>
-        </Box>
-      </Stack>
     </Container>
   );
 }
