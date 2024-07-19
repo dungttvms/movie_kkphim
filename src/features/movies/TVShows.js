@@ -118,7 +118,7 @@ function TVShows() {
               CÓ {fNumber(total)} CHƯƠNG TRÌNH GIẢI TRÍ
             </Typography>
           </Box>
-          <Card sx={{ p: 1, backgroundColor: "#333333" }}>
+          <Card sx={{ p: 1, backgroundColor: "#000000" }}>
             <Stack spacing={2}>
               <Stack spacing={2} direction="column" alignItems="center">
                 <TablePagination

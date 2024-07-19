@@ -10,7 +10,8 @@ import {
   keyframes,
   styled,
 } from "@mui/material";
-import Banner from "../images/banner.png";
+import Banner_Left from "../images/bannerLeft.png";
+import Banner_Right from "../images/bannerRight.png";
 import { BANNER_URL } from "../app/config";
 
 const FixedHeader = styled("div")(({ theme }) => ({
@@ -25,6 +26,8 @@ function MainLayout() {
   const theme = useTheme();
   const isFullScreen = useMediaQuery(theme.breakpoints.up("lg"));
 
+  const headerHeight = 64; // Adjust this value based on the actual height of your header
+
   const footerStyles = {
     flexShrink: 0,
     position: "fixed",
@@ -38,7 +41,7 @@ function MainLayout() {
       opacity: 1;
     }
     50% {
-      opacity: 0.5;
+      opacity: 0.8;
     }
     100% {
       opacity: 1;
@@ -70,30 +73,31 @@ function MainLayout() {
       <FixedHeader>
         <MainHeader />
       </FixedHeader>
-      {isFullScreen && (
-        <>
-          <Box sx={{ ...adBannerStyles, left: 0 }}>
-            <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
-              <img
-                src={Banner}
-                alt="Left Banner"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </a>
-          </Box>
-          <Box sx={{ ...adBannerStyles, right: 0 }}>
-            <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
-              <img
-                src={Banner}
-                alt="Right Banner"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-            </a>
-          </Box>
-        </>
-      )}
-      <Outlet />
-      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ pt: `${headerHeight}px`, flexGrow: 1 }}>
+        {isFullScreen && (
+          <>
+            <Box sx={{ ...adBannerStyles, left: 0 }}>
+              <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={Banner_Left}
+                  alt="Left Banner"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </a>
+            </Box>
+            <Box sx={{ ...adBannerStyles, right: 0 }}>
+              <a href={BANNER_URL} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={Banner_Right}
+                  alt="Right Banner"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </a>
+            </Box>
+          </>
+        )}
+        <Outlet />
+      </Box>
       <MainFooter sx={footerStyles} />
     </Stack>
   );
