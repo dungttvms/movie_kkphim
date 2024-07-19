@@ -5,7 +5,12 @@ import Logo from "../components/Logo";
 
 function BlankLayout() {
   return (
-    <Stack minHeight="100vh" justifyContent="center" alignItems="center">
+    <Stack
+      minHeight="100vh"
+      justifyContent="center"
+      alignItems="center"
+      sx={{ backgroundColor: "primary.lighter" }}
+    >
       <Logo sx={{ width: 300, height: 200, mb: 8 }} />
       <Outlet />
     </Stack>

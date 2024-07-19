@@ -27,10 +27,10 @@ const NotFoundPage = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography variant="h4" align="center">
+        <Typography variant="h4" align="center" color="#ffffff">
           Trang không tìm thấy (Error 404)
         </Typography>
-        <Typography align="center" marginBottom={3}>
+        <Typography align="center" marginBottom={3} color="#ffffff">
           Xin lỗi, phim bạn đang tìm kiếm không tồn tại
         </Typography>
         <Button variant="contained" component={NavLink} to="/">
