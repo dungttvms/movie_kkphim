@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -13,6 +13,10 @@ import XIcon from "@mui/icons-material/X";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getViewerCount } from "../features/movies/movieSlice";
+import { fNumber } from "../utils/numberFormat";
 
 const ICON_LINK = [
   {
@@ -70,6 +74,29 @@ const ICON_LINK = [
 ];
 
 function MainFooter() {
+  const dispatch = useDispatch();
+  const viewerCountFromRedux = useSelector(
+    (state) => state.movie?.totalViewers
+  );
+  const [viewerCount, setViewerCount] = useState(0);
+
+  useEffect(() => {
+    // Clear local storage before fetching the updated count
+    localStorage.removeItem("viewerCount");
+
+    // Fetch the updated viewer count from the backend
+    dispatch(getViewerCount());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (viewerCountFromRedux !== null && viewerCountFromRedux !== undefined) {
+      setViewerCount(viewerCountFromRedux);
+
+      // Update local storage with the new count
+      localStorage.setItem("viewerCount", viewerCountFromRedux.toString());
+    }
+  }, [viewerCountFromRedux]);
+
   return (
     <Container maxWidth="lg" sx={{ pt: 3 }}>
       <Grid container justifyContent="center">
@@ -117,7 +144,7 @@ function MainFooter() {
         align="center"
         sx={{ my: 1 }}
       >
-        Website được sử dụng với mục đích học tập
+        Đã có {fNumber(viewerCount)} lượt truy cập
       </Typography>
     </Container>
   );

@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/SearchInput";
-import { getSearchMovie } from "../features/movies/movieSlice";
+import { getSearchMovie, getViewerCount } from "../features/movies/movieSlice";
 import Logo from "../components/Logo";
 
 function MainHeader() {
@@ -26,13 +26,19 @@ function MainHeader() {
 
   const pages = useMemo(
     () => [
-      { title: "TRANG CHỦ", action: () => navigate("/") },
+      {
+        title: "TRANG CHỦ",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/");
+        },
+      },
       { title: "PHIM LẺ", action: () => navigate("/phim-le") },
       { title: "PHIM BỘ", action: () => navigate("/phim-bo") },
       { title: "PHIM HOẠT HÌNH", action: () => navigate("/hoat-hinh") },
       { title: "TV SHOWS", action: () => navigate("/tv-shows") },
     ],
-    [navigate]
+    [navigate, dispatch]
   );
 
   const [anchorElNav, setAnchorElNav] = useState(null);

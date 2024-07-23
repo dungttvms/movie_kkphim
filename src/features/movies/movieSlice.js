@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import apiService from "../../app/apiService";
+import apiService2 from "../../app/apiService2";
 
 const initialState = {
   isLoading: false,
@@ -8,6 +9,7 @@ const initialState = {
   movies: [],
   singleMovie: "",
   pagination: "",
+  totalViewers: "",
 };
 
 const slice = createSlice({
@@ -74,6 +76,11 @@ const slice = createSlice({
       state.movies = movies;
       const totalMovies = action.payload.totalMovies;
       state.pagination = totalMovies;
+    },
+    getViewerCountSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.totalViewers = action.payload;
     },
   },
 });
@@ -198,6 +205,17 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getSearchMovieSuccess({ movies, totalMovies }));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
+export const getViewerCount = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService2.get(`/viewerCounts`);
+    dispatch(slice.actions.getViewerCountSuccess(response.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
