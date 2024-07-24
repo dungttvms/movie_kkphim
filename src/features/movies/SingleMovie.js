@@ -157,7 +157,9 @@ function SingleMovie() {
 
   useEffect(() => {
     if (singleMovieInfo) {
-      setShareUrl(`${window.location.origin}/phim/${singleMovieInfo.slug}`);
+      const generatedShareUrl = `${window.location.origin}/phim/${singleMovieInfo.slug}`;
+      setShareUrl(generatedShareUrl);
+      console.log("Share URL:", generatedShareUrl);
     }
   }, [singleMovieInfo]);
 
@@ -186,6 +188,7 @@ function SingleMovie() {
   };
   const shareLinkedIn = () => {
     const linkedInShareUrl = `${LINKEDIN_URL}${encodeURIComponent(shareUrl)}`;
+    console.log(linkedInShareUrl);
     window.open(linkedInShareUrl, "_blank");
   };
 
