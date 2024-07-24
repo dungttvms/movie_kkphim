@@ -23,9 +23,13 @@ const useStyles = makeStyles({
     "&:hover $playIcon": {
       opacity: 1,
     },
+    "&:hover $media": {
+      filter: "blur(2px)",
+    },
   },
   media: {
     height: 250,
+    transition: "filter 0.3s",
   },
   content: {
     backgroundColor: "#333",
@@ -81,7 +85,8 @@ function MovieCard({ movie }) {
           className={classes.media}
           image={movie.poster_url}
           title={movie.origin_name}
-          alt={movie.origin_name} // Added alt attribute
+          alt={movie.origin_name}
+          e
         />
         <Box className={classes.qualityTag}>{movie.year}</Box>
         <CardContent className={classes.content}>

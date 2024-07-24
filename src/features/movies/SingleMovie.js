@@ -21,8 +21,14 @@ import { getSingleMovie } from "./movieSlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import Logo from "../../components/Logo";
 import NotFoundPage from "../../pages/NotFoundPage";
-import { FACEBOOK_URL, TELEGRAM_URL, X_URL } from "../../app/config";
+import {
+  FACEBOOK_URL,
+  LINKEDIN_URL,
+  TELEGRAM_URL,
+  X_URL,
+} from "../../app/config";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
 import TelegramIcon from "@mui/icons-material/Telegram";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -37,8 +43,8 @@ const useStyles = makeStyles({
     height: 500,
   },
   content: {
-    backgroundColor: "#333",
-    color: "white",
+    backgroundColor: "#333333",
+    color: "#ffffff",
   },
   title: {
     fontWeight: "bold",
@@ -90,16 +96,41 @@ const useStyles = makeStyles({
     },
   },
   facebookIcon: {
-    color: "#1877F2 !important",
+    color: "#3B5998!important",
+  },
+  linkedInIcon: {
+    color: "#0077B5 !important",
   },
   XIcon: {
-    color: "#ffffff !important",
+    color: "#F5F8FA !important",
   },
   telegramIcon: {
     color: "#24A1DE !important",
   },
   copyIcon: {
     color: "#ffffff !important",
+  },
+  backgroundBox: {
+    position: "relative",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    minHeight: "100vh",
+    width: "100%",
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.55)", // overlay color with 45% opacity
+      zIndex: 1,
+    },
+  },
+  contentContainer: {
+    position: "relative",
+    zIndex: 2,
   },
 });
 
@@ -153,6 +184,10 @@ function SingleMovie() {
     const facebookShareUrl = `${FACEBOOK_URL}${encodeURIComponent(shareUrl)}`;
     window.open(facebookShareUrl, "_blank");
   };
+  const shareLinkedIn = () => {
+    const linkedInShareUrl = `${LINKEDIN_URL}${encodeURIComponent(shareUrl)}`;
+    window.open(linkedInShareUrl, "_blank");
+  };
 
   const shareTelegram = () => {
     const telegramShareUrl = `${TELEGRAM_URL}${encodeURIComponent(shareUrl)}`;
@@ -189,203 +224,217 @@ function SingleMovie() {
   const totalPages = Math.ceil(singleMoviePlayer.length / itemsPerPage);
 
   return (
-    <Container>
-      <Helmet>
-        <title>{singleMovieInfo.name} | HAUSNEO MOVIE</title>
-        <meta property="og:title" content={singleMovieInfo.name} />
-        <meta property="og:description" content={singleMovieInfo.content} />
-        <meta property="og:image" content={singleMovieInfo.thumb_url} />
-        <meta property="og:url" content={shareUrl} />
-        <meta property="og:type" content="website" />
-      </Helmet>
-      <Card className={classes.root}>
-        <CardContent className={classes.content}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4}>
-              <CardMedia
-                className={classes.media}
-                image={singleMovieInfo.thumb_url}
-                title={singleMovieInfo.origin_name}
-              />
-              <Box p={2} alignItems="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  href={singleMovieInfo.trailer_url}
-                  target="_blank"
-                  className={classes.button}
-                >
-                  Trailer
-                </Button>
-                <Box className={classes.episodesContainer}>
-                  {currentEpisodes.map((episode, index) =>
-                    episode.server_data.map((data, dataIndex) => (
-                      <Button
-                        key={`${index}-${dataIndex}`}
-                        variant="contained"
-                        color="secondary"
-                        className={classes.episodeButton}
-                        onClick={() => handleEpisodeClick(data)}
-                      >
-                        {data.name}
-                      </Button>
-                    ))
-                  )}
-                </Box>
-                <Box className={classes.paginationContainer}>
-                  <Pagination
-                    count={totalPages}
-                    page={currentPage}
-                    onChange={handlePageChange}
+    <Box
+      className={classes.backgroundBox}
+      style={{ backgroundImage: `url(${singleMovieInfo.poster_url})` }}
+    >
+      <Container className={classes.contentContainer}>
+        <Helmet>
+          <title>{singleMovieInfo.name} | HAUSNEO MOVIE</title>
+          <meta property="og:title" content={singleMovieInfo.name} />
+          <meta property="og:description" content={singleMovieInfo.content} />
+          <meta property="og:image" content={singleMovieInfo.thumb_url} />
+          <meta property="og:url" content={shareUrl} />
+          <meta property="og:type" content="website" />
+        </Helmet>
+        <Card className={classes.root}>
+          <CardContent className={classes.content}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <CardMedia
+                  className={classes.media}
+                  image={singleMovieInfo.thumb_url}
+                  title={singleMovieInfo.origin_name}
+                />
+                <Box p={2} alignItems="center">
+                  <Button
+                    variant="contained"
                     color="primary"
-                  />
+                    href={singleMovieInfo.trailer_url}
+                    target="_blank"
+                    className={classes.button}
+                  >
+                    Trailer
+                  </Button>
+                  <Box className={classes.episodesContainer}>
+                    {currentEpisodes.map((episode, index) =>
+                      episode.server_data.map((data, dataIndex) => (
+                        <Button
+                          key={`${index}-${dataIndex}`}
+                          variant="contained"
+                          color="secondary"
+                          className={classes.episodeButton}
+                          onClick={() => handleEpisodeClick(data)}
+                        >
+                          {data.name}
+                        </Button>
+                      ))
+                    )}
+                  </Box>
+                  <Box className={classes.paginationContainer}>
+                    <Pagination
+                      count={totalPages}
+                      page={currentPage}
+                      onChange={handlePageChange}
+                      color="primary"
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={12} md={8}>
-              <Typography
-                variant="h4"
-                className={classes.title}
-                sx={{ pl: 2, pt: 2 }}
-              >
-                {singleMovieInfo.name}
-              </Typography>
+              </Grid>
+              <Grid item xs={12} md={8}>
+                <Typography
+                  variant="h4"
+                  className={classes.title}
+                  sx={{ pl: 2, pt: 2 }}
+                >
+                  {singleMovieInfo.name}
+                </Typography>
 
-              <Typography
-                variant="h6"
-                className={classes.subtitle}
-                sx={{ pl: 2, pt: 1 }}
-              >
-                {singleMovieInfo.origin_name} ({singleMovieInfo.year})
-              </Typography>
-              <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
-                <IconButton
-                  aria-label="share on Facebook"
-                  onClick={shareFacebook}
-                  className={`${classes.iconButton} ${classes.facebookIcon}`}
+                <Typography
+                  variant="h6"
+                  className={classes.subtitle}
+                  sx={{ pl: 2, pt: 1 }}
                 >
-                  <FacebookIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="share on X"
-                  onClick={shareX}
-                  className={`${classes.iconButton} ${classes.XIcon}`}
+                  {singleMovieInfo.origin_name} ({singleMovieInfo.year})
+                </Typography>
+                <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
+                  <IconButton
+                    aria-label="share on Facebook"
+                    onClick={shareFacebook}
+                    className={`${classes.iconButton} ${classes.facebookIcon}`}
+                  >
+                    <FacebookIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="share on LinkedIn"
+                    onClick={shareLinkedIn}
+                    className={`${classes.iconButton} ${classes.linkedInIcon}`}
+                  >
+                    <LinkedInIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="share on X"
+                    onClick={shareX}
+                    className={`${classes.iconButton} ${classes.XIcon}`}
+                  >
+                    <XIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="share on Telegram"
+                    onClick={shareTelegram}
+                    className={`${classes.iconButton} ${classes.telegramIcon}`}
+                  >
+                    <TelegramIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="copy link"
+                    onClick={copyToClipboard}
+                    className={`${classes.iconButton} ${classes.copyIcon}`}
+                  >
+                    <ContentCopyIcon />
+                  </IconButton>
+                </Box>
+                <Box my={2}>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Trạng thái:</strong>{" "}
+                    {singleMovieInfo.episode_current}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Đạo diễn:</strong> {singleMovieInfo.director}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Quốc gia:</strong> {singleMovieInfo.country[0].name}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Năm sản xuất:</strong> {singleMovieInfo.year}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Tổng số tập:</strong>{" "}
+                    {singleMovieInfo.episode_total}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Thời lượng:</strong> {singleMovieInfo.time}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Chất lượng:</strong> {singleMovieInfo.quality}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Ngôn ngữ:</strong> {singleMovieInfo.lang}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Thể loại:</strong>{" "}
+                    {singleMovieInfo.type === "series"
+                      ? "Phim bộ"
+                      : singleMovieInfo.type === "single"
+                      ? "Phim lẻ"
+                      : singleMovieInfo.type === "hoathinh"
+                      ? "Phim hoạt hình"
+                      : "Chương trình giải trí"}
+                  </Typography>
+                  <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
+                    <strong>Lượt xem:</strong> {singleMovieInfo.view}
+                  </Typography>
+                </Box>
+                <Typography
+                  variant="h6"
+                  className={classes.title}
+                  sx={{ pl: 2, pt: 1 }}
                 >
-                  <XIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="share on Telegram"
-                  onClick={shareTelegram}
-                  className={`${classes.iconButton} ${classes.telegramIcon}`}
+                  Diễn viên
+                </Typography>
+                <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
+                  {singleMovieInfo.actor.map((actor) => (
+                    <Chip
+                      key={actor}
+                      avatar={
+                        <Avatar className={classes.actorAvatar}>
+                          {actor.charAt(0)}
+                        </Avatar>
+                      }
+                      label={actor}
+                      className={classes.keyword}
+                      sx={{ color: "white" }}
+                    />
+                  ))}
+                </Box>
+                <Typography
+                  variant="h5"
+                  className={classes.title}
+                  sx={{ pl: 2, pt: 1 }}
                 >
-                  <TelegramIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="copy link"
-                  onClick={copyToClipboard}
-                  className={`${classes.iconButton} ${classes.copyIcon}`}
+                  Nội dung phim
+                </Typography>
+                <Typography variant="body1" paragraph sx={{ pl: 2, pt: 1 }}>
+                  {singleMovieInfo.content}
+                </Typography>
+                <Typography
+                  variant="h5"
+                  className={classes.title}
+                  sx={{ pl: 2, pt: 1 }}
                 >
-                  <ContentCopyIcon />
-                </IconButton>
-              </Box>
-              <Box my={2}>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Trạng thái:</strong> {singleMovieInfo.episode_current}
+                  Từ khóa
                 </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Đạo diễn:</strong> {singleMovieInfo.director}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Quốc gia:</strong> {singleMovieInfo.country[0].name}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Năm sản xuất:</strong> {singleMovieInfo.year}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Tổng số tập:</strong> {singleMovieInfo.episode_total}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Thời lượng:</strong> {singleMovieInfo.time}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Chất lượng:</strong> {singleMovieInfo.quality}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Ngôn ngữ:</strong> {singleMovieInfo.lang}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Thể loại:</strong>{" "}
-                  {singleMovieInfo.type === "series"
-                    ? "Phim bộ"
-                    : singleMovieInfo.type === "single"
-                    ? "Phim lẻ"
-                    : singleMovieInfo.type === "hoathinh"
-                    ? "Phim hoạt hình"
-                    : "Chương trình giải trí"}
-                </Typography>
-                <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  <strong>Lượt xem:</strong> {singleMovieInfo.view}
-                </Typography>
-              </Box>
-              <Typography
-                variant="h6"
-                className={classes.title}
-                sx={{ pl: 2, pt: 1 }}
-              >
-                Diễn viên
-              </Typography>
-              <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
-                {singleMovieInfo.actor.map((actor) => (
-                  <Chip
-                    key={actor}
-                    avatar={
-                      <Avatar className={classes.actorAvatar}>
-                        {actor.charAt(0)}
-                      </Avatar>
-                    }
-                    label={actor}
-                    className={classes.keyword}
-                    sx={{ color: "white" }}
-                  />
-                ))}
-              </Box>
-              <Typography
-                variant="h5"
-                className={classes.title}
-                sx={{ pl: 2, pt: 1 }}
-              >
-                Nội dung phim
-              </Typography>
-              <Typography variant="body1" paragraph sx={{ pl: 2, pt: 1 }}>
-                {singleMovieInfo.content}
-              </Typography>
-              <Typography
-                variant="h5"
-                className={classes.title}
-                sx={{ pl: 2, pt: 1 }}
-              >
-                Từ khóa
-              </Typography>
-              <Box display="flex" flexWrap="wrap" className={classes.keyword}>
-                {[
-                  singleMovieInfo.name,
-                  ...singleMovieInfo.country.map((country) => country.name),
-                  singleMovieInfo.lang,
-                  singleMovieInfo.year,
-                  ...singleMovieInfo.category.map((cat) => cat.name),
-                ].map((keyword, index) => (
-                  <Chip
-                    key={index}
-                    label={keyword}
-                    className={classes.keyword}
-                  />
-                ))}
-              </Box>
+                <Box display="flex" flexWrap="wrap" className={classes.keyword}>
+                  {[
+                    singleMovieInfo.name,
+                    ...singleMovieInfo.country.map((country) => country.name),
+                    singleMovieInfo.lang,
+                    singleMovieInfo.year,
+                    ...singleMovieInfo.category.map((cat) => cat.name),
+                  ].map((keyword, index) => (
+                    <Chip
+                      key={index}
+                      label={keyword}
+                      className={classes.keyword}
+                    />
+                  ))}
+                </Box>
+              </Grid>
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-    </Container>
+          </CardContent>
+        </Card>
+      </Container>
+    </Box>
   );
 }
 
