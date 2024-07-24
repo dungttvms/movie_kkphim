@@ -191,7 +191,12 @@ function SingleMovie() {
   return (
     <Container>
       <Helmet>
-        <title>Xem phim | HAUSNEO MOVIE</title>
+        <title>{singleMovieInfo.name} | HAUSNEO MOVIE</title>
+        <meta property="og:title" content={singleMovieInfo.name} />
+        <meta property="og:description" content={singleMovieInfo.content} />
+        <meta property="og:image" content={singleMovieInfo.thumb_url} />
+        <meta property="og:url" content={shareUrl} />
+        <meta property="og:type" content="website" />
       </Helmet>
       <Card className={classes.root}>
         <CardContent className={classes.content}>
