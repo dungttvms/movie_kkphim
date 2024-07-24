@@ -27,7 +27,7 @@ const ICON_LINK = [
         target="_blank"
         rel="noopener noreferrer"
       >
-        <XIcon sx={{ color: "#ffffff", width: "40px", height: "40px" }} />
+        <XIcon sx={{ color: "#ffffff ", width: "40px", height: "40px" }} />
       </Link>
     ),
   },

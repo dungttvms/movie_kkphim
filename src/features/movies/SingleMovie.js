@@ -69,6 +69,7 @@ const useStyles = makeStyles({
     flexDirection: "row",
     flexWrap: "wrap",
     maxHeight: "200px",
+
     overflowY: "auto",
     margin: "10px",
   },
@@ -85,14 +86,14 @@ const useStyles = makeStyles({
     fontSize: "24px",
     margin: "0 8px",
     "&:hover": {
-      opacity: 0.8,
+      opacity: 1,
     },
   },
   facebookIcon: {
     color: "#1877F2 !important",
   },
   XIcon: {
-    color: "#000000 !important",
+    color: "#ffffff !important",
   },
   telegramIcon: {
     color: "#24A1DE !important",
