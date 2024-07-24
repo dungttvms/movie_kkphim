@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import apiService from "../../app/apiService";
-import apiService2 from "../../app/apiService2";
+import { apiService1, apiService2 } from "../../app/apiService";
 
 const initialState = {
   isLoading: false,
@@ -90,7 +89,7 @@ export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
   try {
     const requests = pages.map((page) => {
       const queryParams = new URLSearchParams({ page });
-      return apiService.get(
+      return apiService1.get(
         `danh-sach/phim-moi-cap-nhat?${queryParams.toString()}`
       );
     });
@@ -118,7 +117,7 @@ export const getPhimLe = ({ page, limit }) => async (dispatch) => {
       page: page,
       limit: limit,
     });
-    const response = await apiService.get(
+    const response = await apiService1.get(
       `v1/api/danh-sach/phim-le?${queryParams.toString()}`
     );
     const movies = response.data.items;
@@ -137,7 +136,7 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
       page: page,
       limit: limit,
     });
-    const response = await apiService.get(
+    const response = await apiService1.get(
       `v1/api/danh-sach/phim-bo?${queryParams.toString()}`
     );
     const movies = response.data.items;
@@ -156,7 +155,7 @@ export const getPhimHoatHinh = ({ page, limit }) => async (dispatch) => {
       page: page,
       limit: limit,
     });
-    const response = await apiService.get(
+    const response = await apiService1.get(
       `v1/api/danh-sach/hoat-hinh?${queryParams.toString()}`
     );
     const movies = response.data.items;
@@ -175,7 +174,7 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
       page: page,
       limit: limit,
     });
-    const response = await apiService.get(
+    const response = await apiService1.get(
       `v1/api/danh-sach/tv-shows?${queryParams.toString()}`
     );
     const movies = response.data.items;
@@ -190,7 +189,7 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
 export const getSingleMovie = ({ slug }) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.get(`phim/${slug}`);
+    const response = await apiService1.get(`phim/${slug}`);
     dispatch(slice.actions.getSingleMovieSuccess(response));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
@@ -201,7 +200,9 @@ export const getSingleMovie = ({ slug }) => async (dispatch) => {
 export const getSearchMovie = ({ keyword }) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
-    const response = await apiService.get(`v1/api/tim-kiem?keyword=${keyword}`);
+    const response = await apiService1.get(
+      `v1/api/tim-kiem?keyword=${keyword}`
+    );
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getSearchMovieSuccess({ movies, totalMovies }));
@@ -215,6 +216,7 @@ export const getViewerCount = () => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService2.get(`/viewerCounts`);
+
     dispatch(slice.actions.getViewerCountSuccess(response.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));

@@ -1,31 +1,38 @@
 import axios from "axios";
-import { BASE_URL } from "./config";
+import { BASE_URL, BASE_URL_2 } from "./config";
 
-const apiService = axios.create({
-  baseURL: BASE_URL,
-});
+const createApiService = (baseURL) => {
+  const apiService = axios.create({
+    baseURL,
+  });
 
-apiService.interceptors.request.use(
-  (request) => {
-    // console.log("Start request", request);
-    return request;
-  },
-  function(error) {
-    console.log("REQUEST ERROR", { error });
-    return Promise.reject(error);
-  }
-);
+  apiService.interceptors.request.use(
+    (request) => {
+      // console.log("Start request", request);
+      return request;
+    },
+    (error) => {
+      console.log("REQUEST ERROR", { error });
+      return Promise.reject(error);
+    }
+  );
 
-apiService.interceptors.response.use(
-  (response) => {
-    // console.log("Response", response);
-    return response.data;
-  },
-  function(error) {
-    // console.log("RESPONSE ERROR", { error });
-    const message = error.response?.data?.error?.message || "Unknown Error";
-    return Promise.reject(message);
-  }
-);
+  apiService.interceptors.response.use(
+    (response) => {
+      // console.log("Response", response);
+      return response.data;
+    },
+    (error) => {
+      // console.log("RESPONSE ERROR", { error });
+      const message = error.response?.data?.error?.message || "Unknown Error";
+      return Promise.reject(message);
+    }
+  );
 
-export default apiService;
+  return apiService;
+};
+
+const apiService1 = createApiService(BASE_URL);
+const apiService2 = createApiService(BASE_URL_2);
+
+export { apiService1, apiService2 };

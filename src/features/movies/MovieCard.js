@@ -81,6 +81,7 @@ function MovieCard({ movie }) {
           className={classes.media}
           image={movie.poster_url}
           title={movie.origin_name}
+          alt={movie.origin_name} // Added alt attribute
         />
         <Box className={classes.qualityTag}>{movie.year}</Box>
         <CardContent className={classes.content}>

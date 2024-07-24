@@ -13,6 +13,7 @@ import {
   Pagination,
   Container,
   Stack,
+  IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,10 +21,15 @@ import { getSingleMovie } from "./movieSlice";
 import LoadingScreen from "../../components/LoadingScreen";
 import Logo from "../../components/Logo";
 import NotFoundPage from "../../pages/NotFoundPage";
+import { FACEBOOK_URL, TELEGRAM_URL, X_URL } from "../../app/config";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import XIcon from "@mui/icons-material/X";
+import TelegramIcon from "@mui/icons-material/Telegram";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles({
   root: {
-    // margin: "20px",
     backgroundColor: "#333",
     color: "white",
   },
@@ -67,7 +73,6 @@ const useStyles = makeStyles({
     margin: "10px",
   },
   episodeButton: {
-    // marginRight: "10px",
     marginBottom: "10px",
     color: "green",
   },
@@ -75,6 +80,25 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     marginTop: "20px",
+  },
+  iconButton: {
+    fontSize: "24px",
+    margin: "0 8px",
+    "&:hover": {
+      opacity: 0.8,
+    },
+  },
+  facebookIcon: {
+    color: "#1877F2 !important",
+  },
+  XIcon: {
+    color: "#000000 !important",
+  },
+  telegramIcon: {
+    color: "#24A1DE !important",
+  },
+  copyIcon: {
+    color: "#ffffff !important",
   },
 });
 
@@ -88,6 +112,32 @@ function SingleMovie() {
   );
   const isLoading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
+  const shareUrl = `${window.location.origin}/phim/${singleMovieInfo?.slug}`;
+
+  const shareFacebook = () => {
+    const facebookShareUrl = `${FACEBOOK_URL}${encodeURIComponent(shareUrl)}`;
+    window.open(facebookShareUrl, "_blank");
+  };
+  const shareTelegram = () => {
+    const telegramShareUrl = `${TELEGRAM_URL}${encodeURIComponent(shareUrl)}`;
+    window.open(telegramShareUrl, "_blank");
+  };
+
+  const shareX = () => {
+    const XShareUrl = `${X_URL}${encodeURIComponent(shareUrl)}`;
+    window.open(XShareUrl, "_blank");
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl).then(
+      () => {
+        console.log("Copied to clipboard successfully!");
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
@@ -130,6 +180,9 @@ function SingleMovie() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Xem phim | HAUSNEO MOVIE</title>
+      </Helmet>
       <Card className={classes.root}>
         <CardContent className={classes.content}>
           <Grid container spacing={2}>
@@ -190,6 +243,36 @@ function SingleMovie() {
               >
                 {singleMovieInfo.origin_name} ({singleMovieInfo.year})
               </Typography>
+              <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
+                <IconButton
+                  aria-label="share on Facebook"
+                  onClick={shareFacebook}
+                  className={`${classes.iconButton} ${classes.facebookIcon}`}
+                >
+                  <FacebookIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="share on X"
+                  onClick={shareX}
+                  className={`${classes.iconButton} ${classes.XIcon}`}
+                >
+                  <XIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="share on Telegram"
+                  onClick={shareTelegram}
+                  className={`${classes.iconButton} ${classes.telegramIcon}`}
+                >
+                  <TelegramIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="copy link"
+                  onClick={copyToClipboard}
+                  className={`${classes.iconButton} ${classes.copyIcon}`}
+                >
+                  <ContentCopyIcon />
+                </IconButton>
+              </Box>
               <Box my={2}>
                 <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   <strong>Trạng thái:</strong> {singleMovieInfo.episode_current}
@@ -236,7 +319,7 @@ function SingleMovie() {
               >
                 Diễn viên
               </Typography>
-              <Box display="flex" flexWrap="wrap" my={2} sx={{ pl: 2, pt: 1 }}>
+              <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
                 {singleMovieInfo.actor.map((actor) => (
                   <Chip
                     key={actor}

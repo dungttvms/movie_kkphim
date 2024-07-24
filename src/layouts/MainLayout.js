@@ -41,7 +41,7 @@ function MainLayout() {
       opacity: 1;
     }
     50% {
-      opacity: 0.8;
+      opacity: 0.68;
     }
     100% {
       opacity: 1;

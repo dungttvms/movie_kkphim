@@ -7,7 +7,7 @@ import ChatBot from "react-simple-chatbot";
 import CloseIcon from "@mui/icons-material/Close";
 import SupportAgentIcon from "../images/customer-service_870175.png";
 import styled, { keyframes } from "styled-components";
-import apiService from "../app/apiService";
+import { apiService1 } from "../app/apiService";
 import { getSearchMovie } from "../features/movies/movieSlice";
 
 const ChatContainer = styled.div`
@@ -96,7 +96,7 @@ function CustomChatBot() {
     };
 
     try {
-      await apiService.post("/chatBots", data);
+      await apiService1.post("/chatBots", data);
       toast.success("Cảm ơn bạn ");
     } catch (error) {
       toast.error(error.message);
