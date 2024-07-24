@@ -112,12 +112,47 @@ function SingleMovie() {
   );
   const isLoading = useSelector((state) => state.movie.isLoading);
   const error = useSelector((state) => state.movie.error);
-  const shareUrl = `${window.location.origin}/phim/${singleMovieInfo?.slug}`;
+
+  const [shareUrl, setShareUrl] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50;
+
+  useEffect(() => {
+    if (slug) {
+      dispatch(getSingleMovie({ slug }));
+    }
+  }, [slug, dispatch]);
+
+  useEffect(() => {
+    if (singleMovieInfo) {
+      setShareUrl(`${window.location.origin}/phim/${singleMovieInfo.slug}`);
+    }
+  }, [singleMovieInfo]);
+
+  useEffect(() => {
+    if (error) {
+      console.error("Error fetching single movie:", error);
+    }
+  }, [error]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!singleMovieInfo) {
+    return (
+      <Stack minHeight="100vh" justifyContent="center" alignItems="center">
+        <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+        <NotFoundPage />
+      </Stack>
+    );
+  }
 
   const shareFacebook = () => {
     const facebookShareUrl = `${FACEBOOK_URL}${encodeURIComponent(shareUrl)}`;
     window.open(facebookShareUrl, "_blank");
   };
+
   const shareTelegram = () => {
     const telegramShareUrl = `${TELEGRAM_URL}${encodeURIComponent(shareUrl)}`;
     window.open(telegramShareUrl, "_blank");
@@ -138,32 +173,6 @@ function SingleMovie() {
       }
     );
   };
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 50;
-
-  useEffect(() => {
-    dispatch(getSingleMovie({ slug }));
-  }, [slug, dispatch]);
-
-  useEffect(() => {
-    if (error) {
-      console.error("Error fetching single movie:", error);
-    }
-  }, [error]);
-
-  if (isLoading) {
-    return <LoadingScreen />;
-  }
-
-  if (!singleMovieInfo) {
-    return (
-      <Stack minHeight="100vh" justifyContent="center" alignItems="center">
-        <Logo sx={{ width: 300, height: 200, mb: 8 }} />
-        <NotFoundPage />
-      </Stack>
-    );
-  }
 
   const handleEpisodeClick = (episode) => {
     window.open(episode.link_embed, "_blank");
