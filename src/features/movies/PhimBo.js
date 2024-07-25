@@ -95,7 +95,7 @@ function PhimBo() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim Bộ | PHIM GIA LAI</title>
+        <title>Phim Bộ | Phim Gia Lai</title>
       </Helmet>
       {movies.length > 0 ? (
         <>
@@ -239,57 +239,61 @@ function PhimBo() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {movies.map((movie) => (
-                      <TableRow key={movie._id} hover>
-                        <TableCell
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <CardMedia
-                            className={classes.media}
-                            image={`${IMAGE_URL}${movie.poster_url}`}
-                            sx={{ width: 60, height: 60, marginRight: 2 }}
-                          />
-                          <Typography
-                            variant="subtitle2"
+                    {movies.map((movie) => {
+                      const imageUrl = `${IMAGE_URL}${movie.poster_url}`;
+                      console.log("Movie Image URL:", imageUrl);
+                      return (
+                        <TableRow key={movie._id} hover>
+                          <TableCell
                             sx={{
-                              fontWeight: 600,
-                              textDecoration: "none",
-                              color: "white",
+                              display: "flex",
+                              alignItems: "center",
+                              cursor: "pointer",
                             }}
-                            component={RouterLink}
-                            to={`/phim/${movie.slug}`}
                           >
-                            {movie.name} - {movie.year}
-                          </Typography>
-                        </TableCell>
-                        {!isMobile && (
-                          <>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.episode_current || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.time || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.quality || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.lang || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.country?.[0]?.name || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {fToNow(movie.modified?.time)}
-                            </TableCell>
-                          </>
-                        )}
-                      </TableRow>
-                    ))}
+                            <CardMedia
+                              className={classes.media}
+                              image={imageUrl}
+                              sx={{ width: 60, height: 60, marginRight: 2 }}
+                            />
+                            <Typography
+                              variant="subtitle2"
+                              sx={{
+                                fontWeight: 600,
+                                textDecoration: "none",
+                                color: "white",
+                              }}
+                              component={RouterLink}
+                              to={`/phim/${movie.slug}`}
+                            >
+                              {movie.name} - {movie.year}
+                            </Typography>
+                          </TableCell>
+                          {!isMobile && (
+                            <>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.episode_current || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.time || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.quality || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.lang || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.country?.[0]?.name || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {fToNow(movie.modified?.time)}
+                              </TableCell>
+                            </>
+                          )}
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </TableContainer>

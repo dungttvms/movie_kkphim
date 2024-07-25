@@ -83,7 +83,7 @@ function SearchResults() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Tìm kiếm | PHIM GIA LAI</title>
+        <title>Tìm kiếm | Phim Gia Lai</title>
       </Helmet>
       <>
         <Box

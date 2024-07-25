@@ -95,7 +95,23 @@ function PhimLe() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim Lẻ | PHIM GIA LAI</title>
+        <title>Phim Lẻ | Phim Gia Lai</title>
+        <meta
+          name="description"
+          content="Phim Gia Lai - Mang rạp chiếu phim vào ngôi nhà của bạn."
+        />
+        <meta
+          name="keywords"
+          content="Phim lẻ, phim bộ, phim Hàn Quốc, phim Trung Quốc, Phim Âu Mỹ, Phim chiếu rạp, Vietsub, Phim Việt Nam, Phimmoi, Phim mới"
+        />
+        <meta property="og:title" content="Phim Lẻ | Phim Gia Lai" />
+        <meta
+          property="og:description"
+          content="Explore the latest collection of Vietnamese movies with details on status, duration, quality, language, and more."
+        />
+        <meta property="og:image" content="URL to a relevant image" />
+        <meta property="og:url" content="URL of the page" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
       {movies.length > 0 ? (
         <>

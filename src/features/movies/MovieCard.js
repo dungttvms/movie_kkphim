@@ -88,6 +88,7 @@ function MovieCard({ movie }) {
           alt={movie.origin_name}
           e
         />
+
         <Box className={classes.qualityTag}>{movie.year}</Box>
         <CardContent className={classes.content}>
           <Typography className={classes.title} variant="h6">

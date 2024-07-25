@@ -95,7 +95,7 @@ function PhimHoatHinh() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim Hoạt Hình | PHIM GIA LAI</title>
+        <title>Phim Hoạt Hình | Phim Gia Lai</title>
       </Helmet>
       {movies.length > 0 ? (
         <>

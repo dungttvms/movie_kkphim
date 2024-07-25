@@ -95,7 +95,7 @@ function TVShows() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>TV Shows | PHIM GIA LAI</title>
+        <title>TV Shows | Phim Gia Lai</title>
       </Helmet>
       {movies.length > 0 ? (
         <>
