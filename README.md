@@ -1,6 +1,6 @@
-# HausNeo Movie Website
+# Phim Gia Lai Website
 
-Welcome to the HausNeo Movie Website! This project is built with ReactJS and allows users to browse and watch movies and TV shows. You can visit the website at [https://hausneo-movie.netlify.app/](https://hausneo-movie.netlify.app/).
+Welcome to the Phim Gia Lai Website! This project is built with ReactJS and allows users to browse and watch movies and TV shows. You can visit the website at [https://phimgialai.netlify.app/](https://phimgialai.netlify.app/).
 
 ## Features
 

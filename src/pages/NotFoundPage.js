@@ -19,7 +19,7 @@ const NotFoundPage = () => {
   return (
     <Container>
       <Helmet>
-        <title>Not Found Page | Hausneo Movie</title>
+        <title>Not Found Page | PHIM GIA LAI</title>
       </Helmet>
       <Box
         display="flex"

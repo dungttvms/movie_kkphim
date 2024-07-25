@@ -95,7 +95,7 @@ function TVShows() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>TV Shows | HAUSNEO MOVIE</title>
+        <title>TV Shows | PHIM GIA LAI</title>
       </Helmet>
       {movies.length > 0 ? (
         <>
@@ -336,7 +336,7 @@ function TVShows() {
         </>
       ) : (
         <Stack minHeight="100vh" justifyContent="center" alignItems="center">
-          <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+          <Logo sx={{ width: 300, height: 200, mb: 15 }} />
           <NotFoundPage />
         </Stack>
       )}

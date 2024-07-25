@@ -95,7 +95,7 @@ function PhimHoatHinh() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim Hoạt Hình | HAUSNEO MOVIE</title>
+        <title>Phim Hoạt Hình | PHIM GIA LAI</title>
       </Helmet>
       {movies.length > 0 ? (
         <>
@@ -336,7 +336,7 @@ function PhimHoatHinh() {
         </>
       ) : (
         <Stack minHeight="100vh" justifyContent="center" alignItems="center">
-          <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+          <Logo sx={{ width: 300, height: 200, mb: 15 }} />
           <NotFoundPage />
         </Stack>
       )}

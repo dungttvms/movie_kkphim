@@ -17,6 +17,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import { useDispatch, useSelector } from "react-redux";
 import { getViewerCount } from "../features/movies/movieSlice";
 import { fNumber } from "../utils/numberFormat";
+// import DigitalClock from "../components/DigitalClock";
 
 const ICON_LINK = [
   {
@@ -98,7 +99,7 @@ function MainFooter() {
   }, [viewerCountFromRedux]);
 
   return (
-    <Container maxWidth="lg" sx={{ pt: 3 }}>
+    <Container maxWidth="lg" sx={{ pt: 3, position: "relative" }}>
       <Grid container justifyContent="center">
         <Grid item xs={12} sm={4}>
           <Stack spacing={1}>
@@ -146,6 +147,9 @@ function MainFooter() {
       >
         Đã có {fNumber(viewerCount)} lượt truy cập
       </Typography>
+      {/* <Box sx={{ position: "absolute", bottom: 10, right: 10 }}>
+        <DigitalClock />
+      </Box> */}
     </Container>
   );
 }

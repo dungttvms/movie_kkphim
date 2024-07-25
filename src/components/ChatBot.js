@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Box, IconButton } from "@mui/material";
 import ChatBot from "react-simple-chatbot";
 import CloseIcon from "@mui/icons-material/Close";
-import SupportAgentIcon from "../images/customer-service_870175.png";
+import SupportAgentIcon from "../images/Chatbot.png";
 import styled, { keyframes } from "styled-components";
 import { apiService1 } from "../app/apiService";
 import { getSearchMovie } from "../features/movies/movieSlice";
@@ -119,7 +119,7 @@ function CustomChatBot() {
     {
       id: "Step_1",
       message:
-        "Chào mừng bạn đã đến với Hausneo-Movie, rạp chiếu phim trong ngôi nhà bạn",
+        "Chào mừng bạn đã đến với Phim Gia Lai, rạp chiếu phim trong ngôi nhà bạn",
       trigger: "Step_2",
     },
     {

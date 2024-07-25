@@ -176,7 +176,7 @@ function SingleMovie() {
   if (!singleMovieInfo) {
     return (
       <Stack minHeight="100vh" justifyContent="center" alignItems="center">
-        <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+        <Logo sx={{ width: 300, height: 200, mb: 15 }} />
         <NotFoundPage />
       </Stack>
     );
@@ -233,7 +233,7 @@ function SingleMovie() {
     >
       <Container className={classes.contentContainer}>
         <Helmet>
-          <title>{singleMovieInfo.name} | HAUSNEO MOVIE</title>
+          <title>{singleMovieInfo.name} | PHIM GIA LAI</title>
           <meta property="og:title" content={singleMovieInfo.name} />
           <meta property="og:description" content={singleMovieInfo.content} />
           <meta property="og:image" content={singleMovieInfo.thumb_url} />

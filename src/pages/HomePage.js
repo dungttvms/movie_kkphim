@@ -19,7 +19,7 @@ function HomePage() {
       }}
     >
       <Helmet>
-        <title>Trang chủ | HAUSNEO MOVIE</title>
+        <title>Trang chủ | PHIM GIA LAI</title>
       </Helmet>
       <MovieList />
 

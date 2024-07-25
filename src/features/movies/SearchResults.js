@@ -74,7 +74,7 @@ function SearchResults() {
   if (movies.length === 0) {
     return (
       <Stack minHeight="100vh" justifyContent="center" alignItems="center">
-        <Logo sx={{ width: 300, height: 200, mb: 8 }} />
+        <Logo sx={{ width: 300, height: 200, mb: 15 }} />
         <NotFoundPage />
       </Stack>
     );
@@ -83,7 +83,7 @@ function SearchResults() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Tìm kiếm | HAUSNEO MOVIE</title>
+        <title>Tìm kiếm | PHIM GIA LAI</title>
       </Helmet>
       <>
         <Box
