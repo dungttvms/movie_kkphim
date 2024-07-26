@@ -7,3 +7,4 @@ export const FACEBOOK_URL = process.env.REACT_APP_FACEBOOK_URL;
 export const X_URL = process.env.REACT_APP_X_URL;
 export const TELEGRAM_URL = process.env.REACT_APP_TELEGRAM_URL;
 export const LINKEDIN_URL = process.env.REACT_APP_LINKEDIN_URL;
+export const WHATSAPP_URL = process.env.REACT_APP_WHATSAPP_URL;

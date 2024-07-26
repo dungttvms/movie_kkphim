@@ -13,6 +13,7 @@ import {
   Container,
   Stack,
   IconButton,
+  Tooltip,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,12 +25,14 @@ import {
   FACEBOOK_URL,
   LINKEDIN_URL,
   TELEGRAM_URL,
+  WHATSAPP_URL,
   X_URL,
 } from "../../app/config";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
 import TelegramIcon from "@mui/icons-material/Telegram";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import { Helmet } from "react-helmet";
 
@@ -101,6 +104,9 @@ const useStyles = makeStyles({
   telegramIcon: {
     color: "#24A1DE !important",
   },
+  whatsAppIcon: {
+    color: "#25D366 !important",
+  },
   copyIcon: {
     color: "#ffffff !important",
   },
@@ -127,6 +133,24 @@ const useStyles = makeStyles({
     zIndex: 2,
   },
 });
+
+const ShareIconButton = ({
+  label,
+  onClick,
+  icon: Icon,
+  className,
+  tooltip,
+}) => (
+  <Tooltip title={tooltip}>
+    <IconButton
+      aria-label={`share on ${label}`}
+      onClick={onClick}
+      className={className}
+    >
+      <Icon />
+    </IconButton>
+  </Tooltip>
+);
 
 function SingleMovie() {
   const { slug } = useParams();
@@ -174,24 +198,9 @@ function SingleMovie() {
     );
   }
 
-  const shareFacebook = () => {
-    const facebookShareUrl = `${FACEBOOK_URL}${encodeURIComponent(shareUrl)}`;
-    window.open(facebookShareUrl, "_blank");
-  };
-  const shareLinkedIn = () => {
-    const linkedInShareUrl = `${LINKEDIN_URL}${encodeURIComponent(shareUrl)}`;
-    console.log(linkedInShareUrl);
-    window.open(linkedInShareUrl, "_blank");
-  };
-
-  const shareTelegram = () => {
-    const telegramShareUrl = `${TELEGRAM_URL}${encodeURIComponent(shareUrl)}`;
-    window.open(telegramShareUrl, "_blank");
-  };
-
-  const shareX = () => {
-    const XShareUrl = `${X_URL}${encodeURIComponent(shareUrl)}`;
-    window.open(XShareUrl, "_blank");
+  const shareOnSocialMedia = (url) => {
+    const fullUrl = `${url}${encodeURIComponent(shareUrl)}`;
+    window.open(fullUrl, "_blank");
   };
 
   const copyToClipboard = () => {
@@ -276,41 +285,48 @@ function SingleMovie() {
                   {singleMovieInfo.origin_name} ({singleMovieInfo.year})
                 </Typography>
                 <Box display="flex" flexWrap="wrap" sx={{ pl: 2, pt: 1 }}>
-                  <IconButton
-                    aria-label="share on Facebook"
-                    onClick={shareFacebook}
+                  <ShareIconButton
+                    label="Facebook"
+                    onClick={() => shareOnSocialMedia(FACEBOOK_URL)}
+                    icon={FacebookIcon}
                     className={`${classes.iconButton} ${classes.facebookIcon}`}
-                  >
-                    <FacebookIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="share on LinkedIn"
-                    onClick={shareLinkedIn}
+                    tooltip="Chia sẻ qua Facebook"
+                  />
+                  <ShareIconButton
+                    label="LinkedIn"
+                    onClick={() => shareOnSocialMedia(LINKEDIN_URL)}
+                    icon={LinkedInIcon}
                     className={`${classes.iconButton} ${classes.linkedInIcon}`}
-                  >
-                    <LinkedInIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="share on X"
-                    onClick={shareX}
+                    tooltip="Chia sẻ qua LinkedIn"
+                  />
+                  <ShareIconButton
+                    label="WhatsApp"
+                    onClick={() => shareOnSocialMedia(WHATSAPP_URL)}
+                    icon={WhatsAppIcon}
+                    className={`${classes.iconButton} ${classes.whatsAppIcon}`}
+                    tooltip="Chia sẻ qua WhatsApp"
+                  />
+                  <ShareIconButton
+                    label="X"
+                    onClick={() => shareOnSocialMedia(X_URL)}
+                    icon={XIcon}
                     className={`${classes.iconButton} ${classes.XIcon}`}
-                  >
-                    <XIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="share on Telegram"
-                    onClick={shareTelegram}
+                    tooltip="Chia sẻ qua X/Twitter"
+                  />
+                  <ShareIconButton
+                    label="Telegram"
+                    onClick={() => shareOnSocialMedia(TELEGRAM_URL)}
+                    icon={TelegramIcon}
                     className={`${classes.iconButton} ${classes.telegramIcon}`}
-                  >
-                    <TelegramIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="copy link"
+                    tooltip="Chia sẻ qua Telegram"
+                  />
+                  <ShareIconButton
+                    label="Copy"
                     onClick={copyToClipboard}
+                    icon={ContentCopyIcon}
                     className={`${classes.iconButton} ${classes.copyIcon}`}
-                  >
-                    <ContentCopyIcon />
-                  </IconButton>
+                    tooltip="Sao chép liên kết"
+                  />
                 </Box>
                 <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
                   {singleMovieInfo.content}
