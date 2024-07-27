@@ -20,6 +20,16 @@ function HomePage() {
     >
       <Helmet>
         <title>Trang chủ | Phim Gia Lai</title>
+        <meta property="og:url" content="https://phimgialai.netlify.app/" />
+        <meta property="og:title" content="Bring cinema to your home" />
+        <meta
+          property="og:image"
+          content="https://www.canva.com/design/DAGL77WyiQ4/ATFUCPOiVT55wZ926-89Tw/edit?utm_content=DAGL77WyiQ4&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton"
+        />
+        <meta
+          property="og:description"
+          content="Phim Gia Lai - Mang tạp chiếu phim vào gia đình của bạn"
+        />
       </Helmet>
       <MovieList />
 
