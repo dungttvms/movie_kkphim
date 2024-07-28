@@ -24,23 +24,6 @@ function MainHeader() {
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const pages = useMemo(
-    () => [
-      {
-        title: "TRANG CHỦ",
-        action: () => {
-          dispatch(getViewerCount());
-          navigate("/");
-        },
-      },
-      { title: "PHIM LẺ", action: () => navigate("/phim-le") },
-      { title: "PHIM BỘ", action: () => navigate("/phim-bo") },
-      { title: "PHIM HOẠT HÌNH", action: () => navigate("/hoat-hinh") },
-      { title: "TV SHOWS", action: () => navigate("/tv-shows") },
-    ],
-    [navigate, dispatch]
-  );
-
   const [anchorElNav, setAnchorElNav] = useState(null);
 
   const handleOpenNavMenu = useCallback((event) => {
@@ -50,6 +33,52 @@ function MainHeader() {
   const handleCloseNavMenu = useCallback(() => {
     setAnchorElNav(null);
   }, []);
+
+  const pages = useMemo(
+    () => [
+      {
+        title: "TRANG CHỦ",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/");
+          handleCloseNavMenu();
+        },
+      },
+      {
+        title: "PHIM LẺ",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/phim-le");
+          handleCloseNavMenu();
+        },
+      },
+      {
+        title: "PHIM BỘ",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/phim-bo");
+          handleCloseNavMenu();
+        },
+      },
+      {
+        title: "PHIM HOẠT HÌNH",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/hoat-hinh");
+          handleCloseNavMenu();
+        },
+      },
+      {
+        title: "TV SHOWS",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/tv-shows");
+          handleCloseNavMenu();
+        },
+      },
+    ],
+    [navigate, dispatch, handleCloseNavMenu]
+  );
 
   const handleSearchSubmit = (keyword) => {
     dispatch(getSearchMovie({ keyword }));
