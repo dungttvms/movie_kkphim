@@ -25,56 +25,43 @@ const slice = createSlice({
     getAllMoviesSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getSingleMovieSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const singleMovie = action.payload;
-      state.singleMovie = singleMovie;
+      state.singleMovie = action.payload;
     },
     getPhimLeSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getPhimBoSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getPhimHoatHinhSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getTVShowsSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getSearchMovieSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
-      const movies = action.payload.movies;
-      state.movies = movies;
-      const totalMovies = action.payload.totalMovies;
-      state.pagination = totalMovies;
+      state.movies = action.payload.movies;
+      state.pagination = action.payload.totalMovies;
     },
     getViewerCountSuccess(state, action) {
       state.isLoading = false;
@@ -104,6 +91,7 @@ export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
     dispatch(
       slice.actions.getAllMoviesSuccess({ movies: combinedMovies, totalMovies })
     );
+    toast.success("Load All Movies Success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -123,6 +111,7 @@ export const getPhimLe = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
+    toast.success("Load all single movies success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -141,7 +130,8 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
     );
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
-    dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
+    dispatch(slice.actions.getPhimBoSuccess({ movies, totalMovies }));
+    toast.success("Load all serie movies success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -160,7 +150,8 @@ export const getPhimHoatHinh = ({ page, limit }) => async (dispatch) => {
     );
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
-    dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
+    dispatch(slice.actions.getPhimHoatHinhSuccess({ movies, totalMovies }));
+    toast.success("Load all cartoon movies success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -179,7 +170,8 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
     );
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
-    dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
+    dispatch(slice.actions.getTVShowsSuccess({ movies, totalMovies }));
+    toast.success("Load all TV Shows success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -191,6 +183,7 @@ export const getSingleMovie = ({ slug }) => async (dispatch) => {
   try {
     const response = await apiService1.get(`phim/${slug}`);
     dispatch(slice.actions.getSingleMovieSuccess(response));
+    toast.success(`Load movie ${response.movie.name} success`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -206,6 +199,7 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getSearchMovieSuccess({ movies, totalMovies }));
+    toast.success(`Load all movies with keyword "${keyword}" success`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -216,7 +210,6 @@ export const getViewerCount = () => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService2.get(`/viewerCounts`);
-
     dispatch(slice.actions.getViewerCountSuccess(response.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));

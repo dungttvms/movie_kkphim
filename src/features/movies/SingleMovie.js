@@ -175,7 +175,6 @@ function SingleMovie() {
     if (singleMovieInfo) {
       const generatedShareUrl = `${window.location.origin}/phim/${singleMovieInfo.slug}`;
       setShareUrl(generatedShareUrl);
-      console.log("Share URL:", generatedShareUrl);
     }
   }, [singleMovieInfo]);
 

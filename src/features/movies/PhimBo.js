@@ -241,7 +241,7 @@ function PhimBo() {
                   <TableBody>
                     {movies.map((movie) => {
                       const imageUrl = `${IMAGE_URL}${movie.poster_url}`;
-                      console.log("Movie Image URL:", imageUrl);
+
                       return (
                         <TableRow key={movie._id} hover>
                           <TableCell
