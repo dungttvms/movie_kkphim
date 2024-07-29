@@ -15,7 +15,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SearchInput from "../components/SearchInput";
-import { getSearchMovie, getViewerCount } from "../features/movies/movieSlice";
+import {
+  getSearchMovie,
+  getViewerCount,
+} from "../features/movies/movieSlice.js";
 import Logo from "../components/Logo";
 
 function MainHeader() {

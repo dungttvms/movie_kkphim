@@ -15,7 +15,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import InstagramIcon from "@mui/icons-material/Instagram";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getViewerCount } from "../features/movies/movieSlice";
+import { getViewerCount } from "../features/movies/movieSlice.js";
 import { fNumber } from "../utils/numberFormat";
 // import DigitalClock from "../components/DigitalClock";
 

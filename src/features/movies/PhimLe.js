@@ -19,7 +19,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhimLe } from "./movieSlice";
+import { getPhimLe } from "./movieSlice.js";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fToNow } from "../../utils/formatTime";
 import { IMAGE_URL } from "../../app/config";
@@ -168,8 +168,9 @@ function PhimLe() {
                   page={page}
                   onPageChange={handleChangePage}
                   rowsPerPage={rowsPerPage}
-                  rowsPerPageOptions={[20, 30, 50]}
+                  rowsPerPageOptions={[10, 20, 30, 40, 50]}
                   onRowsPerPageChange={handleChangeRowsPerPage}
+                  labelRowsPerPage="Số lượng Phim / Trang"
                 />
               </Stack>
             </Stack>
@@ -343,8 +344,9 @@ function PhimLe() {
                   page={page}
                   onPageChange={handleChangePage}
                   rowsPerPage={rowsPerPage}
-                  rowsPerPageOptions={[20, 30, 50]}
+                  rowsPerPageOptions={[10, 20, 30, 40, 50]}
                   onRowsPerPageChange={handleChangeRowsPerPage}
+                  labelRowsPerPage="Số lượng Phim / Trang"
                 />
               </Stack>
             </Stack>

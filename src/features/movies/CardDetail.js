@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMovies } from "./movieSlice.js";
+import { getSingleMovie } from "./movieSlice.js";
 import MovieCard from "./MovieCard";
 import { Box, Container, Grid, Typography, Pagination } from "@mui/material";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fNumber } from "../../utils/numberFormat";
 
-function MovieList() {
+function CardDetail() {
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
@@ -15,13 +15,13 @@ function MovieList() {
     pagination: totalMovies,
     isLoading: loading,
     error,
-  } = useSelector((state) => state.movie);
+  } = useSelector((state) => state.singleMovie);
 
   useEffect(() => {
     const startPage = (page - 1) * 3 + 1;
     const pagesToFetch = [startPage, startPage + 1, startPage + 2];
 
-    dispatch(getAllMovies({ pages: pagesToFetch }));
+    dispatch(getSingleMovie({ pages: pagesToFetch }));
   }, [page, dispatch]);
 
   const handlePageChange = (event, value) => {
@@ -92,4 +92,4 @@ function MovieList() {
   );
 }
 
-export default MovieList;
+export default CardDetail;

@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleMovie } from "./movieSlice";
+import { getSingleMovie } from "./movieSlice.js";
 import LoadingScreen from "../../components/LoadingScreen";
 import Logo from "../../components/Logo";
 import NotFoundPage from "../../pages/NotFoundPage";

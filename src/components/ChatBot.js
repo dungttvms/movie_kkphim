@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import SupportAgentIcon from "../images/Chatbot.png";
 import styled, { keyframes } from "styled-components";
 import { apiService1 } from "../app/apiService";
-import { getSearchMovie } from "../features/movies/movieSlice";
+import { getSearchMovie } from "../features/movies/movieSlice.js";
 
 const ChatContainer = styled.div`
   position: relative;

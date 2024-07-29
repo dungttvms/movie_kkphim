@@ -18,7 +18,7 @@ To run this project locally, you will need to have Node.js and npm installed on 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/dungttvms/movie_kkphim.git
+   git clone https://github.com/dungttvms/gialaifilm.git
    ```
 
 2. Run
