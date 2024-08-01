@@ -6,6 +6,7 @@ const initialState = {
   isLoading: false,
   error: null,
   movies: [],
+  filterMoviesByGenre: [],
   singleMovie: "",
   pagination: "",
   totalViewers: "",

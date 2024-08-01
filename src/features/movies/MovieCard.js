@@ -7,6 +7,7 @@ import {
   Typography,
   CardActionArea,
   Box,
+  Tooltip,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -86,17 +87,16 @@ function MovieCard({ movie }) {
           image={movie.poster_url}
           title={movie.origin_name}
           alt={movie.origin_name}
-          e
         />
-
         <Box className={classes.qualityTag}>{movie.year}</Box>
         <CardContent className={classes.content}>
-          <Typography className={classes.title} variant="h6">
-            {movie.name.length > 25
-              ? `${movie.name.substring(0, 25)}...`
-              : movie.name}
-          </Typography>
-
+          <Tooltip title={`${movie.name} | ${movie.year}`} arrow>
+            <Typography className={classes.title} variant="h6">
+              {movie.name.length > 25
+                ? `${movie.name.substring(0, 25)}...`
+                : movie.name}
+            </Typography>
+          </Tooltip>
           <Typography className={classes.subtitle} variant="subtitle1">
             {movie.origin_name.length > 30
               ? `${movie.origin_name.substring(0, 30)}...`

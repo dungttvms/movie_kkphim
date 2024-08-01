@@ -224,13 +224,49 @@ function SingleMovie() {
     >
       <Container className={classes.contentContainer}>
         <Helmet>
+          {/* Title and Description */}
           <title>{singleMovieInfo.name} | Phim Gia Lai</title>
-          <meta property="og:title" content={singleMovieInfo.name} />
+          <meta name="description" content={singleMovieInfo.content} />
+
+          {/* Open Graph Tags */}
+          <meta
+            property="og:title"
+            content={`${singleMovieInfo.name} | Phim Gia Lai`}
+          />
           <meta property="og:description" content={singleMovieInfo.content} />
           <meta property="og:image" content={singleMovieInfo.thumb_url} />
           <meta property="og:url" content={shareUrl} />
-          <meta property="og:type" content="website" />
+          <meta property="og:type" content="video.movie" />
+
+          {/* Twitter Card Tags */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta
+            name="twitter:title"
+            content={`${singleMovieInfo.name} | Phim Gia Lai`}
+          />
+          <meta name="twitter:description" content={singleMovieInfo.content} />
+          <meta name="twitter:image" content={singleMovieInfo.thumb_url} />
+
+          {/* Canonical Link */}
+          <link rel="canonical" href={shareUrl} />
+
+          {/* Language and Charset */}
+          <meta charset="UTF-8" />
+          <meta httpEquiv="Content-Language" content="vi" />
+
+          {/* Viewport Settings */}
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+          {/* Additional Meta Tags */}
+          <meta name="author" content="Phim Gia Lai" />
+          <meta
+            name="keywords"
+            content={`Phim, Phim lẻ, Phim bộ, Phim Hàn Quóc, Phim Trung Quóc, Phim Châu Âu, Phim Mỹ, Phim Hành Động, Phim mới, Phim Gia Lai, ${singleMovieInfo.name}, ${singleMovieInfo.category.name},
+            ${singleMovieInfo.country.name}
+            `}
+          />
         </Helmet>
+
         <Card className={classes.root}>
           <CardContent className={classes.content}>
             <Grid container spacing={2}>

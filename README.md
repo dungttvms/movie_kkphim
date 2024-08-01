@@ -22,7 +22,10 @@ To run this project locally, you will need to have Node.js and npm installed on 
    ```
 
 2. Run
-   npm install
+   npm install / yarn add
+
+3. Run
+   npm start / yarn start
 
 This website using API from "https://kkphim.com/", I do not accept responsibility for the content on the website.
 For further information, please connect with me (Telegram @tiendungtranttd)
