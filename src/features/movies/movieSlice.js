@@ -1,15 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { apiService1, apiService2 } from "../../app/apiService";
+import { NUMBER_OF_LIMIT } from "../../app/config";
 
 const initialState = {
   isLoading: false,
   error: null,
   movies: [],
-  filterMoviesByGenre: [],
   singleMovie: "",
   pagination: "",
+  genres: [],
+  countries: [],
   totalViewers: "",
+  filteredCountryMovies: [],
+  filteredGenreMovies: [],
+  totalFilteredMovies: "",
 };
 
 const slice = createSlice({
@@ -69,6 +74,28 @@ const slice = createSlice({
       state.error = null;
       state.totalViewers = action.payload;
     },
+    getCountriesSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.countries = action.payload;
+    },
+    getFilteredCountryMoviesSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.filteredCountryMovies = action.payload.items;
+      state.totalFilteredMovies = action.payload.params.pagination;
+    },
+    getGenreSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.genres = action.payload;
+    },
+    getFilteredGenreMoviesSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.filteredGenreMovies = action.payload.items;
+      state.totalFilteredMovies = action.payload.params.pagination;
+    },
   },
 });
 
@@ -87,7 +114,7 @@ export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
       return acc.concat(response.items);
     }, []);
 
-    const totalMovies = responses[0].pagination.totalItems; // Assuming totalItems is the same for all pages
+    const totalMovies = responses[0].pagination.totalItems;
 
     dispatch(
       slice.actions.getAllMoviesSuccess({ movies: combinedMovies, totalMovies })
@@ -99,6 +126,30 @@ export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
   }
 };
 
+export const getGenres = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService1.get("the-loai");
+    dispatch(slice.actions.getGenreSuccess(response));
+    // console.log(response);
+    // toast.success(`Load movie ${response.movie.name} success`);
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const getCountries = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService1.get("quoc-gia");
+    dispatch(slice.actions.getCountriesSuccess(response));
+
+    // toast.success(`Load movie ${response.movie.name} success`);
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
 export const getPhimLe = ({ page, limit }) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
@@ -212,6 +263,47 @@ export const getViewerCount = () => async (dispatch) => {
   try {
     const response = await apiService2.get(`/viewerCounts`);
     dispatch(slice.actions.getViewerCountSuccess(response.data));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+
+export const getFilteredCountryMovies = ({ slug, page, limit }) => async (
+  dispatch
+) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const queryParams = new URLSearchParams({
+      page: page,
+      limit: NUMBER_OF_LIMIT,
+    });
+    const response = await apiService1.get(
+      `v1/api/quoc-gia/${slug}?${queryParams.toString()}`
+    );
+
+    dispatch(slice.actions.getFilteredCountryMoviesSuccess(response.data));
+    toast.success(`Load country movies successful`);
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const getFilteredGenreMovies = ({ slug, page, limit }) => async (
+  dispatch
+) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const queryParams = new URLSearchParams({
+      page: page,
+      limit: NUMBER_OF_LIMIT,
+    });
+    const response = await apiService1.get(
+      `v1/api/the-loai/${slug}?${queryParams.toString()}`
+    );
+
+    dispatch(slice.actions.getFilteredGenreMoviesSuccess(response.data));
+    toast.success(`Load genre movies successful`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
