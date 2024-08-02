@@ -175,7 +175,7 @@ function MovieByCountry() {
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
-      rowsPerPageOptions={[20, 30, 50]}
+      rowsPerPageOptions={[20, 25, 30]}
       onRowsPerPageChange={handleChangeRowsPerPage}
       labelRowsPerPage="Số lượng Phim / Trang"
     />
@@ -184,7 +184,7 @@ function MovieByCountry() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim | Phim Gia Lai</title>
+        <title>Quốc Gia | Phim Gia Lai</title>
       </Helmet>
       {filteredCountryMovies.length > 0 ? (
         <>

@@ -175,7 +175,7 @@ function MovieByGenre() {
       page={page}
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
-      rowsPerPageOptions={[20, 30, 50]}
+      rowsPerPageOptions={[20, 25, 30]}
       onRowsPerPageChange={handleChangeRowsPerPage}
       labelRowsPerPage="Số lượng Phim / Trang"
     />
