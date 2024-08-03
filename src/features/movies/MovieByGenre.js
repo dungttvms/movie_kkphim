@@ -82,7 +82,7 @@ function MovieByGenre() {
   );
 
   const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage); // Directly set the new page
+    setPage(newPage);
   }, []);
 
   useEffect(() => {
@@ -92,13 +92,13 @@ function MovieByGenre() {
         page: page + 1,
         genreName,
         limit: rowsPerPage,
-      }) // Pass `page + 1` to match API page indexing
+      })
     );
   }, [slug, page, rowsPerPage, dispatch, genreName]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, 10)); // Set new rows per page
-    setPage(0); // Reset to the first page when changing rows per page
+    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
+    setPage(0);
   }, []);
 
   const renderTableCells = (movie) => {

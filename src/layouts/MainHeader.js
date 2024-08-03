@@ -67,6 +67,7 @@ function MainHeader() {
   const handleCountrySelect = useCallback(
     (slug, name) => {
       navigate(`/quoc-gia/${slug}`, { state: { countryName: name } });
+
       handleCloseCountriesMenu();
     },
     [navigate, handleCloseCountriesMenu]

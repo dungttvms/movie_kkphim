@@ -259,6 +259,7 @@ export const getFilteredCountryMovies = ({
   page,
   limit,
 }) => async (dispatch) => {
+  console.log(countryName);
   dispatch(slice.actions.startLoading());
   try {
     const queryParams = new URLSearchParams({

@@ -67,7 +67,7 @@ const tablePaginationStyles = {
 function MovieByCountry() {
   const { slug } = useParams();
   const location = useLocation();
-  const countryName = location.state?.countryName;
+  const countryName = location.state.countryName;
   const [page, setPage] = useState(0); // Page should start at 0
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
@@ -89,13 +89,18 @@ function MovieByCountry() {
   useEffect(() => {
     // Ensure the API request is correct
     dispatch(
-      getFilteredCountryMovies({ slug, page: page + 1, limit: rowsPerPage }) // Pass `page + 1` to match API page indexing
+      getFilteredCountryMovies({
+        slug,
+        page: page + 1,
+        limit: rowsPerPage,
+        countryName,
+      })
     );
-  }, [slug, page, rowsPerPage, dispatch]);
+  }, [slug, page, rowsPerPage, countryName, dispatch]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, 10)); // Set new rows per page
-    setPage(0); // Reset to the first page when changing rows per page
+    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
+    setPage(0);
   }, []);
 
   const renderTableCells = (movie) => {
