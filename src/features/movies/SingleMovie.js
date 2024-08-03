@@ -223,7 +223,7 @@ function SingleMovie() {
   return (
     <Box
       className={classes.backgroundBox}
-      style={{ backgroundImage: `url(${singleMovieInfo.poster_url})` }}
+      style={{ backgroundImage: `url(${singleMovieInfo.thumb_url})` }}
     >
       <Container className={classes.contentContainer}>
         <Helmet>
@@ -276,7 +276,7 @@ function SingleMovie() {
               <Grid item xs={12} md={4}>
                 <CardMedia
                   className={classes.media}
-                  image={singleMovieInfo.thumb_url}
+                  image={singleMovieInfo.poster_url}
                   title={singleMovieInfo.origin_name}
                 />
                 <Box p={2} alignItems="center">

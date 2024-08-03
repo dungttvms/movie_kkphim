@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -7,8 +7,10 @@ import ChatBot from "react-simple-chatbot";
 import CloseIcon from "@mui/icons-material/Close";
 import SupportAgentIcon from "../images/Chatbot.png";
 import styled, { keyframes } from "styled-components";
-import { apiService1 } from "../app/apiService";
+import { apiService2 } from "../app/apiService";
 import { getSearchMovie } from "../features/movies/movieSlice.js";
+import chatBotImage from "../images/Logo.png";
+import avatar from "../images/avatar.png";
 
 const ChatContainer = styled.div`
   position: relative;
@@ -80,10 +82,16 @@ function CustomChatBot() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSearchSubmit = (movie) => {
-    dispatch(getSearchMovie({ keyword: movie }));
-    navigate(`/tim-kiem?keyword=${movie}`);
-  };
+  const handleSearchSubmit = useCallback(
+    (keyword) => {
+      if (typeof keyword === "object") {
+        keyword = keyword.value || "";
+      }
+      dispatch(getSearchMovie({ keyword }));
+      navigate(`/tim-kiem?keyword=${encodeURIComponent(keyword)}`);
+    },
+    [dispatch, navigate]
+  );
 
   const handleSentData = async () => {
     if (!username || !phoneNumber || !movie) {
@@ -96,7 +104,7 @@ function CustomChatBot() {
     };
 
     try {
-      await apiService1.post("/chatBots", data);
+      await apiService2.post("/chatBots", data);
       toast.success("Cảm ơn bạn ");
     } catch (error) {
       toast.error(error.message);
@@ -157,7 +165,7 @@ function CustomChatBot() {
     },
     {
       id: "Step_6",
-      message: "Bạn đang cần chúng tôi cập nhật bộ phim nào?",
+      message: "Bạn đang cần chúng tôi tìm giúp bạn bộ phim nào?",
       trigger: "Step_7",
     },
     {
@@ -165,6 +173,7 @@ function CustomChatBot() {
       user: true,
       trigger: (value) => {
         setMovie(value);
+        handleSearchSubmit(value);
         return "Step_8";
       },
     },
@@ -173,7 +182,6 @@ function CustomChatBot() {
       message:
         "Chúng tôi đang tìm kiếm bộ phim {previousValue} cho bạn. Vui lòng chờ giây lát...",
       end: true,
-      callback: () => handleSearchSubmit(movie),
     },
   ];
 
@@ -200,7 +208,12 @@ function CustomChatBot() {
             flexDirection: "row",
           }}
         >
-          <ChatBot steps={steps} />
+          <ChatBot
+            steps={steps}
+            userAvatar={avatar}
+            hideInput={false}
+            botAvatar={chatBotImage}
+          />
           <IconButton
             sx={{
               color: "#ffffff",

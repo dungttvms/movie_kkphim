@@ -22,10 +22,10 @@ function SearchInput({ searchQuery, setSearchQuery, handleSubmit }) {
               borderColor: "white", // default border color
             },
             "&:hover fieldset": {
-              borderColor: "yellow", // border color on hover
+              borderColor: "red", // border color on hover
             },
             "&.Mui-focused fieldset": {
-              borderColor: "red", // border color when focused
+              borderColor: "green", // border color when focused
             },
           },
           "& .MuiInputBase-input": {

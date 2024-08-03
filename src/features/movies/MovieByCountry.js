@@ -104,7 +104,7 @@ function MovieByCountry() {
   }, []);
 
   const renderTableCells = (movie) => {
-    const imageUrl = `${IMAGE_URL}${movie.poster_url}`;
+    const imageUrl = `${IMAGE_URL}${movie.thumb_url}`;
     return (
       <>
         <TableCell
@@ -208,7 +208,7 @@ function MovieByCountry() {
             alignItems="center"
             justifyContent="space-between"
             p={2}
-            sx={{ backgroundColor: "#000000", borderRadius: 1 }}
+            sx={{ backgroundColor: "#333333", borderRadius: 1 }}
           />
           <Typography
             variant="h5"

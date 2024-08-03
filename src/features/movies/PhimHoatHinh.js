@@ -250,7 +250,7 @@ function PhimHoatHinh() {
                         >
                           <CardMedia
                             className={classes.media}
-                            image={`${IMAGE_URL}${movie.poster_url}`}
+                            image={`${IMAGE_URL}${movie.thumb_url}`}
                             sx={{ width: 60, height: 60, marginRight: 2 }}
                           />
                           <Typography

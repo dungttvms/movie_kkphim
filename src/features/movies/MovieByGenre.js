@@ -102,7 +102,7 @@ function MovieByGenre() {
   }, []);
 
   const renderTableCells = (movie) => {
-    const imageUrl = `${IMAGE_URL}${movie.poster_url}`;
+    const imageUrl = `${IMAGE_URL}${movie.thumb_url}`;
     return (
       <>
         <TableCell
