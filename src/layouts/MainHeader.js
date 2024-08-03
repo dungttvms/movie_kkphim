@@ -65,16 +65,16 @@ function MainHeader() {
   }, []);
 
   const handleCountrySelect = useCallback(
-    (slug) => {
-      navigate(`/quoc-gia/${slug}`);
+    (slug, name) => {
+      navigate(`/quoc-gia/${slug}`, { state: { countryName: name } });
       handleCloseCountriesMenu();
     },
     [navigate, handleCloseCountriesMenu]
   );
 
   const handleGenreSelect = useCallback(
-    (slug) => {
-      navigate(`/the-loai/${slug}`);
+    (slug, name) => {
+      navigate(`/the-loai/${slug}`, { state: { genreName: name } });
       handleCloseGenresMenu();
     },
     [navigate, handleCloseGenresMenu]
@@ -234,7 +234,9 @@ function MainHeader() {
               key={country.slug}
               style={{ textAlign: "center" }}
             >
-              <MenuItem onClick={() => handleCountrySelect(country.slug)}>
+              <MenuItem
+                onClick={() => handleCountrySelect(country.slug, country.name)}
+              >
                 {country.name}
               </MenuItem>
             </Grid>
@@ -267,7 +269,9 @@ function MainHeader() {
               key={genre.slug}
               style={{ textAlign: "center" }}
             >
-              <MenuItem onClick={() => handleGenreSelect(genre.slug)}>
+              <MenuItem
+                onClick={() => handleGenreSelect(genre.slug, genre.name)}
+              >
                 {genre.name}
               </MenuItem>
             </Grid>

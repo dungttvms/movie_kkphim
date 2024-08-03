@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as RouterLink, useParams, useLocation } from "react-router-dom";
+
 import { IMAGE_URL, NUMBER_OF_LIMIT } from "../../app/config";
 import {
   Box,
@@ -25,6 +26,7 @@ import { fToNow } from "../../utils/formatTime";
 import Logo from "../../components/Logo";
 import NotFoundPage from "../../pages/NotFoundPage";
 import { getFilteredCountryMovies } from "./movieSlice";
+import { fNumber } from "../../utils/numberFormat";
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +65,8 @@ const tablePaginationStyles = {
 
 function MovieByCountry() {
   const { slug } = useParams();
-
+  const location = useLocation();
+  const countryName = location.state?.countryName;
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
@@ -184,7 +187,7 @@ function MovieByCountry() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Quốc Gia | Phim Gia Lai</title>
+        <title>Phim {countryName} | Phim Gia Lai</title>
       </Helmet>
       {filteredCountryMovies.length > 0 ? (
         <>
@@ -194,7 +197,18 @@ function MovieByCountry() {
             justifyContent="space-between"
             p={2}
             sx={{ backgroundColor: "#000000", borderRadius: 1 }}
-          />
+          />{" "}
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              fontWeight: "bold",
+              color: "orange",
+              textAlign: "center",
+            }}
+          >
+            CÓ {fNumber(total)} PHIM {countryName.toUpperCase()} ĐƯỢC TÌM THẤY
+          </Typography>
           <Card sx={{ p: 1, backgroundColor: "#333333" }}>
             <Stack spacing={2}>
               <Stack spacing={2} direction="column" alignItems="center">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { Link as RouterLink, useParams, useLocation } from "react-router-dom";
 import { IMAGE_URL, NUMBER_OF_LIMIT } from "../../app/config";
 import {
   Box,
@@ -25,6 +25,7 @@ import { fToNow } from "../../utils/formatTime";
 import Logo from "../../components/Logo";
 import NotFoundPage from "../../pages/NotFoundPage";
 import { getFilteredGenreMovies } from "./movieSlice";
+import { fNumber } from "../../utils/numberFormat";
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +64,8 @@ const tablePaginationStyles = {
 
 function MovieByGenre() {
   const { slug } = useParams();
-
+  const location = useLocation();
+  const genreName = location.state?.genreName;
   const [page, setPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
@@ -184,7 +186,7 @@ function MovieByGenre() {
   return (
     <Container sx={{ mt: 2 }}>
       <Helmet>
-        <title>Phim | Phim Gia Lai</title>
+        <title>{genreName} | Phim Gia Lai</title>
       </Helmet>
       {filteredGenreMovies.length > 0 ? (
         <>
@@ -195,6 +197,17 @@ function MovieByGenre() {
             p={2}
             sx={{ backgroundColor: "#000000", borderRadius: 1 }}
           />
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              fontWeight: "bold",
+              color: "orange",
+              textAlign: "center",
+            }}
+          >
+            CÓ {fNumber(total)} PHIM {genreName.toUpperCase()} ĐƯỢC TÌM THẤY
+          </Typography>
           <Card sx={{ p: 1, backgroundColor: "#333333" }}>
             <Stack spacing={2}>
               <Stack spacing={2} direction="column" alignItems="center">

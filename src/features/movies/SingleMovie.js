@@ -79,11 +79,13 @@ const useStyles = makeStyles({
     flexWrap: "wrap",
     maxHeight: "200px",
     overflowY: "auto",
-    margin: "10px",
+    marginTop: "10px",
+    marginBottom: "10px",
   },
   episodeButton: {
     marginBottom: "10px",
     color: "green",
+    width: "100%",
   },
   iconButton: {
     fontSize: "24px",
