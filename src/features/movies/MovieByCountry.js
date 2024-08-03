@@ -129,11 +129,14 @@ function MovieByCountry() {
             component={RouterLink}
             to={`/phim/${movie.slug}`}
           >
-            {movie.name} - {movie.year}
+            {movie.name}
           </Typography>
         </TableCell>
         {!isMobile && (
           <>
+            <TableCell align="center" sx={{ color: "white" }}>
+              {movie.year || "N/A"}
+            </TableCell>
             <TableCell align="center" sx={{ color: "white" }}>
               {movie.episode_current || "N/A"}
             </TableCell>
@@ -241,6 +244,16 @@ function MovieByCountry() {
                       </TableCell>
                       {!isMobile && (
                         <>
+                          <TableCell
+                            sx={{
+                              width: { xs: "none", md: "10%" },
+                              fontWeight: "bold",
+                              textAlign: "center",
+                              color: "yellow",
+                            }}
+                          >
+                            Năm sản xuất
+                          </TableCell>
                           <TableCell
                             sx={{
                               width: { xs: "none", md: "10%" },

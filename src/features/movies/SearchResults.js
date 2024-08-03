@@ -53,6 +53,7 @@ const useStyles = makeStyles({
 function SearchResults() {
   const { movies, isLoading, error } = useSelector((state) => state.movie);
   const total = useSelector((state) => state.movie.pagination);
+
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -102,7 +103,8 @@ function SearchResults() {
               textAlign: "center",
             }}
           >
-            CÓ {fNumber(total)} PHIM CÓ TỪ KHÓA "{searchKeyword}" ĐƯỢC TÌM THẤY
+            CÓ {fNumber(total)} PHIM CÓ TỪ KHÓA "{searchKeyword.toUpperCase()}"
+            ĐƯỢC TÌM THẤY
           </Typography>
         </Box>
         <Card sx={{ p: 3, backgroundColor: "#333333" }}>
