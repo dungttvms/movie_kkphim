@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import he from "he";
 import {
   Card,
   CardMedia,
@@ -263,7 +264,7 @@ function SingleMovie() {
           <meta name="author" content="Phim Gia Lai" />
           <meta
             name="keywords"
-            content={`Phim, Phim lẻ, Phim bộ, Phim Hàn Quóc, Phim Trung Quóc, Phim Châu Âu, Phim Mỹ, Phim Hành Động, Phim mới, Phim Gia Lai, ${singleMovieInfo.name}, ${singleMovieInfo.category.name},
+            content={`Phim, Phim lẻ, Phim bộ, Phim Hàn Quóc, Phim Trung Quốc, Phim Châu Âu, Phim Mỹ, Phim Hành Động, Phim mới, Phim Gia Lai, ${singleMovieInfo.name}, ${singleMovieInfo.category.name},
             ${singleMovieInfo.country.name}
             `}
           />
@@ -366,7 +367,7 @@ function SingleMovie() {
                   />
                 </Box>
                 <Typography variant="body1" sx={{ pl: 2, pt: 1 }}>
-                  {singleMovieInfo.content}
+                  {he.decode(singleMovieInfo.content)}
                 </Typography>
                 <Box sx={{ pl: 2, pt: 1 }}>
                   <Typography variant="h6">Actors:</Typography>
