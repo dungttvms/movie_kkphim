@@ -24,9 +24,10 @@ import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet";
 import { fToNow } from "../../utils/formatTime";
 import Logo from "../../components/Logo";
-import NotFoundPage from "../../pages/NotFoundPage";
+
 import { getFilteredCountryMovies } from "./movieSlice";
 import { fNumber } from "../../utils/numberFormat";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const useStyles = makeStyles({
   root: {
@@ -67,7 +68,7 @@ function MovieByCountry() {
   const { slug } = useParams();
   const location = useLocation();
   const countryName = location.state?.countryName;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0); // Page should start at 0
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
   const theme = useTheme();
@@ -82,18 +83,19 @@ function MovieByCountry() {
   );
 
   const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage);
+    setPage(newPage); // Directly set the new page
   }, []);
 
   useEffect(() => {
+    // Ensure the API request is correct
     dispatch(
-      getFilteredCountryMovies({ slug, page, limit: rowsPerPage, countryName })
+      getFilteredCountryMovies({ slug, page: page + 1, limit: rowsPerPage }) // Pass `page + 1` to match API page indexing
     );
-  }, [slug, page, rowsPerPage, countryName, dispatch]);
+  }, [slug, page, rowsPerPage, dispatch]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
-    setPage(0);
+    setRowsPerPage(parseInt(event.target.value, 10)); // Set new rows per page
+    setPage(0); // Reset to the first page when changing rows per page
   }, []);
 
   const renderTableCells = (movie) => {
@@ -177,7 +179,7 @@ function MovieByCountry() {
       }}
       component="div"
       count={total}
-      page={page}
+      page={page} // Page now correctly starts from 0
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
       rowsPerPageOptions={[20, 25, 30]}
@@ -199,7 +201,7 @@ function MovieByCountry() {
             justifyContent="space-between"
             p={2}
             sx={{ backgroundColor: "#000000", borderRadius: 1 }}
-          />{" "}
+          />
           <Typography
             variant="h5"
             component="div"
@@ -308,7 +310,7 @@ function MovieByCountry() {
       ) : (
         <Stack minHeight="100vh" justifyContent="center" alignItems="center">
           <Logo sx={{ width: 300, height: 200, mb: 15 }} />
-          <NotFoundPage />
+          <LoadingScreen />
         </Stack>
       )}
     </Container>

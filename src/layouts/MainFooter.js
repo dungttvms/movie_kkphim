@@ -133,7 +133,13 @@ function MainFooter() {
         sx={{ my: 1 }}
       >
         {`Copyright © `}
-        <Link href="https://kkphim.vip" underline="none" color="inherit">
+        <Link
+          href="https://kkphim.vip"
+          underline="none"
+          color="inherit"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Phim miễn phí,
         </Link>{" "}
         {new Date().getFullYear()}

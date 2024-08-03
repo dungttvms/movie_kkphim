@@ -26,7 +26,6 @@ import { IMAGE_URL } from "../../app/config";
 import { fNumber } from "../../utils/numberFormat";
 import { Helmet } from "react-helmet";
 import Logo from "../../components/Logo";
-import NotFoundPage from "../../pages/NotFoundPage";
 
 const useStyles = makeStyles({
   root: {
@@ -355,7 +354,7 @@ function PhimLe() {
       ) : (
         <Stack minHeight="100vh" justifyContent="center" alignItems="center">
           <Logo sx={{ width: 300, height: 200, mb: 15 }} />
-          <NotFoundPage />
+          <LoadingScreen />
         </Stack>
       )}
     </Container>

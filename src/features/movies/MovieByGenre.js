@@ -23,9 +23,10 @@ import { makeStyles } from "@mui/styles";
 import { Helmet } from "react-helmet";
 import { fToNow } from "../../utils/formatTime";
 import Logo from "../../components/Logo";
-import NotFoundPage from "../../pages/NotFoundPage";
+
 import { getFilteredGenreMovies } from "./movieSlice";
 import { fNumber } from "../../utils/numberFormat";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const useStyles = makeStyles({
   root: {
@@ -66,7 +67,7 @@ function MovieByGenre() {
   const { slug } = useParams();
   const location = useLocation();
   const genreName = location.state?.genreName;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0); // Page should start at 0
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
   const theme = useTheme();
@@ -81,18 +82,23 @@ function MovieByGenre() {
   );
 
   const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage);
+    setPage(newPage); // Directly set the new page
   }, []);
 
   useEffect(() => {
     dispatch(
-      getFilteredGenreMovies({ slug, page, genreName, limit: rowsPerPage })
+      getFilteredGenreMovies({
+        slug,
+        page: page + 1,
+        genreName,
+        limit: rowsPerPage,
+      }) // Pass `page + 1` to match API page indexing
     );
   }, [slug, page, rowsPerPage, dispatch, genreName]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
-    setPage(0);
+    setRowsPerPage(parseInt(event.target.value, 10)); // Set new rows per page
+    setPage(0); // Reset to the first page when changing rows per page
   }, []);
 
   const renderTableCells = (movie) => {
@@ -176,7 +182,7 @@ function MovieByGenre() {
       }}
       component="div"
       count={total}
-      page={page}
+      page={page} // Page now correctly starts from 0
       onPageChange={handleChangePage}
       rowsPerPage={rowsPerPage}
       rowsPerPageOptions={[20, 25, 30]}
@@ -307,7 +313,7 @@ function MovieByGenre() {
       ) : (
         <Stack minHeight="100vh" justifyContent="center" alignItems="center">
           <Logo sx={{ width: 300, height: 200, mb: 15 }} />
-          <NotFoundPage />
+          <LoadingScreen />
         </Stack>
       )}
     </Container>

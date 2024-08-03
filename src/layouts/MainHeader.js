@@ -82,7 +82,14 @@ function MainHeader() {
 
   const pages = useMemo(
     () => [
-      { title: "TRANG CHỦ", path: "/" },
+      {
+        title: "TRANG CHỦ",
+        action: () => {
+          dispatch(getViewerCount());
+          navigate("/");
+          handleCloseNavMenu();
+        },
+      },
       {
         title: "PHIM LẺ",
         action: () => {
@@ -115,8 +122,22 @@ function MainHeader() {
           handleCloseNavMenu();
         },
       },
-      { title: "THỂ LOẠI", action: (e) => handleOpenMenu(e, "genres") },
-      { title: "QUỐC GIA", action: (e) => handleOpenMenu(e, "countries") },
+      {
+        title: "THỂ LOẠI",
+        action: (e) => {
+          dispatch(getViewerCount());
+          handleOpenMenu(e, "genres");
+          handleCloseNavMenu();
+        },
+      },
+      {
+        title: "QUỐC GIA",
+        action: (e) => {
+          dispatch(getViewerCount());
+          handleOpenMenu(e, "countries");
+          handleCloseNavMenu();
+        },
+      },
     ],
     [handleOpenMenu, handleCloseNavMenu, navigate, dispatch]
   );
