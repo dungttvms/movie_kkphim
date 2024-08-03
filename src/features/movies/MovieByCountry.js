@@ -86,11 +86,13 @@ function MovieByCountry() {
   }, []);
 
   useEffect(() => {
-    dispatch(getFilteredCountryMovies({ slug, page, limit: rowsPerPage }));
-  }, [slug, page, rowsPerPage, dispatch]);
+    dispatch(
+      getFilteredCountryMovies({ slug, page, limit: rowsPerPage, countryName })
+    );
+  }, [slug, page, rowsPerPage, countryName, dispatch]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
     setPage(0);
   }, []);
 

@@ -85,11 +85,13 @@ function MovieByGenre() {
   }, []);
 
   useEffect(() => {
-    dispatch(getFilteredGenreMovies({ slug, page, limit: rowsPerPage }));
-  }, [slug, page, rowsPerPage, dispatch]);
+    dispatch(
+      getFilteredGenreMovies({ slug, page, genreName, limit: rowsPerPage })
+    );
+  }, [slug, page, rowsPerPage, dispatch, genreName]);
 
   const handleChangeRowsPerPage = useCallback((event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    setRowsPerPage(parseInt(event.target.value, NUMBER_OF_LIMIT));
     setPage(0);
   }, []);
 

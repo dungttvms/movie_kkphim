@@ -119,37 +119,12 @@ export const getAllMovies = ({ pages }) => async (dispatch, getState) => {
     dispatch(
       slice.actions.getAllMoviesSuccess({ movies: combinedMovies, totalMovies })
     );
-    toast.success("Load All Movies Success");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
   }
 };
 
-export const getGenres = () => async (dispatch) => {
-  dispatch(slice.actions.startLoading());
-  try {
-    const response = await apiService1.get("the-loai");
-    dispatch(slice.actions.getGenreSuccess(response));
-    // console.log(response);
-    // toast.success(`Load movie ${response.movie.name} success`);
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
-export const getCountries = () => async (dispatch) => {
-  dispatch(slice.actions.startLoading());
-  try {
-    const response = await apiService1.get("quoc-gia");
-    dispatch(slice.actions.getCountriesSuccess(response));
-
-    // toast.success(`Load movie ${response.movie.name} success`);
-  } catch (error) {
-    dispatch(slice.actions.hasError(error.message));
-    toast.error(error.message);
-  }
-};
 export const getPhimLe = ({ page, limit }) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
@@ -163,7 +138,7 @@ export const getPhimLe = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
-    toast.success("Load all single movies success");
+    toast.success("Tải các phim lẻ thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -183,7 +158,7 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimBoSuccess({ movies, totalMovies }));
-    toast.success("Load all serie movies success");
+    toast.success("Tải các phim bộ thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -203,7 +178,7 @@ export const getPhimHoatHinh = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimHoatHinhSuccess({ movies, totalMovies }));
-    toast.success("Load all cartoon movies success");
+    toast.success("Tải các phim hoạt hình thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -223,7 +198,7 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getTVShowsSuccess({ movies, totalMovies }));
-    toast.success("Load all TV Shows success");
+    toast.success("Tải các chương trình giải trí thành công");
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -235,7 +210,7 @@ export const getSingleMovie = ({ slug }) => async (dispatch) => {
   try {
     const response = await apiService1.get(`phim/${slug}`);
     dispatch(slice.actions.getSingleMovieSuccess(response));
-    toast.success(`Load movie ${response.movie.name} success`);
+    toast.success(`Tải thông tin phim ${response.movie.name} thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -251,7 +226,7 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getSearchMovieSuccess({ movies, totalMovies }));
-    toast.success(`Load all movies with keyword "${keyword}" success`);
+    toast.success(`Tải các phim với từ khóa "${keyword}" thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -268,10 +243,22 @@ export const getViewerCount = () => async (dispatch) => {
     toast.error(error.message);
   }
 };
-
-export const getFilteredCountryMovies = ({ slug, page, limit }) => async (
-  dispatch
-) => {
+export const getCountries = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService1.get("quoc-gia");
+    dispatch(slice.actions.getCountriesSuccess(response));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const getFilteredCountryMovies = ({
+  slug,
+  countryName,
+  page,
+  limit,
+}) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const queryParams = new URLSearchParams({
@@ -283,15 +270,29 @@ export const getFilteredCountryMovies = ({ slug, page, limit }) => async (
     );
 
     dispatch(slice.actions.getFilteredCountryMoviesSuccess(response.data));
-    toast.success(`Load country movies successful`);
+    toast.success(`Tải các phim ${countryName} thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
   }
 };
-export const getFilteredGenreMovies = ({ slug, page, limit }) => async (
-  dispatch
-) => {
+
+export const getGenres = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService1.get("the-loai");
+    dispatch(slice.actions.getGenreSuccess(response));
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const getFilteredGenreMovies = ({
+  slug,
+  page,
+  limit,
+  genreName,
+}) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const queryParams = new URLSearchParams({
@@ -303,7 +304,7 @@ export const getFilteredGenreMovies = ({ slug, page, limit }) => async (
     );
 
     dispatch(slice.actions.getFilteredGenreMoviesSuccess(response.data));
-    toast.success(`Load genre movies successful`);
+    toast.success(`Tải các phim ${genreName} thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
