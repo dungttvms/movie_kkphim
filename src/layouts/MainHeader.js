@@ -27,6 +27,7 @@ import Logo from "../components/Logo";
 function MainHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [searchQuery, setSearchQuery] = useState("");
   const [anchorElCountries, setAnchorElCountries] = useState(null);
@@ -144,10 +145,10 @@ function MainHeader() {
   );
 
   const handleSearchSubmit = useCallback(
-    (keyword) => {
-      dispatch(getSearchMovie({ keyword }));
+    (keyword, page = 1) => {
+      dispatch(getSearchMovie({ keyword, page: 1 }));
       navigate(`/tim-kiem?keyword=${keyword}`);
-      setSearchQuery(""); // Reset the search query
+      setSearchQuery("");
     },
     [dispatch, navigate]
   );

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { apiService1, apiService2 } from "../../app/apiService";
 import { NUMBER_OF_LIMIT } from "../../app/config";
+import { fNumber } from "../../utils/numberFormat";
 
 const initialState = {
   isLoading: false,
@@ -138,7 +139,7 @@ export const getPhimLe = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
-    toast.success("Tải các phim lẻ thành công");
+    toast.success(`Tải ${fNumber(totalMovies)} phim lẻ thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -158,7 +159,7 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimBoSuccess({ movies, totalMovies }));
-    toast.success("Tải các phim bộ thành công");
+    toast.success(`Tải ${fNumber(totalMovies)} phim bộ thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -178,7 +179,7 @@ export const getPhimHoatHinh = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimHoatHinhSuccess({ movies, totalMovies }));
-    toast.success("Tải các phim hoạt hình thành công");
+    toast.success(`Tải ${fNumber(totalMovies)} phim hoạt hình thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -198,7 +199,9 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getTVShowsSuccess({ movies, totalMovies }));
-    toast.success("Tải các chương trình giải trí thành công");
+    toast.success(
+      `Tải ${fNumber(totalMovies)} chương trình giải trí thành công`
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -221,12 +224,20 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
   dispatch(slice.actions.startLoading());
   try {
     const response = await apiService1.get(
-      `v1/api/tim-kiem?keyword=${keyword}`
+      `v1/api/tim-kiem?keyword=${keyword}&limit=1`
     );
-    const movies = response.data.items;
+
     const totalMovies = response.data.params.pagination.totalItems;
+
+    const responseWithLimit = await apiService1.get(
+      `v1/api/tim-kiem?keyword=${keyword}&limit=${totalMovies}`
+    );
+
+    const movies = responseWithLimit.data.items;
     dispatch(slice.actions.getSearchMovieSuccess({ movies, totalMovies }));
-    toast.success(`Tải các phim với từ khóa "${keyword}" thành công`);
+    toast.success(
+      `Tải ${fNumber(totalMovies)} phim với từ khóa "${keyword}" thành công`
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -270,7 +281,11 @@ export const getFilteredCountryMovies = ({
     );
 
     dispatch(slice.actions.getFilteredCountryMoviesSuccess(response.data));
-    toast.success(`Tải các phim ${countryName} thành công`);
+    toast.success(
+      `Tải ${fNumber(
+        response.data.params.pagination.totalItems
+      )} phim ${countryName} thành công`
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -304,7 +319,12 @@ export const getFilteredGenreMovies = ({
     );
 
     dispatch(slice.actions.getFilteredGenreMoviesSuccess(response.data));
-    toast.success(`Tải các phim ${genreName} thành công`);
+
+    toast.success(
+      `Tải ${fNumber(
+        response.data.params.pagination.totalItems
+      )} phim ${genreName} thành công`
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);

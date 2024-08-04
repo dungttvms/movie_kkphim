@@ -146,7 +146,7 @@ function CustomChatBot() {
     },
     {
       id: "Step_4",
-      message: "Chào {previousValue}, Bạn vui lòng nhập số điện thoại",
+      message: "Chào {previousValue}, Vui lòng nhập số điện thoại của bạn",
       trigger: "Step_5",
     },
     {
@@ -159,7 +159,7 @@ function CustomChatBot() {
           setPhoneNumber(value);
           return true;
         } else {
-          return "Vui lòng nhập SĐT đúng định dạng";
+          return "SĐT sai định dạng. SĐT gồm 10 số, bắt đầu từ 09/08/07/05/03";
         }
       },
     },

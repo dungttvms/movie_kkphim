@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Box,
+  Button,
   Card,
   CardMedia,
   Container,
@@ -19,12 +20,14 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 import { fToNow } from "../../utils/formatTime";
-import { IMAGE_URL } from "../../app/config";
+import { IMAGE_URL, NUMBER_OF_LIMIT } from "../../app/config";
 import LoadingScreen from "../../components/LoadingScreen";
 import { fNumber } from "../../utils/numberFormat";
 import NotFoundPage from "../../pages/NotFoundPage";
 import Logo from "../../components/Logo";
 import { Helmet } from "react-helmet";
+import SkipNextSharpIcon from "@mui/icons-material/SkipNextSharp";
+import SkipPreviousSharpIcon from "@mui/icons-material/SkipPreviousSharp";
 
 const useStyles = makeStyles({
   root: {
@@ -52,26 +55,48 @@ const useStyles = makeStyles({
 
 function SearchResults() {
   const { movies, isLoading, error } = useSelector((state) => state.movie);
-  const total = useSelector((state) => state.movie.pagination);
-
+  const totalMovies = useSelector((state) => state.movie.pagination || 0);
+  const [page, setPage] = useState(0);
   const classes = useStyles();
+
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-  // Lấy từ khóa tìm kiếm từ URL query string
-  const searchKeyword = new URLSearchParams(window.location.search).get(
-    "keyword"
-  );
+  const searchKeyword =
+    new URLSearchParams(window.location.search).get("keyword") || "";
+
+  const maxPage = Math.ceil(totalMovies / NUMBER_OF_LIMIT);
+
+  const start = page * NUMBER_OF_LIMIT + 1;
+  const end = Math.min(start + Number(NUMBER_OF_LIMIT) - 1, totalMovies);
+
+  const handleNextPage = () => {
+    if (page < maxPage - 1) {
+      setPage(page + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+    }
+  };
+
+  const paginatedMovies = movies.slice(start, end);
 
   if (isLoading) {
-    return <LoadingScreen />;
+    return (
+      <Stack minHeight="100vh" justifyContent="center" alignItems="center">
+        <Logo sx={{ width: 300, height: 200, mb: 15 }} />
+        <LoadingScreen />
+      </Stack>
+    );
   }
 
   if (error) {
     return <Typography>Error: {error}</Typography>;
   }
 
-  // Kiểm tra nếu không có kết quả tìm kiếm
   if (movies.length === 0) {
     return (
       <Stack minHeight="100vh" justifyContent="center" alignItems="center">
@@ -103,10 +128,35 @@ function SearchResults() {
               textAlign: "center",
             }}
           >
-            CÓ {fNumber(total)} PHIM CÓ TỪ KHÓA "{searchKeyword.toUpperCase()}"
-            ĐƯỢC TÌM THẤY
+            CÓ {fNumber(totalMovies)} PHIM CÓ TỪ KHÓA "
+            {searchKeyword.toUpperCase()}" ĐƯỢC TÌM THẤY
           </Typography>
         </Box>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={2}
+          sx={{ mt: 2 }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePrevPage}
+            disabled={page === 0}
+            sx={{ minWidth: 40, minHeight: 40 }}
+          >
+            <SkipPreviousSharpIcon />
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNextPage}
+            disabled={page >= maxPage - 1}
+            sx={{ minWidth: 40, minHeight: 40 }}
+          >
+            <SkipNextSharpIcon />
+          </Button>
+        </Stack>
         <Card sx={{ p: 3, backgroundColor: "#333333" }}>
           <Box sx={{ overflowX: "auto", backgroundColor: "#333333" }}>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -190,7 +240,7 @@ function SearchResults() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {movies.map((movie) => (
+                  {paginatedMovies.map((movie) => (
                     <TableRow key={movie._id} hover>
                       <TableCell
                         sx={{
@@ -246,6 +296,31 @@ function SearchResults() {
             </TableContainer>
           </Box>
         </Card>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={2}
+          sx={{ mt: 2 }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handlePrevPage}
+            disabled={page === 0}
+            sx={{ minWidth: 40, minHeight: 40 }}
+          >
+            <SkipPreviousSharpIcon />
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNextPage}
+            disabled={page >= maxPage - 1}
+            sx={{ minWidth: 40, minHeight: 40 }}
+          >
+            <SkipNextSharpIcon />
+          </Button>
+        </Stack>
       </>
     </Container>
   );

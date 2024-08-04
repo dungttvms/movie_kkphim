@@ -83,11 +83,10 @@ function MovieByCountry() {
   );
 
   const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage); // Directly set the new page
+    setPage(newPage);
   }, []);
 
   useEffect(() => {
-    // Ensure the API request is correct
     dispatch(
       getFilteredCountryMovies({
         slug,
