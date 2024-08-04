@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Typography,
@@ -68,10 +68,19 @@ function PhimHoatHinh() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-
+  const scrollRef = useRef(null);
   const { movies, pagination: total, isLoading: loading, error } = useSelector(
     (state) => state.movie
   );
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [movies]);
 
   useEffect(() => {
     dispatch(getPhimHoatHinh({ page: page + 1, limit: rowsPerPage }));
@@ -92,7 +101,7 @@ function PhimHoatHinh() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>Phim Hoạt Hình | Phim Gia Lai</title>
       </Helmet>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useParams, useLocation } from "react-router-dom";
 
@@ -74,19 +74,29 @@ function MovieByCountry() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+  const scrollRef = useRef(null);
   const filteredCountryMovies = useSelector(
     (state) => state.movie.filteredCountryMovies
   );
   const total = useSelector(
     (state) => state.movie.totalFilteredMovies.totalItems
   );
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [page]);
 
   const handleChangePage = useCallback((event, newPage) => {
-    setPage(newPage);
+    setPage(newPage); // Directly set the new page
   }, []);
 
   useEffect(() => {
+    // Ensure the API request is correct
     dispatch(
       getFilteredCountryMovies({
         slug,
@@ -196,7 +206,7 @@ function MovieByCountry() {
   );
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>Phim {countryName} | Phim Gia Lai</title>
       </Helmet>

@@ -23,7 +23,7 @@ const createApiService = (baseURL) => {
       return response.data;
     },
     (error) => {
-      // console.log("RESPONSE ERROR", { error });
+      console.log("RESPONSE ERROR", { error });
       const message = error.response?.data?.error?.message || "Unknown Error";
       return Promise.reject(message);
     }

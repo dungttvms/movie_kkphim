@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   Box,
@@ -67,8 +67,8 @@ function SearchResults() {
 
   const maxPage = Math.ceil(totalMovies / NUMBER_OF_LIMIT);
 
-  const start = page * NUMBER_OF_LIMIT + 1;
-  const end = Math.min(start + Number(NUMBER_OF_LIMIT) - 1, totalMovies);
+  const start = page * NUMBER_OF_LIMIT;
+  const end = Math.min(start + Number(NUMBER_OF_LIMIT), totalMovies);
 
   const handleNextPage = () => {
     if (page < maxPage - 1) {
@@ -81,6 +81,18 @@ function SearchResults() {
       setPage(page - 1);
     }
   };
+
+  const scrollRef = useRef(null);
+
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  useEffect(() => {
+    scrollToTop();
+  }, [page]);
 
   const paginatedMovies = movies.slice(start, end);
 
@@ -107,7 +119,7 @@ function SearchResults() {
   }
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>Tìm kiếm | Phim Gia Lai</title>
       </Helmet>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Typography,
@@ -67,6 +67,7 @@ function PhimLe() {
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const dispatch = useDispatch();
   const theme = useTheme();
+  const scrollRef = useRef(null);
   const classes = useStyles();
 
   const { movies, pagination: total, isLoading: loading, error } = useSelector(
@@ -82,7 +83,15 @@ function PhimLe() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
+  useEffect(() => {
+    scrollToTop();
+  }, [movies]);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -92,7 +101,7 @@ function PhimLe() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>Phim Lẻ | Phim Gia Lai</title>
         <meta

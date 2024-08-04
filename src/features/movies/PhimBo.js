@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Typography,
@@ -68,6 +68,7 @@ function PhimBo() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
+  const scrollRef = useRef(null);
 
   const { movies, pagination: total, isLoading: loading, error } = useSelector(
     (state) => state.movie
@@ -76,6 +77,16 @@ function PhimBo() {
   useEffect(() => {
     dispatch(getPhimBo({ page: page + 1, limit: rowsPerPage }));
   }, [page, rowsPerPage, dispatch]);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [movies]);
+
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -92,7 +103,7 @@ function PhimBo() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>Phim Bộ | Phim Gia Lai</title>
       </Helmet>

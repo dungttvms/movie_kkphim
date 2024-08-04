@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useParams, useLocation } from "react-router-dom";
 import { IMAGE_URL, NUMBER_OF_LIMIT } from "../../app/config";
@@ -71,9 +71,18 @@ function MovieByGenre() {
   const [rowsPerPage, setRowsPerPage] = useState(NUMBER_OF_LIMIT);
   const classes = useStyles();
   const theme = useTheme();
+  const scrollRef = useRef(null);
   const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
+  useEffect(() => {
+    scrollToTop();
+  }, [page]);
   const filteredGenreMovies = useSelector(
     (state) => state.movie.filteredGenreMovies
   );
@@ -195,7 +204,7 @@ function MovieByGenre() {
   );
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>{genreName} | Phim Gia Lai</title>
       </Helmet>

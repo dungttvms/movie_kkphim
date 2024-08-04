@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Card,
   Typography,
@@ -67,12 +67,21 @@ function TVShows() {
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const dispatch = useDispatch();
   const theme = useTheme();
+  const scrollRef = useRef(null);
   const classes = useStyles();
 
   const { movies, pagination: total, isLoading: loading, error } = useSelector(
     (state) => state.movie
   );
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
+  useEffect(() => {
+    scrollToTop();
+  }, [movies]);
   useEffect(() => {
     dispatch(getTVShows({ page: page + 1, limit: rowsPerPage }));
   }, [page, rowsPerPage, dispatch]);
@@ -92,7 +101,7 @@ function TVShows() {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <Container sx={{ mt: 2 }}>
+    <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
         <title>TV Shows | Phim Gia Lai</title>
       </Helmet>
