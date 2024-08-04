@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "./movieSlice.js";
 import MovieCard from "./MovieCard";
@@ -8,7 +8,7 @@ import { fNumber } from "../../utils/numberFormat";
 
 function MovieList() {
   const [page, setPage] = useState(1);
-
+  const scrollRef = useRef(null);
   const dispatch = useDispatch();
   const {
     movies,
@@ -23,13 +23,21 @@ function MovieList() {
 
     dispatch(getAllMovies({ pages: pagesToFetch }));
   }, [page, dispatch]);
+  useEffect(() => {
+    scrollToTop();
+  }, [movies]);
 
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
   const handlePageChange = (event, value) => {
     setPage(value);
   };
 
   return (
-    <Container>
+    <Container ref={scrollRef}>
       {loading && <LoadingScreen />}
       {error && <p>Error: {error}</p>}
       {movies && (
