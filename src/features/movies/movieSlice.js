@@ -16,6 +16,7 @@ const initialState = {
   filteredCountryMovies: [],
   filteredGenreMovies: [],
   totalFilteredMovies: "",
+  chatBot: null,
 };
 
 const slice = createSlice({
@@ -96,6 +97,13 @@ const slice = createSlice({
       state.error = null;
       state.filteredGenreMovies = action.payload.items;
       state.totalFilteredMovies = action.payload.params.pagination;
+    },
+    getChatBotSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const { count, chatBot } = action.payload.data;
+      state.totalChatBot = count;
+      state.chatBot = chatBot;
     },
   },
 });
@@ -325,6 +333,17 @@ export const getFilteredGenreMovies = ({
         response.data.params.pagination.totalItems
       )} phim ${genreName} thành công`
     );
+  } catch (error) {
+    dispatch(slice.actions.hasError(error.message));
+    toast.error(error.message);
+  }
+};
+export const getChatBot = () => async (dispatch) => {
+  dispatch(slice.actions.startLoading());
+  try {
+    const response = await apiService2.post(`/chatBots`);
+    console.log(response);
+    dispatch(slice.actions.getChatBotSuccess(response.data));
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);

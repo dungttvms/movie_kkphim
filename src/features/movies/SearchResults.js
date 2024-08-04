@@ -144,31 +144,34 @@ function SearchResults() {
             {searchKeyword.toUpperCase()}" ĐƯỢC TÌM THẤY
           </Typography>
         </Box>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          spacing={2}
-          sx={{ mt: 2 }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handlePrevPage}
-            disabled={page === 0}
-            sx={{ minWidth: 40, minHeight: 40 }}
+        {totalMovies > NUMBER_OF_LIMIT && (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            spacing={2}
+            sx={{ mt: 2 }}
           >
-            <SkipPreviousSharpIcon />
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNextPage}
-            disabled={page >= maxPage - 1}
-            sx={{ minWidth: 40, minHeight: 40 }}
-          >
-            <SkipNextSharpIcon />
-          </Button>
-        </Stack>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handlePrevPage}
+              disabled={page === 0}
+              sx={{ minWidth: 40, minHeight: 40 }}
+            >
+              <SkipPreviousSharpIcon />
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNextPage}
+              disabled={page >= maxPage - 1}
+              sx={{ minWidth: 40, minHeight: 40 }}
+            >
+              <SkipNextSharpIcon />
+            </Button>
+          </Stack>
+        )}
+
         <Card sx={{ p: 3, backgroundColor: "#333333" }}>
           <Box sx={{ overflowX: "auto", backgroundColor: "#333333" }}>
             <TableContainer sx={{ minWidth: 800 }}>
@@ -308,31 +311,33 @@ function SearchResults() {
             </TableContainer>
           </Box>
         </Card>
-        <Stack
-          direction="row"
-          justifyContent="center"
-          spacing={2}
-          sx={{ mt: 2 }}
-        >
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handlePrevPage}
-            disabled={page === 0}
-            sx={{ minWidth: 40, minHeight: 40 }}
+        {totalMovies > NUMBER_OF_LIMIT && (
+          <Stack
+            direction="row"
+            justifyContent="center"
+            spacing={2}
+            sx={{ mt: 2 }}
           >
-            <SkipPreviousSharpIcon />
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNextPage}
-            disabled={page >= maxPage - 1}
-            sx={{ minWidth: 40, minHeight: 40 }}
-          >
-            <SkipNextSharpIcon />
-          </Button>
-        </Stack>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handlePrevPage}
+              disabled={page === 0}
+              sx={{ minWidth: 40, minHeight: 40 }}
+            >
+              <SkipPreviousSharpIcon />
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNextPage}
+              disabled={page >= maxPage - 1}
+              sx={{ minWidth: 40, minHeight: 40 }}
+            >
+              <SkipNextSharpIcon />
+            </Button>
+          </Stack>
+        )}
       </>
     </Container>
   );

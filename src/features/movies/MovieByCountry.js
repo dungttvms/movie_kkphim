@@ -167,43 +167,44 @@ function MovieByCountry() {
     );
   };
 
-  const renderTablePagination = () => (
-    <TablePagination
-      sx={{
-        "& .MuiTablePagination-root": {
-          backgroundColor: tablePaginationStyles.rootBgColor,
-          color: tablePaginationStyles.rootTextColor,
-        },
-        "& .MuiTablePagination-toolbar": {
-          backgroundColor: tablePaginationStyles.toolbarBgColor,
-        },
-        "& .MuiTablePagination-actions": {
-          color: tablePaginationStyles.actionColor,
-        },
-        "& .MuiTablePagination-selectLabel, .MuiTablePagination-select, .MuiTablePagination-selectIcon": {
-          display: { xs: "none", md: "block" },
-          color: tablePaginationStyles.selectColor,
-        },
-        "& .MuiTablePagination-input": {
-          color: tablePaginationStyles.inputColor,
-        },
-        "& .MuiTablePagination-select": {
-          backgroundColor: tablePaginationStyles.selectBgColor,
-        },
-        "& .MuiTablePagination-displayedRows": {
-          color: tablePaginationStyles.displayedRowsColor,
-        },
-      }}
-      component="div"
-      count={total}
-      page={page} // Page now correctly starts from 0
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      rowsPerPageOptions={[20, 25, 30]}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-      labelRowsPerPage="Số lượng Phim / Trang"
-    />
-  );
+  const renderTablePagination = () =>
+    total > NUMBER_OF_LIMIT && (
+      <TablePagination
+        sx={{
+          "& .MuiTablePagination-root": {
+            backgroundColor: tablePaginationStyles.rootBgColor,
+            color: tablePaginationStyles.rootTextColor,
+          },
+          "& .MuiTablePagination-toolbar": {
+            backgroundColor: tablePaginationStyles.toolbarBgColor,
+          },
+          "& .MuiTablePagination-actions": {
+            color: tablePaginationStyles.actionColor,
+          },
+          "& .MuiTablePagination-selectLabel, .MuiTablePagination-select, .MuiTablePagination-selectIcon": {
+            display: { xs: "none", md: "block" },
+            color: tablePaginationStyles.selectColor,
+          },
+          "& .MuiTablePagination-input": {
+            color: tablePaginationStyles.inputColor,
+          },
+          "& .MuiTablePagination-select": {
+            backgroundColor: tablePaginationStyles.selectBgColor,
+          },
+          "& .MuiTablePagination-displayedRows": {
+            color: tablePaginationStyles.displayedRowsColor,
+          },
+        }}
+        component="div"
+        count={total}
+        page={page} // Page now correctly starts from 0
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        rowsPerPageOptions={[20, 25, 30]}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage="Số lượng Phim / Trang"
+      />
+    );
 
   return (
     <Container sx={{ mt: 2 }} ref={scrollRef}>
