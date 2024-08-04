@@ -85,8 +85,29 @@ const useStyles = makeStyles({
   },
   episodeButton: {
     marginBottom: "10px",
-    color: "green",
+    color: "white",
     width: "100%",
+    position: "relative",
+    backgroundColor: "transparent",
+    "&::before": {
+      content: '""',
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0)",
+      zIndex: 1,
+    },
+    "&:hover": {
+      color: "white",
+      borderRadius: "1px",
+
+      "&::before": {
+        backgroundColor: "rgba(0, 0, 0, 0.35)",
+        marginBottom: "2px",
+      },
+    },
   },
   iconButton: {
     fontSize: "24px",
@@ -127,7 +148,7 @@ const useStyles = makeStyles({
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.55)", // overlay color with 45% opacity
+      backgroundColor: "rgba(0, 0, 0, 0.55)",
       zIndex: 1,
     },
   },

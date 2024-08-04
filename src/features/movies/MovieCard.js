@@ -59,11 +59,11 @@ const useStyles = makeStyles({
     position: "absolute",
     top: 8,
     left: 8,
-    backgroundColor: "#ff0000",
+    backgroundColor: "orange",
     color: "white",
     padding: "2px 8px",
     borderRadius: "4px",
-    fontSize: "0.75rem",
+    fontSize: "1 rem",
     zIndex: 2,
   },
 });
