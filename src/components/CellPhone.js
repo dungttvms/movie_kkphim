@@ -60,7 +60,7 @@ const HotlinePhoneRingWrap = styled.div`
   position: fixed;
   bottom: 0;
   right: 120;
-  z-index: 999999;
+  z-index: 999;
 `;
 
 const HotlinePhoneRing = styled.div`

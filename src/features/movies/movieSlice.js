@@ -16,7 +16,6 @@ const initialState = {
   filteredCountryMovies: [],
   filteredGenreMovies: [],
   totalFilteredMovies: "",
-  chatBot: null,
 };
 
 const slice = createSlice({
@@ -97,13 +96,6 @@ const slice = createSlice({
       state.error = null;
       state.filteredGenreMovies = action.payload.items;
       state.totalFilteredMovies = action.payload.params.pagination;
-    },
-    getChatBotSuccess(state, action) {
-      state.isLoading = false;
-      state.error = null;
-      const { count, chatBot } = action.payload.data;
-      state.totalChatBot = count;
-      state.chatBot = chatBot;
     },
   },
 });

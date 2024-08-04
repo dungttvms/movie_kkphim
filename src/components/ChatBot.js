@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,8 @@ import styled, { keyframes } from "styled-components";
 import { getSearchMovie } from "../features/movies/movieSlice.js";
 import chatBotImage from "../images/Logo.png";
 import avatar from "../images/avatar.png";
+import { apiService2 } from "../app/apiService.js";
+import { toast } from "react-toastify";
 
 const ChatContainer = styled.div`
   position: relative;
@@ -75,23 +77,58 @@ const ChatIconStyled = styled.div`
 
 function CustomChatBot() {
   const [showChatbot, setShowChatbot] = useState(false);
-
+  const [username, setUsername] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [movie, setMovie] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const handleSentData = useCallback(async () => {
+    if (!username || !phoneNumber || !movie) {
+      console.log("Thiếu data trả về");
+      return;
+    }
+    const data = { username: username.value, phoneNumber, movie: movie.value };
+
+    try {
+      await apiService2.post("/phimgialai", data);
+      toast.success("Cảm ơn bạn ");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }, [username, phoneNumber, movie]);
+
   const handleSearchSubmit = useCallback(
     (keyword) => {
-      if (typeof keyword === "object") {
-        keyword = keyword.value || "";
-      }
       dispatch(getSearchMovie({ keyword }));
       navigate(`/tim-kiem?keyword=${encodeURIComponent(keyword)}`);
     },
     [dispatch, navigate]
   );
 
+  useEffect(() => {
+    if (movie.value && username.value && phoneNumber) {
+      handleSearchSubmit(movie.value);
+      handleSentData();
+    }
+  }, [
+    movie.value,
+    username.value,
+    phoneNumber,
+    handleSearchSubmit,
+    handleSentData,
+  ]);
+
   const toggleChatbot = () => {
     setShowChatbot(!showChatbot);
+  };
+
+  const closeChatbot = () => {
+    setShowChatbot(false);
+    handleSentData();
+    setUsername("");
+    setPhoneNumber("");
+    setMovie("");
   };
 
   const steps = [
@@ -109,9 +146,9 @@ function CustomChatBot() {
     {
       id: "Step_3",
       user: true,
-      trigger: "Step_4",
-      validator: (value) => {
-        return true;
+      trigger: (value) => {
+        setUsername(value);
+        return "Step_4";
       },
     },
     {
@@ -122,15 +159,16 @@ function CustomChatBot() {
     {
       id: "Step_5",
       user: true,
-      trigger: "Step_6",
       validator: (value) => {
         const phoneRegex = /^(0[35789][0-9]{8})$/;
         if (phoneRegex.test(value)) {
+          setPhoneNumber(value);
           return true;
         } else {
           return "SĐT sai định dạng. SĐT gồm 10 số, bắt đầu từ 09/08/07/05/03";
         }
       },
+      trigger: "Step_6",
     },
     {
       id: "Step_6",
@@ -141,8 +179,7 @@ function CustomChatBot() {
       id: "Step_7",
       user: true,
       trigger: (value) => {
-        handleSearchSubmit(value);
-        closeChatbot();
+        setMovie(value);
         return "Step_8";
       },
     },
@@ -150,14 +187,13 @@ function CustomChatBot() {
       id: "Step_8",
       message:
         "Chúng tôi đang tìm kiếm bộ phim {previousValue} cho bạn. Vui lòng chờ giây lát...",
-      end: true,
+      trigger: () => {
+        closeChatbot();
+        return "Step_9"; // Nếu bạn muốn thêm bước khác, bạn có thể thêm bước này
+      },
+      end: true, // Hoặc kết thúc tại đây
     },
   ];
-
-  // In giá trị các biến sau khi đóng chatbot
-  const closeChatbot = () => {
-    setShowChatbot(false);
-  };
 
   return (
     <ChatContainer>
