@@ -52,7 +52,7 @@ function AuthProvider({ children }) {
     const initialize = async () => {
       try {
         const accessToken = window.localStorage.getItem("accessToken");
-        console.log("Access Token:", accessToken);
+
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
           const response = await apiService2.get("/users/me");
@@ -98,10 +98,8 @@ function AuthProvider({ children }) {
         picture,
       });
 
-      console.log("Full API Response:", response); // Log the entire response
-
       if (response.data) {
-        console.log("Login Response Data:", response.data); // Log response data
+        console.log("Login Response Data:", response.data);
       } else {
         console.warn("No data in response");
       }

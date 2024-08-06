@@ -13,7 +13,7 @@ import BlankLayout from "../layouts/BlankLayout";
 import MovieByGenre from "../features/movies/MovieByGenre";
 import MovieByCountry from "../features/movies/MovieByCountry";
 
-import LoginWithGoogle from "../pages/LoginWithGoogle";
+import LoginPage from "../pages/LoginPage";
 
 function Router() {
   return (
@@ -33,7 +33,7 @@ function Router() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
-      <Route path="/login" element={<LoginWithGoogle />} />
+      <Route path="/login" element={<LoginPage />} />
     </Routes>
   );
 }

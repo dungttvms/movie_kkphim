@@ -85,7 +85,6 @@ function CustomChatBot() {
 
   const handleSentData = useCallback(async () => {
     if (!username || !phoneNumber || !movie) {
-      console.log("Thiếu data trả về");
       return;
     }
     const data = { username: username.value, phoneNumber, movie: movie.value };

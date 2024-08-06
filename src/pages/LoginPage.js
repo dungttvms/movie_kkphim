@@ -1,24 +1,13 @@
-import {
-  Alert,
-  Box,
-  IconButton,
-  InputAdornment,
-  Stack,
-  Link,
-  Typography,
-} from "@mui/material";
-import React, { useState } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Box, Typography } from "@mui/material";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import LockIcon from "@mui/icons-material/Lock";
-import { LoadingButton } from "@mui/lab";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { FTextField, FormProvider } from "../components/form";
 import useAuth from "../hooks/useAuth";
 import backgroundImg from "../images/img-login.png";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { apiService2 } from "../app/apiService";
+import { toast } from "react-toastify";
+import { GOOGLE_CLIENT_ID } from "../app/config";
 
 const styles = {
   boxWrapIconSigIn: {
@@ -43,13 +32,19 @@ const styles = {
     color: "secondary.lighter",
   },
   boxWrap: {
-    p: 1,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    p: 2,
     width: 450,
-    height: 500,
+    height: 200,
     borderTop: "0.1px solid white",
     borderBottom: "0.1px solid white",
     borderRadius: 3,
+    backgroundColor: "rgba(0, 0, 0, 0.5)", // Optional: adds a slight background overlay to make the content more readable
   },
+
   boxCoverTypoBottom: {
     display: "flex",
     justifyContent: "space-between",
@@ -61,174 +56,60 @@ const styles = {
       color: "white",
     },
   },
-  textField: {
-    "& .MuiInputBase-root": {
-      color: "white", // Text color
-    },
-    "& .MuiInputLabel-root": {
-      color: "white", // Label color
-    },
-    "& .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white", // Border color
-    },
-    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white", // Border color when focused
-    },
-    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": {
-      borderColor: "white", // Border color on hover
-    },
-    "& .MuiInputBase-input::placeholder": {
-      color: "white", // Placeholder color
-    },
-  },
-  alert: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)", // Background color with transparency
-    color: "white", // Text color
-    "& .MuiAlert-message": {
-      color: "white", // Ensure message text is white
-    },
-    "& .MuiAlert-icon": {
-      color: "white", // Ensure icon color is white
-    },
-  },
-  link: {
-    color: "white", // Chữ màu trắng
-    textDecoration: "none", // Bỏ gạch chân
-    "&:hover": {
-      textDecoration: "underline", // Gạch chân khi hover
-    },
-  },
-};
-const loginSchema = yup.object().shape({
-  email: yup
-    .string()
-    .email()
-    .required("Email is required"),
-  password: yup.string().required("Password is required"),
-});
-const defaultValues = {
-  email: "b710hausneo@gmail.com",
-  password: "1234",
 };
 
 function LoginPage() {
-  let navigate = useNavigate();
-
-  let auth = useAuth();
-
-  const [showPassword, setShowPassword] = useState(true);
-
-  const methods = useForm({
-    resolver: yupResolver(loginSchema),
-    defaultValues,
-  });
-
-  const {
-    handleSubmit,
-    reset,
-    setError,
-    formState: { errors, isSubmitting },
-  } = methods;
-
-  const onSubmit = async (data) => {
-    let { email, password } = data;
-
-    try {
-      await auth.login({ email, password }, () => {
-        navigate("/", { replace: true });
-      });
-    } catch (error) {
-      reset();
-      setError("responseError", error);
-    }
-  };
+  const navigate = useNavigate();
+  const auth = useAuth();
 
   return (
     <Box sx={styles.boxCover}>
       <Box component="div" className="faded-div" />
-
       <Box sx={styles.boxWrap}>
         <Box sx={styles.boxWrapIconSigIn}>
-          <LockIcon sx={{ fontSize: 30 }}></LockIcon>
+          <LockIcon sx={{ fontSize: 30 }} />
         </Box>
-        <Box sx={styles.boxWrapIconSigIn}>
-          <Typography variant="h4" mb={3}>
-            Đăng nhập
-          </Typography>
-        </Box>
+        <Typography variant="h4" mb={3} sx={{ textAlign: "center" }}>
+          Đăng nhập
+        </Typography>
 
-        <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={3} mb={4}>
-            {!!errors?.responseError && (
-              <Alert severity="error" sx={styles.alert}>
-                {errors?.responseError.message}
-              </Alert>
-            )}
-            <Alert severity="info" sx={styles.alert}>
-              Bạn chưa có tài khoản{" "}
-              <Link
-                variant="subtitle2"
-                component={RouterLink}
-                to="/dang-ky"
-                sx={styles.link}
-              >
-                Tạo tài khoản ngay
-              </Link>
-            </Alert>
-            <FTextField
-              name="email"
-              label="Địa chỉ Email"
-              sx={styles.textField}
-            />
-            <FTextField
-              name="password"
-              label="Password"
-              type={!showPassword ? "password" : "text"}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword(!showPassword)}
-                      onMouseDown={() => setShowPassword(true)}
-                      onMouseUp={() => setShowPassword(false)}
-                      onMouseLeave={() => setShowPassword(false)}
-                      edge="end"
-                      sx={{ color: "white" }}
-                    >
-                      {!showPassword ? (
-                        <VisibilityOff color="white" />
-                      ) : (
-                        <Visibility color="white" />
-                      )}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-              sx={styles.textField}
-            />
-          </Stack>
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              const token = credentialResponse.credential;
+              try {
+                const response = await apiService2.post("/oauth", { token });
 
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            loading={isSubmitting}
-            variant="contained"
-            sx={{ color: "secondary.lighter" }}
-            color="primary"
-          >
-            Đăng nhập
-          </LoadingButton>
-
-          <Box sx={styles.boxCoverTypoBottom}>
-            <Typography sx={styles.typoBottom} variant="subtitle2">
-              Quên mật khẩu?
-            </Typography>
-            <Typography sx={styles.typoBottom} variant="subtitle2">
-              Chưa có tài khoản? Đăng ký
-            </Typography>
-          </Box>
-        </FormProvider>
+                if (response.data && response.data.email) {
+                  const { email, picture, name } = response.data;
+                  try {
+                    await auth.loginWithGoogleAccount(
+                      { email, name, picture },
+                      () => {
+                        navigate("/", { replace: true });
+                      }
+                    );
+                  } catch (error) {
+                    toast.error("Login Error");
+                    navigate("/login");
+                  }
+                } else {
+                  toast.error("Login Error");
+                  navigate("/login");
+                }
+              } catch (error) {
+                console.log("Error during Google Login:", error);
+                toast.error("Login Error");
+              }
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+            width="300"
+            logo_alignment="center"
+            theme="outlined"
+          />
+        </GoogleOAuthProvider>
       </Box>
     </Box>
   );

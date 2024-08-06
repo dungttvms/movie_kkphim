@@ -248,7 +248,8 @@ function MainHeader() {
           <Button
             state={{ from: location }}
             component={Link}
-            to={user ? "/" : "/login"}
+            to={user ? "/" : "/"}
+            // to={user ? "/" : "/login"}
             // onClick={Logout}
           >
             <LoginIcon sx={styles.loginIcon} />
