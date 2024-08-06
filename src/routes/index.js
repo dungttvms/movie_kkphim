@@ -12,8 +12,7 @@ import SearchResults from "../features/movies/SearchResults";
 import BlankLayout from "../layouts/BlankLayout";
 import MovieByGenre from "../features/movies/MovieByGenre";
 import MovieByCountry from "../features/movies/MovieByCountry";
-
-import LoginPage from "../pages/LoginPage";
+// import LoginPage from "../pages/LoginPage";
 
 function Router() {
   return (
@@ -33,7 +32,7 @@ function Router() {
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
-      <Route path="/login" element={<LoginPage />} />
+      {/* <Route path="/login" element={<LoginPage />} /> */}
     </Routes>
   );
 }

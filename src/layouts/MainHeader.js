@@ -26,6 +26,8 @@ import {
 } from "../features/movies/movieSlice";
 import Logo from "../components/Logo";
 
+import { toast } from "react-toastify";
+
 const styles = {
   loginIcon: {
     color: "white",
@@ -160,10 +162,20 @@ function MainHeader() {
   );
 
   const handleSearchSubmit = useCallback(
-    (keyword, page = 1) => {
-      dispatch(getSearchMovie({ keyword, page: 1 }));
-      navigate(`/tim-kiem?keyword=${keyword}`);
-      setSearchQuery("");
+    async (keyword, page = 1) => {
+      try {
+        // Dispatch action để lấy kết quả tìm kiếm và cập nhật trang
+        dispatch(getSearchMovie({ keyword, page }));
+
+        // Điều hướng đến trang kết quả tìm kiếm
+        navigate(`/tim-kiem?keyword=${keyword}`);
+
+        // Xóa từ khóa tìm kiếm trong state
+        setSearchQuery("");
+      } catch (error) {
+        // Hiển thị thông báo lỗi nếu có lỗi xảy ra
+        toast.error(error.message);
+      }
     },
     [dispatch, navigate]
   );

@@ -226,6 +226,7 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
     const response = await apiService1.get(
       `v1/api/tim-kiem?keyword=${keyword}&limit=1`
     );
+    await apiService2.post("/keywordMovie", { keyword });
 
     const totalMovies = response.data.params.pagination.totalItems;
 
