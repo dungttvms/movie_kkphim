@@ -13,6 +13,8 @@ import BlankLayout from "../layouts/BlankLayout";
 import MovieByGenre from "../features/movies/MovieByGenre";
 import MovieByCountry from "../features/movies/MovieByCountry";
 
+import LoginWithGoogle from "../pages/LoginWithGoogle";
+
 function Router() {
   return (
     <Routes>
@@ -30,6 +32,8 @@ function Router() {
       <Route element={<BlankLayout />}>
         <Route path="*" element={<NotFoundPage />} />
       </Route>
+
+      <Route path="/login" element={<LoginWithGoogle />} />
     </Routes>
   );
 }

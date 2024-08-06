@@ -8,3 +8,4 @@ export const X_URL = process.env.REACT_APP_X_URL;
 export const TELEGRAM_URL = process.env.REACT_APP_TELEGRAM_URL;
 export const LINKEDIN_URL = process.env.REACT_APP_LINKEDIN_URL;
 export const WHATSAPP_URL = process.env.REACT_APP_WHATSAPP_URL;
+export const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;

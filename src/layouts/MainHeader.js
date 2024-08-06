@@ -13,8 +13,10 @@ import {
   Toolbar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import LoginIcon from "@mui/icons-material/Login";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 import SearchInput from "../components/SearchInput";
 import {
   getCountries,
@@ -24,9 +26,22 @@ import {
 } from "../features/movies/movieSlice";
 import Logo from "../components/Logo";
 
+const styles = {
+  loginIcon: {
+    color: "white",
+    mr: 1,
+    fontSize: 36,
+  },
+};
+
 function MainHeader() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  let { user } = useAuth();
+  const location = useLocation();
+  // const Logout = async () => {
+  //   logout(() => navigate("/"));
+  // };
 
   const isMobile = useMediaQuery("(max-width: 900px)");
   const [searchQuery, setSearchQuery] = useState("");
@@ -109,7 +124,7 @@ function MainHeader() {
         },
       },
       {
-        title: "PHIM HOẠT HÌNH",
+        title: "HOẠT HÌNH",
         action: () => {
           dispatch(getViewerCount());
           navigate("/hoat-hinh");
@@ -158,11 +173,11 @@ function MainHeader() {
       <AppBar position="sticky">
         <Toolbar disableGutters>
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-            <Logo sx={{ mr: 2, ml: 2 }} />
+            <Logo sx={{ mx: 1 }} />
             {isMobile ? (
               <>
                 <IconButton
-                  size="large"
+                  size="medium"
                   aria-label="menu"
                   aria-controls="menu-appbar"
                   aria-haspopup="true"
@@ -189,14 +204,14 @@ function MainHeader() {
                         "&:hover": {
                           backgroundColor: "primary.lighter",
                           borderRadius: "4px",
-                          mx: 2,
+                          mx: 1,
                         },
                       }}
                     >
                       <Typography
                         variant="body1"
                         textAlign="center"
-                        sx={{ fontSize: "18px" }}
+                        sx={{ fontSize: "12px" }}
                       >
                         {page.title}
                       </Typography>
@@ -210,10 +225,10 @@ function MainHeader() {
                   key={page.title}
                   onClick={page.action}
                   sx={{
-                    my: 2,
+                    my: 1,
                     color: "white",
                     display: "block",
-                    mx: 1,
+                    mx: 0.5,
                     "&:hover": {
                       backgroundColor: "primary.dark",
                     },
@@ -228,8 +243,16 @@ function MainHeader() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             handleSubmit={handleSearchSubmit}
-            sx={{ ml: 2 }}
+            sx={{ mx: 1 }}
           />
+          <Button
+            state={{ from: location }}
+            component={Link}
+            to={user ? "/" : "/login"}
+            // onClick={Logout}
+          >
+            <LoginIcon sx={styles.loginIcon} />
+          </Button>
         </Toolbar>
       </AppBar>
       <Menu
