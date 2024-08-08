@@ -139,7 +139,7 @@ export const getPhimLe = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimLeSuccess({ movies, totalMovies }));
-    toast.success(`Tải ${fNumber(totalMovies)} phim lẻ thành công`);
+    toast.success(`Tải ${limit} / ${fNumber(totalMovies)} phim lẻ thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -159,7 +159,7 @@ export const getPhimBo = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimBoSuccess({ movies, totalMovies }));
-    toast.success(`Tải ${fNumber(totalMovies)} phim bộ thành công`);
+    toast.success(`Tải ${limit} / ${fNumber(totalMovies)} phim bộ thành công`);
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -179,7 +179,9 @@ export const getPhimHoatHinh = ({ page, limit }) => async (dispatch) => {
     const movies = response.data.items;
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getPhimHoatHinhSuccess({ movies, totalMovies }));
-    toast.success(`Tải ${fNumber(totalMovies)} phim hoạt hình thành công`);
+    toast.success(
+      `Tải ${limit} / ${fNumber(totalMovies)} phim hoạt hình thành công`
+    );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
     toast.error(error.message);
@@ -200,7 +202,7 @@ export const getTVShows = ({ page, limit }) => async (dispatch) => {
     const totalMovies = response.data.params.pagination.totalItems;
     dispatch(slice.actions.getTVShowsSuccess({ movies, totalMovies }));
     toast.success(
-      `Tải ${fNumber(totalMovies)} chương trình giải trí thành công`
+      `Tải ${limit} / ${fNumber(totalMovies)} chương trình giải trí thành công`
     );
   } catch (error) {
     dispatch(slice.actions.hasError(error.message));
@@ -227,9 +229,7 @@ export const getSearchMovie = ({ keyword }) => async (dispatch) => {
       `v1/api/tim-kiem?keyword=${keyword}&limit=1`
     );
     await apiService2.post("/keywordMovie", { keyword });
-
     const totalMovies = response.data.params.pagination.totalItems;
-
     const responseWithLimit = await apiService1.get(
       `v1/api/tim-kiem?keyword=${keyword}&limit=${totalMovies}`
     );

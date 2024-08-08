@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMovies } from "./movieSlice.js";
-import MovieCard from "./MovieCard";
+import { getAllMovies } from "./movieSlice.jsx";
+import MovieCard from "./MovieCard.jsx";
 import { Box, Container, Grid, Typography, Pagination } from "@mui/material";
-import LoadingScreen from "../../components/LoadingScreen";
-import { fNumber } from "../../utils/numberFormat";
+import LoadingScreen from "../../components/LoadingScreen.jsx";
+import { fNumber } from "../../utils/numberFormat.jsx";
 
 function MovieList() {
   const [page, setPage] = useState(1);

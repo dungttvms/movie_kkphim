@@ -19,13 +19,13 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhimLe } from "./movieSlice.js";
-import LoadingScreen from "../../components/LoadingScreen";
-import { fToNow } from "../../utils/formatTime";
-import { IMAGE_URL } from "../../app/config";
-import { fNumber } from "../../utils/numberFormat";
+import { getPhimLe } from "./movieSlice.jsx";
+import LoadingScreen from "../../components/LoadingScreen.jsx";
+import { fToNow } from "../../utils/formatTime.jsx";
+import { IMAGE_URL } from "../../app/config.jsx";
+import { fNumber } from "../../utils/numberFormat.jsx";
 import { Helmet } from "react-helmet";
-import Logo from "../../components/Logo";
+import Logo from "../../components/Logo.jsx";
 
 const useStyles = makeStyles({
   root: {

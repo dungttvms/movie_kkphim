@@ -18,17 +18,17 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleMovie } from "./movieSlice.js";
-import LoadingScreen from "../../components/LoadingScreen";
-import Logo from "../../components/Logo";
-import NotFoundPage from "../../pages/NotFoundPage";
+import { getSingleMovie } from "./movieSlice.jsx";
+import LoadingScreen from "../../components/LoadingScreen.jsx";
+import Logo from "../../components/Logo.jsx";
+import NotFoundPage from "../../pages/NotFoundPage.jsx";
 import {
   FACEBOOK_URL,
   LINKEDIN_URL,
   TELEGRAM_URL,
   WHATSAPP_URL,
   X_URL,
-} from "../../app/config";
+} from "../../app/config.jsx";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";

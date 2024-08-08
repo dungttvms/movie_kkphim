@@ -164,16 +164,10 @@ function MainHeader() {
   const handleSearchSubmit = useCallback(
     async (keyword, page = 1) => {
       try {
-        // Dispatch action để lấy kết quả tìm kiếm và cập nhật trang
         dispatch(getSearchMovie({ keyword, page }));
-
-        // Điều hướng đến trang kết quả tìm kiếm
         navigate(`/tim-kiem?keyword=${keyword}`);
-
-        // Xóa từ khóa tìm kiếm trong state
         setSearchQuery("");
       } catch (error) {
-        // Hiển thị thông báo lỗi nếu có lỗi xảy ra
         toast.error(error.message);
       }
     },

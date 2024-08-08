@@ -83,12 +83,9 @@ function LoginPage() {
                 if (response.data && response.data.email) {
                   const { email, picture, name } = response.data;
                   try {
-                    await auth.loginWithGoogleAccount(
-                      { email, name, picture },
-                      () => {
-                        navigate("/", { replace: true });
-                      }
-                    );
+                    await auth.loginWithGoogle({ email, name, picture }, () => {
+                      navigate("/", { replace: true });
+                    });
                   } catch (error) {
                     toast.error("Login Error");
                     navigate("/login");

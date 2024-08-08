@@ -8,10 +8,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import SupportAgentIcon from "../images/Chatbot.png";
 import styled, { keyframes } from "styled-components";
 
-import { getSearchMovie } from "../features/movies/movieSlice.js";
+import { getSearchMovie } from "../features/movies/movieSlice.jsx";
 import chatBotImage from "../images/Logo.png";
 import avatar from "../images/avatar.png";
-import { apiService2 } from "../app/apiService.js";
+import { apiService2 } from "../app/apiService.jsx";
 import { toast } from "react-toastify";
 
 const ChatContainer = styled.div`

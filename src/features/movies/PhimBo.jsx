@@ -19,13 +19,13 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhimHoatHinh } from "./movieSlice.js";
-import LoadingScreen from "../../components/LoadingScreen";
-import { fToNow } from "../../utils/formatTime";
-import { IMAGE_URL } from "../../app/config";
-import { fNumber } from "../../utils/numberFormat";
+import { getPhimBo } from "./movieSlice.jsx";
+import LoadingScreen from "../../components/LoadingScreen.jsx";
+import { fToNow } from "../../utils/formatTime.jsx";
+import { IMAGE_URL } from "../../app/config.jsx";
+import { fNumber } from "../../utils/numberFormat.jsx";
 import { Helmet } from "react-helmet";
-import Logo from "../../components/Logo";
+import Logo from "../../components/Logo.jsx";
 
 const useStyles = makeStyles({
   root: {
@@ -62,29 +62,31 @@ const tablePaginationStyles = {
   displayedRowsColor: "#ffffff",
 };
 
-function PhimHoatHinh() {
+function PhimBo() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
   const scrollRef = useRef(null);
+
   const { movies, pagination: total, isLoading: loading, error } = useSelector(
     (state) => state.movie
   );
-  const scrollToTop = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
+
+  useEffect(() => {
+    dispatch(getPhimBo({ page: page + 1, limit: rowsPerPage }));
+  }, [page, rowsPerPage, dispatch]);
 
   useEffect(() => {
     scrollToTop();
   }, [movies]);
 
-  useEffect(() => {
-    dispatch(getPhimHoatHinh({ page: page + 1, limit: rowsPerPage }));
-  }, [page, rowsPerPage, dispatch]);
+  const scrollToTop = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -103,7 +105,7 @@ function PhimHoatHinh() {
   return (
     <Container sx={{ mt: 2 }} ref={scrollRef}>
       <Helmet>
-        <title>Phim Hoạt Hình | Phim Gia Lai</title>
+        <title>Phim Bộ | Phim Gia Lai</title>
       </Helmet>
       {movies.length > 0 ? (
         <>
@@ -112,7 +114,7 @@ function PhimHoatHinh() {
             alignItems="center"
             justifyContent="space-between"
             p={2}
-            sx={{ backgroundColor: "#333333", borderRadius: 1 }}
+            sx={{ backgroundColor: "#000000", borderRadius: 1 }}
           >
             <Typography
               variant="h5"
@@ -123,10 +125,10 @@ function PhimHoatHinh() {
                 textAlign: "center",
               }}
             >
-              CÓ {fNumber(total)} PHIM HOẠT HÌNH ĐƯỢC TÌM THẤY
+              CÓ {fNumber(total)} PHIM BỘ ĐƯỢC TÌM THẤY
             </Typography>
           </Box>
-          <Card sx={{ p: 1, backgroundColor: "#000000" }}>
+          <Card sx={{ p: 1, backgroundColor: "#333333" }}>
             <Stack spacing={2}>
               <Stack spacing={2} direction="column" alignItems="center">
                 <TablePagination
@@ -248,57 +250,61 @@ function PhimHoatHinh() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {movies.map((movie) => (
-                      <TableRow key={movie._id} hover>
-                        <TableCell
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            cursor: "pointer",
-                          }}
-                        >
-                          <CardMedia
-                            className={classes.media}
-                            image={`${IMAGE_URL}${movie.thumb_url}`}
-                            sx={{ width: 60, height: 60, marginRight: 2 }}
-                          />
-                          <Typography
-                            variant="subtitle2"
+                    {movies.map((movie) => {
+                      const imageUrl = `${IMAGE_URL}${movie.thumb_url}`;
+
+                      return (
+                        <TableRow key={movie._id} hover>
+                          <TableCell
                             sx={{
-                              fontWeight: 600,
-                              textDecoration: "none",
-                              color: "white",
+                              display: "flex",
+                              alignItems: "center",
+                              cursor: "pointer",
                             }}
-                            component={RouterLink}
-                            to={`/phim/${movie.slug}`}
                           >
-                            {movie.name} - {movie.year}
-                          </Typography>
-                        </TableCell>
-                        {!isMobile && (
-                          <>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.episode_current || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.time || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.quality || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.lang || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {movie.country?.[0]?.name || "N/A"}
-                            </TableCell>
-                            <TableCell align="center" sx={{ color: "white" }}>
-                              {fToNow(movie.modified?.time)}
-                            </TableCell>
-                          </>
-                        )}
-                      </TableRow>
-                    ))}
+                            <CardMedia
+                              className={classes.media}
+                              image={imageUrl}
+                              sx={{ width: 60, height: 60, marginRight: 2 }}
+                            />
+                            <Typography
+                              variant="subtitle2"
+                              sx={{
+                                fontWeight: 600,
+                                textDecoration: "none",
+                                color: "white",
+                              }}
+                              component={RouterLink}
+                              to={`/phim/${movie.slug}`}
+                            >
+                              {movie.name} - {movie.year}
+                            </Typography>
+                          </TableCell>
+                          {!isMobile && (
+                            <>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.episode_current || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.time || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.quality || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.lang || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {movie.country?.[0]?.name || "N/A"}
+                              </TableCell>
+                              <TableCell align="center" sx={{ color: "white" }}>
+                                {fToNow(movie.modified?.time)}
+                              </TableCell>
+                            </>
+                          )}
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </TableContainer>
@@ -354,4 +360,4 @@ function PhimHoatHinh() {
   );
 }
 
-export default PhimHoatHinh;
+export default PhimBo;

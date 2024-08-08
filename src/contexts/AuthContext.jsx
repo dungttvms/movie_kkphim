@@ -90,7 +90,7 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const loginWithGoogleAccount = async ({ email, name, picture }, callback) => {
+  const loginWithGoogle = async ({ email, name, picture }, callback) => {
     try {
       const response = await apiService2.post("/oauth/login", {
         email,
@@ -118,7 +118,7 @@ function AuthProvider({ children }) {
         throw new Error("Missing user or accessToken in response");
       }
     } catch (error) {
-      console.error("Error in loginWithGoogleAccount:", error);
+      console.error("Error in loginWithGoogle:", error);
       toast.error("Login failed");
     }
   };
@@ -127,7 +127,7 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         ...state,
-        loginWithGoogleAccount,
+        loginWithGoogle,
       }}
     >
       {children}
